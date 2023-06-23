@@ -5,6 +5,7 @@ import { parseCookies, setCookie } from "nookies";
 import React, {
   createContext,
   PropsWithChildren,
+  ReactNode,
   useEffect,
   useState,
 } from "react";
@@ -17,10 +18,13 @@ type ColorModeContextType = {
 export const ColorModeContext = createContext<ColorModeContextType>(
   {} as ColorModeContextType
 );
+type ColorModeContextProviderProps = {
+  children: ReactNode;
+};
 
-export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
-  children,
-}) => {
+export const ColorModeContextProvider: React.FC<
+  ColorModeContextProviderProps
+> = ({ children }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [mode, setMode] = useState("light");
 
