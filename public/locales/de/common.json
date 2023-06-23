@@ -59,10 +59,26 @@
       }
     },
     "error": {
-      "info": "Sie haben vergessen, {{action}} component zu {{resource}} hinzufügen.",
       "404": "Leider existiert diese Seite nicht.",
+      "info": "Sie haben vergessen, {{action}} component zu {{resource}} hinzufügen.",
       "resource404": "Haben Sie die {{resource}} resource erstellt?",
       "backHome": "Zurück"
+    },
+    "teams": {
+      "title": "Teams",
+      "fields": {
+        "id": "Id",
+        "title": "Titel",
+        "description": "Beschreibung",
+        "created_at": "Erstellt",
+        "updated_at": "Aktualisiert"
+      },
+      "titles": {
+        "create": "Team erstellen",
+        "edit": "Team bearbeiten",
+        "list": "Teams",
+        "show": "Team anzeigen"
+      }
     }
   },
   "actions": {
@@ -108,53 +124,15 @@
   "dashboard": {
     "title": "Dashboard"
   },
-  "blog_posts": {
-    "blog_posts": "Blogbeiträge",
-    "fields": {
-      "id": "Id",
-      "title": "Titel",
-      "content": "Inhalt",
-      "status": "Status",
-      "created_at": "Erstellt am",
-      "categoryId": "Kategorien"
-    },
-    "titles": {
-      "create": "Erstellen",
-      "edit": "Bearbeiten",
-      "list": "Einträge",
-      "show": "Eintrag zeigen"
-    }
-  },
-  "categories": {
-    "categories": "Kategorien",
-    "fields": {
-      "id": "Id",
-      "title": "Titel",
-      "created_at": "Erstellt am"
-    },
-    "titles": {
-      "create": "Erstellen",
-      "edit": "Bearbeiten",
-      "list": "Einträge",
-      "show": "Eintrag zeigen"
-    }
-  },
   "documentTitle": {
-    "default": "refine",
-    "suffix": " | refine",
-    "blog_posts": {
-      "list": "Blogbeiträge | refine",
-      "show": "#{{id}} Show Blogeintrag | refine",
-      "edit": "#{{id}} Edit Blogeintrag | refine",
-      "create": "Create new Blogeintrag | refine",
-      "clone": "#{{id}} Clone Blogeintrag | refine"
-    },
-    "categories": {
-      "list": "Kategorien | refine",
-      "show": "#{{id}} Zeigen Kategorien | refine",
-      "edit": "#{{id}} Bearbeiten Kategorien | refine",
-      "create": "Neue Kategorie Erstellen | refine",
-      "clone": "#{{id}} Klon Kategorie | refine"
+    "default": "Managify",
+    "suffix": " | Managify",
+    "teams": {
+      "list": "Teams | Managify",
+      "show": "#{{id}} Zeigen Teams | Managify",
+      "edit": "#{{id}} Bearbeiten Teams | Managify",
+      "create": "Neues Team Erstellen | Managify",
+      "clone": "#{{id}} Klon Team | Managify"
     }
   },
   "table": {

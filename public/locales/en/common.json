@@ -63,6 +63,22 @@
       "404": "Sorry, the page you visited does not exist.",
       "resource404": "Are you sure you have created the {{resource}} resource.",
       "backHome": "Back Home"
+    },
+    "teams": {
+      "title": "Teams",
+      "fields": {
+        "id": "Id",
+        "title": "Title",
+        "description": "Description",
+        "created_at": "Created At",
+        "updated_at": "Updated At"
+      },
+      "titles": {
+        "create": "Create Team",
+        "edit": "Edit Team",
+        "list": "Teams",
+        "show": "Show Team"
+      }
     }
   },
   "actions": {
@@ -108,53 +124,15 @@
   "dashboard": {
     "title": "Dashboard"
   },
-  "blog_posts": {
-    "blog_posts": "Blog Posts",
-    "fields": {
-      "id": "Id",
-      "title": "Title",
-      "content": "Content",
-      "status": "Status",
-      "created_at": "Created At",
-      "categoryId": "Category"
-    },
-    "titles": {
-      "create": "Create Blog Post",
-      "edit": "Edit Blog Post",
-      "list": "Blog Posts",
-      "show": "Show Blog Post"
-    }
-  },
-  "categories": {
-    "categories": "Categories",
-    "fields": {
-      "id": "Id",
-      "title": "Title",
-      "created_at": "Created At"
-    },
-    "titles": {
-      "create": "Create Category",
-      "edit": "Edit Category",
-      "list": "Categories",
-      "show": "Show Category"
-    }
-  },
   "documentTitle": {
-    "default": "refine",
-    "suffix": " | refine",
-    "blog_posts": {
-      "list": "Blog Posts | refine",
-      "show": "#{{id}} Show Blog Post | refine",
-      "edit": "#{{id}} Edit Blog Post | refine",
-      "create": "Create new Blog Post | refine",
-      "clone": "#{{id}} Clone Blog Post | refine"
-    },
-    "categories": {
-      "list": "Categories | refine",
-      "show": "#{{id}} Show Category | refine",
-      "edit": "#{{id}} Edit Category | refine",
-      "create": "Create new Category | refine",
-      "clone": "#{{id}} Clone Category | refine"
+    "default": "Managify",
+    "suffix": " | Managify",
+    "teams": {
+      "list": "Teams | Managify",
+      "show": "#{{id}} Show Team | Managify",
+      "edit": "#{{id}} Edit Team | Managify",
+      "create": "Create new Team | Managify",
+      "clone": "#{{id}} Clone Team | Managify"
     }
   },
   "table": {
