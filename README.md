@@ -9,6 +9,17 @@
 
 This [refine](https://github.com/pankod/refine) project was generated with [superplate](https://github.com/pankod/refine).
 
+##  Configuration
+
+You need to create a `config.ts` file inside the `src` folder and add your Supabase credentials.
+
+```ts
+export const config = {
+  SUPABASE_URL: "",
+  SUPABASE_KEY: "",
+};
+```
+
 ## Getting Started
 
 **refine** is a React-based framework for building data-intensive applications in no time ✨
