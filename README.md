@@ -11,13 +11,17 @@ This [refine](https://github.com/pankod/refine) project was generated with [supe
 
 ##  Configuration
 
-You need to create a `config.ts` file inside the `src` folder and add your Supabase credentials.
+You need to create a .env file in the root directory of the project and add the following environment variables.
 
-```ts
-export const config = {
-  SUPABASE_URL: "",
-  SUPABASE_KEY: "",
-};
+```bash
+    NEXT_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL
+    NEXT_PUBLIC_SUPABASE_KEY=YOUR_SUPABASE_ANON_KEY
+```
+
+Also, you can use the following command to create a .env file from .env.example.
+
+```bash
+    cp .env.example .env
 ```
 
 ## Getting Started

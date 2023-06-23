@@ -6,6 +6,3 @@ node_modules
 .env
 .env.*
 !.env.example
-
-# config file
-src/config.ts

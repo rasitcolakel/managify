@@ -2,8 +2,8 @@ import { createClient } from "@refinedev/supabase";
 import { config } from "src/config";
 
 export const supabaseClient = createClient(
-  config.SUPABASE_URL,
-  config.SUPABASE_KEY,
+  config.SUPABASE_URL as string,
+  config.SUPABASE_KEY as string,
   {
     db: {
       schema: "public",
