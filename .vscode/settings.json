@@ -1,0 +1,7 @@
+{
+    "i18n-ally.localesPaths": [
+        "public/locales"
+    ],
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
+}

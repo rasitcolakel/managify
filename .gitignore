@@ -1,0 +1,11 @@
+# npm
+node_modules
+# next.js build files
+.next
+# environment variables
+.env
+.env.*
+!.env.example
+
+# config file
+src/config.ts
