@@ -3,5 +3,9 @@
         "public/locales"
     ],
     "editor.formatOnPaste": true,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "cSpell.words": [
+        "Managify"
+    ],
+    "i18n-ally.keystyle": "nested"
 }
