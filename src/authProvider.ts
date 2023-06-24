@@ -69,6 +69,18 @@ export const authProvider: AuthBindings = {
       }
 
       if (data?.session) {
+        const profile = await supabaseClient.from("profiles").insert({
+          id: data.user?.id,
+          status: "created",
+        });
+
+        if (profile.error) {
+          return {
+            success: false,
+            error: profile.error,
+          };
+        }
+
         nookies.set(null, "token", data.session.access_token, {
           maxAge: 30 * 24 * 60 * 60,
           path: "/",
