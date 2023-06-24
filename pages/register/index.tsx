@@ -1,45 +1,45 @@
-import { AuthPage, ThemedTitleV2 } from "@refinedev/mui";
+import {AuthPage, ThemedTitleV2} from "@refinedev/mui";
 
-import { GetServerSideProps } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import {GetServerSideProps} from "next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
-import { authProvider } from "src/authProvider";
+import {authProvider} from "src/authProvider";
 
-import { AppIcon } from "src/components/app-icon";
+import {AppIcon} from "src/components/app-icon";
 
 export default function Register() {
-  return (
-    <AuthPage
-      type="register"
-      title={
-        <ThemedTitleV2 collapsed={false} text="Managify" icon={<AppIcon />} />
-      }
-    />
-  );
+    return (
+        <AuthPage
+            type="register"
+            title={
+                <ThemedTitleV2 collapsed={false} text="Managify" icon={<AppIcon/>}/>
+            }
+        />
+    );
 }
 
 Register.noLayout = true;
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
-  const { authenticated } = await authProvider.check(context);
+    const {authenticated} = await authProvider.check(context);
 
-  const translateProps = await serverSideTranslations(context.locale ?? "en", [
-    "common",
-  ]);
+    const translateProps = await serverSideTranslations(context.locale ?? "en", [
+        "common",
+    ]);
 
-  if (authenticated) {
+    if (authenticated) {
+        return {
+            props: {},
+            redirect: {
+                destination: `/`,
+                permanent: false,
+            },
+        };
+    }
+
     return {
-      props: {},
-      redirect: {
-        destination: `/`,
-        permanent: false,
-      },
+        props: {
+            ...translateProps,
+        },
     };
-  }
-
-  return {
-    props: {
-      ...translateProps,
-    },
-  };
 };

@@ -1,14 +1,7 @@
 import {GitHubBanner, Refine} from "@refinedev/core";
 import {RefineKbar, RefineKbarProvider} from "@refinedev/kbar";
-import {
-    notificationProvider,
-    RefineSnackbarProvider,
-    ThemedLayoutV2,
-    ThemedTitleV2,
-} from "@refinedev/mui";
-import routerProvider, {
-    UnsavedChangesNotifier,
-} from "@refinedev/nextjs-router";
+import {notificationProvider, RefineSnackbarProvider, ThemedLayoutV2, ThemedTitleV2,} from "@refinedev/mui";
+import routerProvider, {UnsavedChangesNotifier,} from "@refinedev/nextjs-router";
 import type {NextPage} from "next";
 import {AppProps} from "next/app";
 
@@ -21,8 +14,6 @@ import {appWithTranslation, useTranslation} from "next-i18next";
 import {authProvider} from "src/authProvider";
 import {AppIcon} from "src/components/app-icon";
 import {supabaseClient} from "src/utility";
-import {DevSupport} from "@react-buddy/ide-toolbox-next";
-import {ComponentPreviews, useInitial} from "@components/dev";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     noLayout?: boolean;
@@ -35,11 +26,7 @@ type AppPropsWithLayout = AppProps & {
 function MyApp({Component, pageProps}: AppPropsWithLayout): JSX.Element {
     const renderComponent = () => {
         if (Component.noLayout) {
-            return <DevSupport ComponentPreviews={ComponentPreviews}
-                               useInitialHook={useInitial}
-            >
-                <Component {...pageProps} />
-            </DevSupport>;
+            return <Component {...pageProps} />;
         }
 
         return (

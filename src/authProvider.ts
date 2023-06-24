@@ -1,150 +1,150 @@
-import { AuthBindings } from "@refinedev/core";
+import {AuthBindings} from "@refinedev/core";
 import nookies from "nookies";
 
-import { supabaseClient } from "./utility";
+import {supabaseClient} from "./utility";
 
 export const authProvider: AuthBindings = {
-  login: async ({ email, password }) => {
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      return {
-        success: false,
-        error,
-      };
-    }
-
-    if (data?.session) {
-      nookies.set(null, "token", data.session.access_token, {
-        maxAge: 30 * 24 * 60 * 60,
-        path: "/",
-      });
-
-      return {
-        success: true,
-        redirectTo: "/",
-      };
-    }
-
-    // for third-party login
-    return {
-      success: false,
-      error: {
-        name: "LoginError",
-        message: "Invalid username or password",
-      },
-    };
-  },
-  logout: async () => {
-    nookies.destroy(null, "token");
-    const { error } = await supabaseClient.auth.signOut();
-
-    if (error) {
-      return {
-        success: false,
-        error,
-      };
-    }
-
-    return {
-      success: true,
-      redirectTo: "/login",
-    };
-  },
-  register: async ({ email, password }) => {
-    try {
-      const { data, error } = await supabaseClient.auth.signUp({
-        email,
-        password,
-      });
-
-      if (error) {
-        return {
-          success: false,
-          error,
-        };
-      }
-
-      if (data?.session) {
-        const profile = await supabaseClient.from("profiles").insert({
-          id: data.user?.id,
-          status: "created",
+    login: async ({email, password}) => {
+        const {data, error} = await supabaseClient.auth.signInWithPassword({
+            email,
+            password,
         });
 
-        if (profile.error) {
-          return {
-            success: false,
-            error: profile.error,
-          };
+        if (error) {
+            return {
+                success: false,
+                error,
+            };
         }
 
-        nookies.set(null, "token", data.session.access_token, {
-          maxAge: 30 * 24 * 60 * 60,
-          path: "/",
-        });
+        if (data?.session) {
+            nookies.set(null, "token", data.session.access_token, {
+                maxAge: 30 * 24 * 60 * 60,
+                path: "/",
+            });
+
+            return {
+                success: true,
+                redirectTo: "/",
+            };
+        }
+
+        // for third-party login
+        return {
+            success: false,
+            error: {
+                name: "LoginError",
+                message: "Invalid username or password",
+            },
+        };
+    },
+    logout: async () => {
+        nookies.destroy(null, "token");
+        const {error} = await supabaseClient.auth.signOut();
+
+        if (error) {
+            return {
+                success: false,
+                error,
+            };
+        }
 
         return {
-          success: true,
-          redirectTo: "/",
+            success: true,
+            redirectTo: "/login",
         };
-      }
-    } catch (error: any) {
-      return {
-        success: false,
-        error,
-      };
-    }
+    },
+    register: async ({email, password}) => {
+        try {
+            const {data, error} = await supabaseClient.auth.signUp({
+                email,
+                password,
+            });
 
-    return {
-      success: false,
-      error: {
-        message: "Register failed",
-        name: "Invalid email or password",
-      },
-    };
-  },
-  check: async (ctx) => {
-    const { token } = nookies.get(ctx);
-    const { data } = await supabaseClient.auth.getUser(token);
-    const { user } = data;
+            if (error) {
+                return {
+                    success: false,
+                    error,
+                };
+            }
 
-    if (user) {
-      return {
-        authenticated: true,
-      };
-    }
+            if (data?.session) {
+                const profile = await supabaseClient.from("profiles").insert({
+                    id: data.user?.id,
+                    status: "created",
+                });
 
-    return {
-      authenticated: false,
-      redirectTo: "/login",
-    };
-  },
-  getPermissions: async () => {
-    const user = await supabaseClient.auth.getUser();
+                if (profile.error) {
+                    return {
+                        success: false,
+                        error: profile.error,
+                    };
+                }
 
-    if (user) {
-      return user.data.user?.role;
-    }
+                nookies.set(null, "token", data.session.access_token, {
+                    maxAge: 30 * 24 * 60 * 60,
+                    path: "/",
+                });
 
-    return null;
-  },
-  getIdentity: async () => {
-    const { data } = await supabaseClient.auth.getUser();
+                return {
+                    success: true,
+                    redirectTo: "/",
+                };
+            }
+        } catch (error: any) {
+            return {
+                success: false,
+                error,
+            };
+        }
 
-    if (data?.user) {
-      return {
-        ...data.user,
-        name: data.user.email,
-      };
-    }
+        return {
+            success: false,
+            error: {
+                message: "Register failed",
+                name: "Invalid email or password",
+            },
+        };
+    },
+    check: async (ctx) => {
+        const {token} = nookies.get(ctx);
+        const {data} = await supabaseClient.auth.getUser(token);
+        const {user} = data;
 
-    return null;
-  },
-  onError: async (error) => {
-    console.error(error);
-    return { error };
-  },
+        if (user) {
+            return {
+                authenticated: true,
+            };
+        }
+
+        return {
+            authenticated: false,
+            redirectTo: "/login",
+        };
+    },
+    getPermissions: async () => {
+        const user = await supabaseClient.auth.getUser();
+
+        if (user) {
+            return user.data.user?.role;
+        }
+
+        return null;
+    },
+    getIdentity: async () => {
+        const {data} = await supabaseClient.auth.getUser();
+
+        if (data?.user) {
+            return {
+                ...data.user,
+                name: data.user.email,
+            };
+        }
+
+        return null;
+    },
+    onError: async (error) => {
+        console.error(error);
+        return {error};
+    },
 };

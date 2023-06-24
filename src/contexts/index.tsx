@@ -1,59 +1,59 @@
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import {ThemeProvider} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { RefineThemes } from "@refinedev/mui";
-import { parseCookies, setCookie } from "nookies";
-import React, { createContext, ReactNode, useEffect, useState } from "react";
+import {RefineThemes} from "@refinedev/mui";
+import {parseCookies, setCookie} from "nookies";
+import React, {createContext, ReactNode, useEffect, useState} from "react";
 
 type ColorModeContextType = {
-  mode: string;
-  setMode: () => void;
+    mode: string;
+    setMode: () => void;
 };
 
 export const ColorModeContext = createContext<ColorModeContextType>(
-  {} as ColorModeContextType
+    {} as ColorModeContextType
 );
 type ColorModeContextProviderProps = {
-  children: ReactNode;
+    children: ReactNode;
 };
 
 export const ColorModeContextProvider: React.FC<
-  ColorModeContextProviderProps
-> = ({ children }) => {
-  const [isMounted, setIsMounted] = useState(false);
-  const [mode, setMode] = useState("light");
+    ColorModeContextProviderProps
+> = ({children}) => {
+    const [isMounted, setIsMounted] = useState(false);
+    const [mode, setMode] = useState("light");
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
-  const systemTheme = useMediaQuery(`(prefers-color-scheme: dark)`);
+    const systemTheme = useMediaQuery(`(prefers-color-scheme: dark)`);
 
-  useEffect(() => {
-    if (isMounted) {
-      setMode(parseCookies()["theme"] || (systemTheme ? "dark" : "light"));
-    }
-  }, [isMounted, systemTheme]);
+    useEffect(() => {
+        if (isMounted) {
+            setMode(parseCookies()["theme"] || (systemTheme ? "dark" : "light"));
+        }
+    }, [isMounted, systemTheme]);
 
-  const toggleTheme = () => {
-    const nextTheme = mode === "light" ? "dark" : "light";
+    const toggleTheme = () => {
+        const nextTheme = mode === "light" ? "dark" : "light";
 
-    setMode(nextTheme);
-    setCookie(null, "theme", nextTheme);
-  };
+        setMode(nextTheme);
+        setCookie(null, "theme", nextTheme);
+    };
 
-  return (
-    <ColorModeContext.Provider
-      value={{
-        setMode: toggleTheme,
-        mode,
-      }}
-    >
-      <ThemeProvider
-        // you can change the theme colors here. example: mode === "light" ? RefineThemes.Magenta : RefineThemes.MagentaDark
-        theme={mode === "light" ? RefineThemes.Blue : RefineThemes.BlueDark}
-      >
-        {children}
-      </ThemeProvider>
-    </ColorModeContext.Provider>
-  );
+    return (
+        <ColorModeContext.Provider
+            value={{
+                setMode: toggleTheme,
+                mode,
+            }}
+        >
+            <ThemeProvider
+                // you can change the theme colors here. example: mode === "light" ? RefineThemes.Magenta : RefineThemes.MagentaDark
+                theme={mode === "light" ? RefineThemes.Blue : RefineThemes.BlueDark}
+            >
+                {children}
+            </ThemeProvider>
+        </ColorModeContext.Provider>
+    );
 };
