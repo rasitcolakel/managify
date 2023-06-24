@@ -7,7 +7,8 @@
     "build": "refine build",
     "start": "refine start",
     "lint": "eslint '**/*.{js,jsx,ts,tsx}'",
-    "refine": "refine"
+    "refine": "refine",
+    "generate:types": "./generate-types.sh"
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
@@ -36,6 +37,7 @@
     "@types/react-dom": "^18.0.0",
     "@typescript-eslint/parser": "5.48.0",
     "cross-env": "^7.0.3",
+    "supabase": "^1.68.6",
     "typescript": "^4.7.4"
   }
 }
