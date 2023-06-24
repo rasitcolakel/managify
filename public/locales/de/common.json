@@ -129,10 +129,10 @@
     "suffix": " | Managify",
     "teams": {
       "list": "Teams | Managify",
-      "show": "#{{id}} Zeigen Teams | Managify",
-      "edit": "#{{id}} Bearbeiten Teams | Managify",
-      "create": "Neues Team Erstellen | Managify",
-      "clone": "#{{id}} Klon Team | Managify"
+      "show": "{{title}} | Managify",
+      "edit": "Bearbeite {{title}}  | Managify",
+      "create": "Erstelle Neues Team | Managify",
+      "clone": "{{title}} Klonen Team | Managify"
     }
   },
   "table": {
