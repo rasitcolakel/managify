@@ -68,7 +68,12 @@ export const authProvider: AuthBindings = {
         };
       }
 
-      if (data) {
+      if (data?.session) {
+        nookies.set(null, "token", data.session.access_token, {
+          maxAge: 30 * 24 * 60 * 60,
+          path: "/",
+        });
+
         return {
           success: true,
           redirectTo: "/",

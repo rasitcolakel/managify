@@ -10,12 +10,6 @@ export default function Login() {
   return (
     <AuthPage
       type="login"
-      formProps={{
-        defaultValues: {
-          email: "info@refine.dev",
-          password: "refine-supabase",
-        },
-      }}
       title={
         <ThemedTitleV2 collapsed={false} text="Managify" icon={<AppIcon />} />
       }
