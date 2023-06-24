@@ -7,11 +7,40 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { Team } from "src/types";
-import { Avatar } from "@mui/material";
+import { TeamWithMembers } from "src/types";
+import { Avatar, Box, Tab, Tabs } from "@mui/material";
+import { TeamMembers } from "@components/teams/members";
+import {
+  generateRandomColorWithName,
+  getFirstLettersOfWord,
+  supabaseClient,
+} from "src/utility";
+import TabPanel from "@components/common/TabPanel";
 
-export default function TeamList() {
-  const { queryResult } = useShow<Team>();
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+const select = "*, teamMembers(id, user_id, status, profile:profiles(*))";
+
+type Props = {
+  initialTeam: TeamWithMembers;
+};
+export default function TeamShow({ initialTeam }: Props) {
+  const [value, setValue] = React.useState(0);
+  const { queryResult } = useShow<TeamWithMembers>({
+    meta: {
+      select,
+    },
+    queryOptions: {
+      initialData: {
+        data: initialTeam,
+      },
+    },
+  });
   const { data, isLoading } = queryResult;
   const t = useTranslate();
   const record = data?.data;
@@ -21,16 +50,15 @@ export default function TeamList() {
       return "";
     }
 
-    const words = record.title.split(" ");
-
-    if (words.length === 1) {
-      return words[0].slice(0, 2);
-    }
-    return `${words[0].slice(0, 1)}${words[1].slice(0, 1)}`;
+    return getFirstLettersOfWord(record?.title);
   }, [record?.title]);
 
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
   return (
-    <Show isLoading={isLoading} canDelete={false} canEdit={false}>
+    <Show isLoading={isLoading || !record} canDelete={false} canEdit={false}>
       <Head>
         <title>{t("documentTitle.teams.show", { title: record?.title })}</title>
       </Head>
@@ -46,12 +74,14 @@ export default function TeamList() {
             <Avatar
               alt={record?.title ?? ""}
               sx={{
-                bgcolor: "primary.main",
+                bgcolor: generateRandomColorWithName(record?.title ?? ""),
                 height: "4em",
                 width: "4em",
               }}
             >
-              {getTitleFirstLetters()}
+              <Typography variant="h4" color="white">
+                {getTitleFirstLetters()}
+              </Typography>
             </Avatar>
             <Stack>
               <Typography variant="h5">{record?.title}</Typography>
@@ -60,8 +90,14 @@ export default function TeamList() {
           </Stack>
         </Stack>
       </Stack>
-      {/* TODO: Tabs will be created */}
-      {/* TODO: Members Tab */}
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs value={value} onChange={handleChange}>
+          <Tab label={`Members`} {...a11yProps(0)} />
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0}>
+        <TeamMembers teamMembers={record?.teamMembers ?? []} />
+      </TabPanel>
     </Show>
   );
 }
@@ -85,8 +121,21 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     };
   }
 
+  const team = await supabaseClient
+    .from("teams")
+    .select(select)
+    .eq("id", context.query.id)
+    .single();
+
+  if (team.error) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
+      initialTeam: team.data,
       ...translateProps,
     },
   };

@@ -18,6 +18,7 @@ import Stack from "@mui/material/Stack";
 
 export default function TeamList() {
   const { dataGridProps } = useDataGrid();
+
   const t = useTranslate();
   const columns = React.useMemo<GridColDef<Team>[]>(
     () => [
@@ -63,7 +64,7 @@ export default function TeamList() {
         },
       },
     ],
-    []
+    [t]
   );
 
   return (
