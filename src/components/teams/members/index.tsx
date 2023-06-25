@@ -27,7 +27,11 @@ export const TeamMembers = ({ team }: Props) => {
   const renderMember = useCallback(
     (teamMember: Props["team"]["teamMembers"][0]) => (
       <Grid key={teamMember.id} item xs={12} sm={6} md={6} lg={4} xl={3}>
-        <RenderMember key={teamMember.id} teamMember={teamMember} />
+        <RenderMember
+          key={teamMember.id}
+          teamMember={teamMember}
+          isOwner={team.owner.id === teamMember.user_id}
+        />
       </Grid>
     ),
     []
@@ -67,7 +71,7 @@ export const TeamMembers = ({ team }: Props) => {
     });
     if (check) {
       const error = {
-        message: t("pages.teams.errors.user_already_member"),
+        message: t("teams.errors.user_already_member"),
         type: "error" as any,
       };
       open?.(error);

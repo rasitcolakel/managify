@@ -63,22 +63,22 @@
       "info": "Sie haben vergessen, {{action}} component zu {{resource}} hinzufügen.",
       "resource404": "Haben Sie die {{resource}} resource erstellt?",
       "backHome": "Zurück"
+    }
+  },
+  "teams": {
+    "title": "Teams",
+    "fields": {
+      "id": "Id",
+      "title": "Titel",
+      "description": "Beschreibung",
+      "created_at": "Erstellt",
+      "updated_at": "Aktualisiert"
     },
-    "teams": {
-      "title": "Teams",
-      "fields": {
-        "id": "Id",
-        "title": "Titel",
-        "description": "Beschreibung",
-        "created_at": "Erstellt",
-        "updated_at": "Aktualisiert"
-      },
-      "titles": {
-        "create": "Team erstellen",
-        "edit": "Team bearbeiten",
-        "list": "Teams",
-        "show": "Team anzeigen"
-      }
+    "titles": {
+      "create": "Team erstellen",
+      "edit": "Team bearbeiten",
+      "list": "Teams",
+      "show": "Team anzeigen"
     }
   },
   "actions": {

@@ -25,7 +25,8 @@ function a11yProps(index: number) {
   };
 }
 
-const select = "*, teamMembers(id, user_id, status, profile:profiles(*))";
+const select =
+  "*, owner(*), teamMembers(id, user_id, status, profile:profiles(*))";
 
 export default function TeamShow() {
   const router = useRouter();
@@ -37,6 +38,7 @@ export default function TeamShow() {
     },
   });
   const { data, isLoading } = queryResult;
+  console.log(data);
   const t = useTranslate();
   const record = data?.data;
 

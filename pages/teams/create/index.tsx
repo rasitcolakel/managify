@@ -2,8 +2,10 @@ import { GetServerSideProps } from "next";
 import { authProvider } from "src/authProvider";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { MuiCreateInferencer } from "@refinedev/inferencer/mui";
+import { useTranslate } from "@refinedev/core";
 
 export default function TeamCreate() {
+  const t = useTranslate();
   return (
     <MuiCreateInferencer
       resource="teams"
@@ -14,6 +16,7 @@ export default function TeamCreate() {
             type: "text",
             relation: false,
             multiple: false,
+            label: t("teams.fields." + field.key),
           };
         }
       }}

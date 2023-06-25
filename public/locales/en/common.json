@@ -63,25 +63,37 @@
       "404": "Sorry, the page you visited does not exist.",
       "resource404": "Are you sure you have created the {{resource}} resource.",
       "backHome": "Back Home"
+    }
+  },
+  "teams": {
+    "title": "Teams",
+    "fields": {
+      "id": "Id",
+      "title": "Title",
+      "description": "Description",
+      "created_at": "Created At",
+      "updated_at": "Updated At",
+      "owner": "Owner"
     },
-    "teams": {
-      "title": "Teams",
-      "fields": {
-        "id": "Id",
-        "title": "Title",
-        "description": "Description",
-        "created_at": "Created At",
-        "updated_at": "Updated At"
-      },
-      "titles": {
-        "create": "Create Team",
-        "edit": "Edit Team",
-        "list": "Teams",
-        "show": "Show Team"
-      },
-      "errors": {
-        "user_already_member": "User is already a member of this team."
-      }
+    "titles": {
+      "create": "Create Team",
+      "edit": "Edit Team",
+      "list": "Teams",
+      "show": "Show Team"
+    },
+    "errors": {
+      "user_already_member": "User is already a member of this team."
+    }
+  },
+  "teamMembers": {
+    "types": {
+      "owner": "Owner",
+      "admin": "Admin",
+      "member": "Member"
+    },
+    "statuses": {
+      "invited": "Invited",
+      "active": "Active"
     }
   },
   "actions": {
