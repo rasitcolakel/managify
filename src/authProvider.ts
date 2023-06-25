@@ -117,6 +117,9 @@ export const authProvider: AuthBindings = {
       };
     }
 
+    nookies.destroy(null, "token");
+    await supabaseClient.auth.signOut();
+
     return {
       authenticated: false,
       redirectTo: "/login",
