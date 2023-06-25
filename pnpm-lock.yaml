@@ -58,6 +58,9 @@ dependencies:
   react-dom:
     specifier: ^18.0.0
     version: 18.0.0(react@18.0.0)
+  react-hook-form:
+    specifier: ^7.45.0
+    version: 7.45.0(react@18.0.0)
 
 devDependencies:
   '@types/node':
