@@ -78,6 +78,9 @@
         "edit": "Edit Team",
         "list": "Teams",
         "show": "Show Team"
+      },
+      "errors": {
+        "user_already_member": "User is already a member of this team."
       }
     }
   },
@@ -137,5 +140,9 @@
   },
   "table": {
     "actions": "Actions"
+  },
+  "form": {
+    "optional": "Optional",
+    "required": "Required"
   }
 }
