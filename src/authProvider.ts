@@ -39,7 +39,9 @@ export const authProvider: AuthBindings = {
     };
   },
   logout: async () => {
-    nookies.destroy(null, "token");
+    nookies.destroy(null, "token", {
+      path: "/",
+    });
     const { error } = await supabaseClient.auth.signOut();
 
     if (error) {
@@ -117,7 +119,10 @@ export const authProvider: AuthBindings = {
       };
     }
 
-    nookies.destroy(null, "token");
+    nookies.destroy(null, "token", {
+      path: "/",
+    });
+
     await supabaseClient.auth.signOut();
 
     return {

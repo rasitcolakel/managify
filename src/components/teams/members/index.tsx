@@ -40,7 +40,7 @@ export const TeamMembers = ({ team }: Props) => {
         />
       </Grid>
     ),
-    []
+    [team.owner.id]
   );
 
   useEffect(() => {
