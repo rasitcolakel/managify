@@ -12,4 +12,6 @@ type TeamWithMembers = Team & { teamMembers: TeamMemberWithUser[] };
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
-export type { Team, TeamMember, TeamWithMembers, Profile };
+type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
+
+export type { Team, TeamMember, TeamWithMembers, Profile, WithRequired };

@@ -38,7 +38,7 @@ export default function TeamShow() {
     },
   });
   const { data, isLoading } = queryResult;
-  console.log(data);
+
   const t = useTranslate();
   const record = data?.data;
 

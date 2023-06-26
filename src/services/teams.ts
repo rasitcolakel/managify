@@ -22,13 +22,27 @@ export const checkTeamHasTheUser = async ({
 };
 
 export const checkIsTeamOwner = async (team: Team): Promise<boolean> => {
-  if (!authProvider.getIdentity) {
-    return false;
-  }
   const user: any = await authProvider.getIdentity();
 
   if (team.owner.id === user?.id) {
     return true;
   }
   return false;
+};
+
+export const getMyMemberData = async (teamId: number) => {
+  const authData = (await authProvider.getIdentity()) as any;
+  if (!authData) {
+    throw new Error("User is not logged in");
+  }
+
+  const { data, error } = await supabaseClient
+    .from("teamMembers")
+    .select("*, profile:profiles(*)")
+    .eq("team_id", teamId)
+    .eq("user_id", authData.id);
+  if (error) {
+    throw error;
+  }
+  return data[0];
 };
