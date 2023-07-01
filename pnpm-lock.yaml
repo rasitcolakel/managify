@@ -20,29 +20,29 @@ dependencies:
     specifier: ^6.6.0
     version: 6.6.0(@mui/material@5.8.6)(@mui/system@5.13.6)(react-dom@18.0.0)(react@18.0.0)
   '@refinedev/cli':
-    specifier: ^2.7.0
-    version: 2.7.0(@babel/preset-env@7.22.5)(@types/react@18.0.0)(react@18.0.0)
+    specifier: ^2.7.2
+    version: 2.7.2(@babel/preset-env@7.22.5)(@types/react@18.0.0)(react@18.0.0)
   '@refinedev/core':
-    specifier: ^4.24.0
-    version: 4.24.0(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
+    specifier: ^4.26.2
+    version: 4.26.2(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
   '@refinedev/inferencer':
-    specifier: ^4.1.4
-    version: 4.1.4(@ant-design/icons@5.0.1)(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@mui/lab@5.0.0-alpha.85)(@mui/material@5.8.6)(@mui/x-data-grid@6.6.0)(@refinedev/core@4.24.0)(@refinedev/mui@5.5.0)(@refinedev/react-hook-form@4.4.2)(@types/react-dom@18.0.0)(@types/react@18.0.0)(dayjs@1.11.8)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0)
+    specifier: ^4.3.0
+    version: 4.3.0(@ant-design/icons@5.0.1)(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@mui/lab@5.0.0-alpha.85)(@mui/material@5.8.6)(@mui/x-data-grid@6.6.0)(@refinedev/core@4.26.2)(@refinedev/mui@5.7.0)(@refinedev/react-hook-form@4.4.2)(@types/react-dom@18.0.0)(@types/react@18.0.0)(dayjs@1.11.8)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0)
   '@refinedev/kbar':
     specifier: ^1.1.0
-    version: 1.1.0(@refinedev/core@4.24.0)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
+    version: 1.1.0(@refinedev/core@4.26.2)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
   '@refinedev/mui':
-    specifier: ^5.5.0
-    version: 5.5.0(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@mui/lab@5.0.0-alpha.85)(@mui/material@5.8.6)(@mui/x-data-grid@6.6.0)(@refinedev/core@4.24.0)(@refinedev/react-hook-form@4.4.2)(@types/react@18.0.0)(dayjs@1.11.8)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0)
+    specifier: ^5.7.0
+    version: 5.7.0(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@mui/lab@5.0.0-alpha.85)(@mui/material@5.8.6)(@mui/x-data-grid@6.6.0)(@refinedev/core@4.26.2)(@refinedev/react-hook-form@4.4.2)(@types/react@18.0.0)(dayjs@1.11.8)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0)
   '@refinedev/nextjs-router':
     specifier: ^5.3.2
-    version: 5.3.2(@refinedev/core@4.24.0)(@types/react-dom@18.0.0)(@types/react@18.0.0)(next@13.0.6)(react-dom@18.0.0)(react@18.0.0)
+    version: 5.3.2(@refinedev/core@4.26.2)(@types/react-dom@18.0.0)(@types/react@18.0.0)(next@13.0.6)(react-dom@18.0.0)(react@18.0.0)
   '@refinedev/react-hook-form':
     specifier: ^4.4.2
-    version: 4.4.2(@refinedev/core@4.24.0)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0)
+    version: 4.4.2(@refinedev/core@4.26.2)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0)
   '@refinedev/supabase':
     specifier: ^5.5.2
-    version: 5.5.2(@refinedev/core@4.24.0)(@supabase/supabase-js@2.26.0)
+    version: 5.5.2(@refinedev/core@4.26.2)(@supabase/supabase-js@2.26.0)
   next:
     specifier: ^13.0.6
     version: 13.0.6(@babel/core@7.22.5)(react-dom@18.0.0)(react@18.0.0)
@@ -2281,8 +2281,8 @@ packages:
     resolution: {integrity: sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ==}
     dev: false
 
-  /@refinedev/cli@2.7.0(@babel/preset-env@7.22.5)(@types/react@18.0.0)(react@18.0.0):
-    resolution: {integrity: sha512-BPIIzqTbNEtsYHv4PveFukKmQf4AGwO7laI6/SHRo9zd5FQy3E9Lfu6L3SO3J9cPD6JTz2+5qzLkW25CdiOT9w==}
+  /@refinedev/cli@2.7.2(@babel/preset-env@7.22.5)(@types/react@18.0.0)(react@18.0.0):
+    resolution: {integrity: sha512-1yTU8yM7DKXmxd914WcQNkcsDRJcN16KZm7EaUHhlM6Jjo5tB3noMEqrq7zkMDgc3zqE8XRLClpDCaxL7r3ZPQ==}
     hasBin: true
     dependencies:
       boxen: 5.1.2
@@ -2327,8 +2327,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@refinedev/core@4.24.0(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0):
-    resolution: {integrity: sha512-W2X8IhG2V8M6k0GQ94pRpC4Ql+8lghtLhSrRLgrJ3868osn0gxUkhlU/1+Mg1B7gNzygI8oyFO1an1j7C1tEbQ==}
+  /@refinedev/core@4.26.2(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0):
+    resolution: {integrity: sha512-zGeBaQIopUZbtCSZSWsD27PY+zjuuknKwrdABgCzWOkCrTOSLxrgK1Zn1+nVB+dMBCqBvlR9goR1CGl0KH6urg==}
     peerDependencies:
       '@tanstack/react-query': ^4.10.1
       '@types/react': ^17.0.0 || ^18.0.0
@@ -2352,8 +2352,8 @@ packages:
       warn-once: 0.1.1
     dev: false
 
-  /@refinedev/inferencer@4.1.4(@ant-design/icons@5.0.1)(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@mui/lab@5.0.0-alpha.85)(@mui/material@5.8.6)(@mui/x-data-grid@6.6.0)(@refinedev/core@4.24.0)(@refinedev/mui@5.5.0)(@refinedev/react-hook-form@4.4.2)(@types/react-dom@18.0.0)(@types/react@18.0.0)(dayjs@1.11.8)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0):
-    resolution: {integrity: sha512-yVBO/EpUeJlcYDFdOnAw9+1xuTC1U//KvQYFoKUGY9JuE0Um9FzcLdWZCfxg4eIaxiFhsmJHCrqHD7YsDvNXNg==}
+  /@refinedev/inferencer@4.3.0(@ant-design/icons@5.0.1)(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@mui/lab@5.0.0-alpha.85)(@mui/material@5.8.6)(@mui/x-data-grid@6.6.0)(@refinedev/core@4.26.2)(@refinedev/mui@5.7.0)(@refinedev/react-hook-form@4.4.2)(@types/react-dom@18.0.0)(@types/react@18.0.0)(dayjs@1.11.8)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0):
+    resolution: {integrity: sha512-9WIenG12wq6P5NusuqVFGxYnDWz1oarAXozqhlQHCL2yxEn8RpSHFIB+M308+F3rDFq9KqbSxk33yD4qEES8ew==}
     peerDependencies:
       '@ant-design/icons': 5.0.1
       '@chakra-ui/react': ^2.5.1
@@ -2430,9 +2430,9 @@ packages:
       '@mui/lab': 5.0.0-alpha.85(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@mui/material@5.8.6)(@types/react@18.0.0)(dayjs@1.11.8)(react-dom@18.0.0)(react@18.0.0)
       '@mui/material': 5.8.6(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
       '@mui/x-data-grid': 6.6.0(@mui/material@5.8.6)(@mui/system@5.13.6)(react-dom@18.0.0)(react@18.0.0)
-      '@refinedev/core': 4.24.0(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
-      '@refinedev/mui': 5.5.0(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@mui/lab@5.0.0-alpha.85)(@mui/material@5.8.6)(@mui/x-data-grid@6.6.0)(@refinedev/core@4.24.0)(@refinedev/react-hook-form@4.4.2)(@types/react@18.0.0)(dayjs@1.11.8)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0)
-      '@refinedev/react-hook-form': 4.4.2(@refinedev/core@4.24.0)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0)
+      '@refinedev/core': 4.26.2(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
+      '@refinedev/mui': 5.7.0(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@mui/lab@5.0.0-alpha.85)(@mui/material@5.8.6)(@mui/x-data-grid@6.6.0)(@refinedev/core@4.26.2)(@refinedev/react-hook-form@4.4.2)(@types/react@18.0.0)(dayjs@1.11.8)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0)
+      '@refinedev/react-hook-form': 4.4.2(@refinedev/core@4.26.2)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0)
       '@tabler/icons': 1.119.0(react-dom@18.0.0)(react@18.0.0)
       '@types/react': 18.0.0
       '@types/react-dom': 18.0.0
@@ -2452,7 +2452,7 @@ packages:
       - supports-color
     dev: false
 
-  /@refinedev/kbar@1.1.0(@refinedev/core@4.24.0)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0):
+  /@refinedev/kbar@1.1.0(@refinedev/core@4.26.2)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0):
     resolution: {integrity: sha512-BnGhoyiRR1clHRKs9XnLEJkS6WoNJpZHg2r+Ez6iJpdtiaGnrz4+S9HN5XJukd57NCL/yt+CXD01SHlc3KrnPA==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -2460,7 +2460,7 @@ packages:
       react: ^17.0.0 || ^18.0.0
       react-dom: ^17.0.0 || ^18.0.0
     dependencies:
-      '@refinedev/core': 4.24.0(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
+      '@refinedev/core': 4.26.2(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
       kbar: 0.1.0-beta.40(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
@@ -2469,8 +2469,8 @@ packages:
       - '@types/react-dom'
     dev: false
 
-  /@refinedev/mui@5.5.0(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@mui/lab@5.0.0-alpha.85)(@mui/material@5.8.6)(@mui/x-data-grid@6.6.0)(@refinedev/core@4.24.0)(@refinedev/react-hook-form@4.4.2)(@types/react@18.0.0)(dayjs@1.11.8)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0):
-    resolution: {integrity: sha512-bghTjAITF+7BHrvTwzoAY4EzoB8GZ731+Rdc87bT4mRlrQh2RjMQufHfxOnIaWavtGD5VNoSrDt68LxIzxCULw==}
+  /@refinedev/mui@5.7.0(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@mui/lab@5.0.0-alpha.85)(@mui/material@5.8.6)(@mui/x-data-grid@6.6.0)(@refinedev/core@4.26.2)(@refinedev/react-hook-form@4.4.2)(@types/react@18.0.0)(dayjs@1.11.8)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0):
+    resolution: {integrity: sha512-/xVGXazUf+rOYuZMF0LAUUuGkM/t2MkLaMIyyhF2AUrEbY9cQV1BUS8cEcPSPZ5MtAPly9NWI+HpTfUJwDBqzg==}
     peerDependencies:
       '@emotion/react': ^11.8.2
       '@emotion/styled': ^11.8.1
@@ -2490,9 +2490,9 @@ packages:
       '@mui/lab': 5.0.0-alpha.85(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@mui/material@5.8.6)(@types/react@18.0.0)(dayjs@1.11.8)(react-dom@18.0.0)(react@18.0.0)
       '@mui/material': 5.8.6(@emotion/react@11.8.2)(@emotion/styled@11.8.1)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
       '@mui/x-data-grid': 6.6.0(@mui/material@5.8.6)(@mui/system@5.13.6)(react-dom@18.0.0)(react@18.0.0)
-      '@refinedev/core': 4.24.0(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
-      '@refinedev/react-hook-form': 4.4.2(@refinedev/core@4.24.0)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0)
-      '@refinedev/ui-types': 1.16.0(@refinedev/core@4.24.0)(react-dom@18.0.0)(react@18.0.0)
+      '@refinedev/core': 4.26.2(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
+      '@refinedev/react-hook-form': 4.4.2(@refinedev/core@4.26.2)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0)
+      '@refinedev/ui-types': 1.18.0(@refinedev/core@4.26.2)(react-dom@18.0.0)(react@18.0.0)
       dayjs: 1.11.8
       lodash: 4.17.21
       lodash-es: 4.17.21
@@ -2509,7 +2509,7 @@ packages:
       - supports-color
     dev: false
 
-  /@refinedev/nextjs-router@5.3.2(@refinedev/core@4.24.0)(@types/react-dom@18.0.0)(@types/react@18.0.0)(next@13.0.6)(react-dom@18.0.0)(react@18.0.0):
+  /@refinedev/nextjs-router@5.3.2(@refinedev/core@4.26.2)(@types/react-dom@18.0.0)(@types/react@18.0.0)(next@13.0.6)(react-dom@18.0.0)(react@18.0.0):
     resolution: {integrity: sha512-twvQsdtEAKS+bZWhng7lnIomUTePZu+k1BtSIimR1YN8/J8dxQ6P6zCQkEYdh+PRaQjNhqrj4PiNU57TkB1yMw==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -2520,7 +2520,7 @@ packages:
       react: ^17.0.0 || ^18.0.0
       react-dom: ^17.0.0 || ^18.0.0
     dependencies:
-      '@refinedev/core': 4.24.0(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
+      '@refinedev/core': 4.26.2(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
       '@types/react': 18.0.0
       '@types/react-dom': 18.0.0
       next: 13.0.6(@babel/core@7.22.5)(react-dom@18.0.0)(react@18.0.0)
@@ -2530,7 +2530,7 @@ packages:
       warn-once: 0.1.1
     dev: false
 
-  /@refinedev/react-hook-form@4.4.2(@refinedev/core@4.24.0)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0):
+  /@refinedev/react-hook-form@4.4.2(@refinedev/core@4.26.2)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react-hook-form@7.45.0)(react@18.0.0):
     resolution: {integrity: sha512-pBkMfbNEcPWXBlhPSEJfztvwcZbnsPiZidbyB+uBDrzWUvoAaMIyNgRMGUloU4Nv2BuKp11azgmXzGwMV7bK4w==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -2541,7 +2541,7 @@ packages:
       react-dom: ^17.0.0 || ^18.0.0
       react-hook-form: ^7.30.0
     dependencies:
-      '@refinedev/core': 4.24.0(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
+      '@refinedev/core': 4.26.2(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
       '@types/react': 18.0.0
       '@types/react-dom': 18.0.0
       react: 18.0.0
@@ -2549,25 +2549,25 @@ packages:
       react-hook-form: 7.45.0(react@18.0.0)
     dev: false
 
-  /@refinedev/supabase@5.5.2(@refinedev/core@4.24.0)(@supabase/supabase-js@2.26.0):
+  /@refinedev/supabase@5.5.2(@refinedev/core@4.26.2)(@supabase/supabase-js@2.26.0):
     resolution: {integrity: sha512-+wAkX5ekYP053nISmeT4AIFA9b/R2sVeqsfj9JlbYbGxeD+CvYlDvKvJ1E7U5P0rmgw0XBdo0WxerB9/wx7msw==}
     engines: {node: '>=10'}
     peerDependencies:
       '@refinedev/core': ^4.0.0
       '@supabase/supabase-js': ^2.7.0
     dependencies:
-      '@refinedev/core': 4.24.0(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
+      '@refinedev/core': 4.26.2(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
       '@supabase/supabase-js': 2.26.0
     dev: false
 
-  /@refinedev/ui-types@1.16.0(@refinedev/core@4.24.0)(react-dom@18.0.0)(react@18.0.0):
-    resolution: {integrity: sha512-qX72/EwBhjz8uIhdU17pTMu337K8xdvyToBwsqYvmEKp3QzNFnQKaOilWToBrguuYZjPgA6VnONqmfhQNurshA==}
+  /@refinedev/ui-types@1.18.0(@refinedev/core@4.26.2)(react-dom@18.0.0)(react@18.0.0):
+    resolution: {integrity: sha512-fh2wcFKbm/q/x8mKpCt6gX0Q8yyt71UH9Ed2QS4jVD9NcuiAXFkaac/uXSemNmyzcu3EMxjUf7p/MdByE1flYw==}
     peerDependencies:
       '@refinedev/core': ^4.0.0
       react: ^17.0.0 || ^18.0.0
       react-dom: ^17.0.0 || ^18.0.0
     dependencies:
-      '@refinedev/core': 4.24.0(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
+      '@refinedev/core': 4.26.2(@tanstack/react-query@4.29.15)(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
       dayjs: 1.11.8
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
