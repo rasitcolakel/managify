@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { TeamWithMembers } from "src/types";
 import RenderMember from "./RenderMember";
 import Stack from "@mui/material/Stack";
@@ -6,11 +6,12 @@ import Grid from "@mui/material/Grid";
 import Add from "@mui/icons-material/Add";
 import RoundedIconButton from "@components/common/RoundedIconButton";
 import { Typography } from "@mui/material";
-import { HttpError, useNotification, useTranslate } from "@refinedev/core";
+import { HttpError, useNotification } from "@refinedev/core";
 import CreateTeamMemberModal from "@components/teams/members/createTeamMemberModal";
 import { useModalForm } from "@refinedev/react-hook-form";
 import { checkIsTeamOwner, checkTeamHasTheUser } from "src/services/teams";
 import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
+import { TeamContext } from "@contexts/TeamContext";
 
 type Props = {
   team: TeamWithMembers;
@@ -24,7 +25,7 @@ export type AddTeamMember = {
 export const TeamMembers = ({ team }: Props) => {
   const { teamMembers } = team;
   const { open } = useNotification();
-  const t = useTranslate();
+  const { t } = useContext(TeamContext);
   const { data: isOwner, execute } = useAsyncFunction<
     typeof checkIsTeamOwner,
     boolean
@@ -36,11 +37,13 @@ export const TeamMembers = ({ team }: Props) => {
         <RenderMember
           key={teamMember.id}
           teamMember={teamMember}
-          isOwner={team.owner.id === teamMember.user_id}
+          type={team.owner.id === teamMember.user_id ? "owner" : "member"}
+          isOwner={!!isOwner}
         />
       </Grid>
     ),
-    [team.owner.id]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [team.owner.id, isOwner]
   );
 
   useEffect(() => {

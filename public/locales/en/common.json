@@ -86,6 +86,7 @@
     }
   },
   "teamMembers": {
+    "title": "Team Members",
     "types": {
       "owner": "Owner",
       "admin": "Admin",
@@ -94,7 +95,11 @@
     "statuses": {
       "invited": "Invited",
       "active": "Active"
-    }
+    },
+    "buttons": {
+      "makeOwner": "Make Owner"
+    },
+    "deleteMemberQuestion": "Are you sure you want to remove this person from the team?"
   },
   "actions": {
     "list": "List",
@@ -109,7 +114,7 @@
     "delete": "Delete",
     "edit": "Edit",
     "cancel": "Cancel",
-    "confirm": "Are you sure?",
+    "confirm": "Confirm",
     "filter": "Filter",
     "clear": "Clear",
     "refresh": "Refresh",
@@ -117,7 +122,8 @@
     "undo": "Undo",
     "import": "Import",
     "clone": "Clone",
-    "notAccessTitle": "You don't have permission to access"
+    "notAccessTitle": "You don't have permission to access",
+    "remove": "Remove"
   },
   "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes.",
   "notifications": {

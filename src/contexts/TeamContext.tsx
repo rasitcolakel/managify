@@ -11,7 +11,7 @@ import { TeamMember, TeamWithMembers } from "src/types";
 
 type TeamContextType = {
   // eslint-disable-next-line no-unused-vars
-  onDelete: (teamMember: TeamMember) => void;
+  onDeleteMember: (teamMember: TeamMember) => void;
   data: GetOneResponse<TeamWithMembers> | undefined;
   queryResult: any;
   t: any;
@@ -39,7 +39,7 @@ export const TeamContextProvider: React.FC<TeamContextProviderProps> = ({
     },
   });
   const { data, isLoading } = queryResult;
-  const onDelete = async (teamMember: TeamMember) => {
+  const onDeleteMember = async (teamMember: TeamMember) => {
     await deleteTeamMember(teamMember.id);
     if (open) {
       open({
@@ -53,7 +53,7 @@ export const TeamContextProvider: React.FC<TeamContextProviderProps> = ({
   return (
     <TeamContext.Provider
       value={{
-        onDelete,
+        onDeleteMember,
         data,
         queryResult,
         t,
