@@ -46,3 +46,13 @@ export const getMyMemberData = async (teamId: number) => {
   }
   return data[0];
 };
+
+export const deleteTeamMember = async (id: number) => {
+  const { error } = await supabaseClient
+    .from("teamMembers")
+    .delete()
+    .eq("id", id);
+  if (error) {
+    throw error;
+  }
+};
