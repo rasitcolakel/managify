@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslate } from "@refinedev/core";
 import {
   List,
@@ -13,8 +13,9 @@ import { GetServerSideProps } from "next";
 import { authProvider } from "src/authProvider";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
-import { Team } from "src/types";
+import { Profile, Team } from "src/types";
 import Stack from "@mui/material/Stack";
+import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
 
 export default function TeamList() {
   const { dataGridProps } = useDataGrid({
@@ -22,6 +23,37 @@ export default function TeamList() {
       select: "*, owner(*)",
     },
   });
+
+  const { execute, data: user } = useAsyncFunction<any, Profile>(
+    authProvider.getIdentity
+  );
+
+  useEffect(() => {
+    execute();
+  }, [execute]);
+
+  const renderActions = React.useCallback(
+    (row: Team) => {
+      return (
+        <Stack direction="row" justifyContent="center" flex={1}>
+          {row.owner.id === user?.id && (
+            <EditButton
+              size="small"
+              hideText
+              recordItemId={row.id}
+              color="success"
+            />
+          )}
+          <ShowButton size="small" hideText recordItemId={row.id} />
+          {row.owner.id === user?.id && (
+            <DeleteButton size="small" hideText recordItemId={row.id} />
+          )}
+        </Stack>
+      );
+    },
+    [user]
+  );
+
   const t = useTranslate();
   const columns = React.useMemo<GridColDef<Team>[]>(
     () => [
@@ -60,23 +92,21 @@ export default function TeamList() {
         renderCell: function render({ row }) {
           return <span>{row.owner?.full_name}</span>;
         },
+        sortable: false,
+        filterable: false,
       },
       {
         field: "actions",
         headerName: t("table.actions"),
         minWidth: 100,
         renderCell: function render({ row }) {
-          return (
-            <Stack direction="row">
-              <EditButton size="small" hideText recordItemId={row.id} />
-              <ShowButton size="small" hideText recordItemId={row.id} />
-              <DeleteButton size="small" hideText recordItemId={row.id} />
-            </Stack>
-          );
+          return renderActions(row);
         },
+        sortable: false,
+        filterable: false,
       },
     ],
-    [t]
+    [renderActions, t]
   );
 
   return (

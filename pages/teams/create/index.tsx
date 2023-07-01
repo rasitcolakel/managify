@@ -8,6 +8,7 @@ export default function TeamCreate() {
   const t = useTranslate();
   return (
     <MuiCreateInferencer
+      hideCodeViewerInProduction
       resource="teams"
       fieldTransformer={(field) => {
         if (field.key === "title" || field.key === "description") {

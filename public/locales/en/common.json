@@ -99,7 +99,8 @@
     "buttons": {
       "makeOwner": "Make Owner"
     },
-    "deleteMemberQuestion": "Are you sure you want to remove this person from the team?"
+    "deleteMemberQuestion": "Are you sure you want to remove this person from the team?",
+    "makeOwnerQuestion": "Are you sure you want to make this person the owner of this team? You will no longer be the owner."
   },
   "actions": {
     "list": "List",

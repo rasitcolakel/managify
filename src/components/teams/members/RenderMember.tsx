@@ -34,7 +34,7 @@ type Props = {
 };
 
 function RenderMember({ teamMember, isOwner, type }: Props) {
-  const { onDeleteMember } = useContext(TeamContext);
+  const { onDeleteMember, onMakeOwner } = useContext(TeamContext);
 
   const fullName = `${teamMember.profile?.first_name} ${teamMember.profile?.last_name}`;
 
@@ -66,6 +66,16 @@ function RenderMember({ teamMember, isOwner, type }: Props) {
 
   const deleteMember = () => {
     onDeleteMember(teamMember);
+  };
+
+  const openMakeOwnerModal = () => {
+    openModal(makeOwner, t("teamMembers.makeOwnerQuestion"));
+    // close the menu
+    handleClose();
+  };
+
+  const makeOwner = () => {
+    onMakeOwner(teamMember);
   };
 
   return (
@@ -122,7 +132,7 @@ function RenderMember({ teamMember, isOwner, type }: Props) {
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
               <MenuList>
-                <MenuItem>
+                <MenuItem disabled={isInvited} onClick={openMakeOwnerModal}>
                   <ListItemIcon>
                     <SupervisedUserCircleIcon
                       fontSize="small"

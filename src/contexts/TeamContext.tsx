@@ -6,12 +6,14 @@ import {
   useTranslate,
 } from "@refinedev/core";
 import React from "react";
-import { deleteTeamMember } from "src/services/teams";
+import { changeOwner, deleteTeamMember } from "src/services/teams";
 import { TeamMember, TeamWithMembers } from "src/types";
 
 type TeamContextType = {
   // eslint-disable-next-line no-unused-vars
   onDeleteMember: (teamMember: TeamMember) => void;
+  // eslint-disable-next-line no-unused-vars
+  onMakeOwner: (teamMember: TeamMember) => void;
   data: GetOneResponse<TeamWithMembers> | undefined;
   queryResult: any;
   t: any;
@@ -38,6 +40,7 @@ export const TeamContextProvider: React.FC<TeamContextProviderProps> = ({
       select,
     },
   });
+
   const { data, isLoading } = queryResult;
   const onDeleteMember = async (teamMember: TeamMember) => {
     await deleteTeamMember(teamMember.id);
@@ -50,10 +53,27 @@ export const TeamContextProvider: React.FC<TeamContextProviderProps> = ({
     queryResult.refetch();
   };
 
+  const onMakeOwner = async (teamMember: TeamMember) => {
+    if (teamMember.status === "invited") {
+      return;
+    }
+    if (data?.data.id && teamMember.user_id) {
+      await changeOwner(data?.data.id, teamMember.user_id);
+      if (open) {
+        open({
+          message: t("notifications.success"),
+          type: "success",
+        });
+      }
+      queryResult.refetch();
+    }
+  };
+
   return (
     <TeamContext.Provider
       value={{
         onDeleteMember,
+        onMakeOwner,
         data,
         queryResult,
         t,
