@@ -56,3 +56,24 @@ export const deleteTeamMember = async (id: number) => {
     throw error;
   }
 };
+
+export const changeOwner = async (teamId: number, newOwnerId: string) => {
+  const { error } = await supabaseClient
+    .from("teams")
+    .update({ owner: newOwnerId })
+    .eq("id", teamId);
+  if (error) {
+    throw error;
+  }
+};
+
+export const getTeamsOwnedByAuthUser = async () => {
+  const { data, error } = await supabaseClient.rpc(
+    "get_teams_owned_by_authenticated_user"
+  );
+
+  if (error) {
+    throw error;
+  }
+  return data as number[];
+};
