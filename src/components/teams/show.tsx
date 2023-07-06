@@ -13,6 +13,8 @@ import TabPanel from "@components/common/TabPanel";
 import { useRouter } from "next/router";
 import LoadingOverlay from "@components/common/LoadingOverlay";
 import { TeamContext } from "@contexts/TeamContext";
+import { checkIsTeamOwner } from "src/services/teams";
+import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
 
 function a11yProps(index: number) {
   return {
@@ -42,19 +44,31 @@ export default function TeamShow() {
     setValue(newValue);
   };
 
+  const { data: isOwner, execute } = useAsyncFunction<
+    typeof checkIsTeamOwner,
+    boolean
+  >(checkIsTeamOwner);
+
   useEffect(() => {
     if (!isLoading && !record) {
       router.push("/teams");
     }
   }, [record, isLoading, router]);
 
+  useEffect(() => {
+    if (!record) {
+      return;
+    }
+    execute(record);
+  }, [execute, record]);
+
   return (
     <LoadingOverlay loading={!record && !isLoading}>
       {record && (
         <Show
           isLoading={!record && !isLoading}
-          canDelete={false}
-          canEdit={false}
+          canDelete={!!isOwner}
+          canEdit={!!isOwner}
         >
           <Head>
             <title>

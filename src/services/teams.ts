@@ -77,3 +77,25 @@ export const getTeamsOwnedByAuthUser = async () => {
   }
   return data as number[];
 };
+
+export const makeTeamDeleted = async (teamId: number) => {
+  await updateTeamStatus(teamId, "deleted");
+};
+
+export const makeTeamActive = async (teamId: number) => {
+  await updateTeamStatus(teamId, "active");
+};
+
+export const updateTeamStatus = async (
+  teamId: number,
+  status: "active" | "deleted"
+) => {
+  const { error } = await supabaseClient
+    .from("teams")
+    .update({ status })
+    .eq("id", teamId);
+
+  if (error) {
+    throw error;
+  }
+};

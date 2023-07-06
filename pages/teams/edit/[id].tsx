@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import { authProvider } from "src/authProvider";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { MuiCreateInferencer } from "@refinedev/inferencer/mui";
+import { MuiEditInferencer } from "@refinedev/inferencer/mui";
 import { useTranslate } from "@refinedev/core";
 import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
 import { getTeamsOwnedByAuthUser } from "src/services/teams";
@@ -38,10 +38,9 @@ export default function TeamEdit() {
   }, [data, id, router]);
   return (
     <LoadingOverlay loading={isLoading}>
-      <MuiCreateInferencer
+      <MuiEditInferencer
         hideCodeViewerInProduction
         resource="teams"
-        action="edit"
         fieldTransformer={(field) => {
           if (field.key === "title" || field.key === "description") {
             return {

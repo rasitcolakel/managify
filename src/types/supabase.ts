@@ -4,7 +4,7 @@ export type Json =
   | number
   | boolean
   | null
-  | { [key: string]: Json }
+  | { [key: string]: Json | undefined }
   | Json[]
 
 export interface Database {
@@ -90,6 +90,7 @@ export interface Database {
           description: string | null
           id: number
           owner: string | null
+          status: string | null
           title: string | null
         }
         Insert: {
@@ -97,6 +98,7 @@ export interface Database {
           description?: string | null
           id?: number
           owner?: string | null
+          status?: string | null
           title?: string | null
         }
         Update: {
@@ -104,6 +106,7 @@ export interface Database {
           description?: string | null
           id?: number
           owner?: string | null
+          status?: string | null
           title?: string | null
         }
         Relationships: [
