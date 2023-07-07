@@ -92,6 +92,31 @@
     "deleteConfirmation": "Are you sure you want to delete this team?",
     "restoreConfirmation": "Are you sure you want to restore this team?"
   },
+  "tasks": {
+    "title": "Tasks",
+    "fields": {
+      "id": "Id",
+      "title": "Title",
+      "description": "Description",
+      "created_at": "Created At",
+      "updated_at": "Updated At",
+      "status": "Status",
+      "priority": "Priority",
+      "team": "Team",
+      "assigned_to": "Assigned To",
+      "due_date": "Due Date"
+    },
+    "taskPriorities": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    },
+    "taskStatuses": {
+      "todo": "Todo",
+      "in_progress": "In Progress",
+      "done": "Done"
+    }
+  },
   "teamMembers": {
     "title": "Team Members",
     "titles": {
