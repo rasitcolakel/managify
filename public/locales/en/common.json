@@ -104,7 +104,8 @@
       "priority": "Priority",
       "team": "Team",
       "assigned_to": "Assigned To",
-      "due_date": "Due Date"
+      "due_date": "Due Date",
+      "assignees": "Assignees"
     },
     "taskPriorities": {
       "low": "Low",

@@ -11,12 +11,14 @@
     "generate:types": "./generate-types.sh"
   },
   "dependencies": {
+    "@date-io/date-fns": "^2.16.0",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.8.3",
     "@mui/lab": "^5.0.0-alpha.85",
     "@mui/material": "^5.8.6",
     "@mui/x-data-grid": "^6.6.0",
+    "@mui/x-date-pickers": "^6.9.2",
     "@refinedev/cli": "^2.7.2",
     "@refinedev/core": "^4.26.4",
     "@refinedev/inferencer": "^4.3.2",
@@ -25,6 +27,7 @@
     "@refinedev/nextjs-router": "^5.3.2",
     "@refinedev/react-hook-form": "^4.4.2",
     "@refinedev/supabase": "^5.5.2",
+    "date-fns": "^2.30.0",
     "next": "^13.0.6",
     "next-i18next": "^8.9.0",
     "nookies": "^2.5.2",
