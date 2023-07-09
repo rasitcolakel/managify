@@ -3,7 +3,13 @@ import { supabaseClient } from "src/utility";
 
 export type CreateTask = Pick<
   TaskWithAssignee,
-  "title" | "description" | "assignees" | "team_id"
+  | "title"
+  | "description"
+  | "assignees"
+  | "team_id"
+  | "priority"
+  | "status"
+  | "due_date"
 >;
 
 export const newTask = async (task: CreateTask) => {
@@ -13,10 +19,9 @@ export const newTask = async (task: CreateTask) => {
       title: task.title,
       description: task.description,
       team_id: task.team_id,
-      status: "todo",
-      priority: "low",
-      // 3 days from now in ISO format (YYYY-MM-DD)
-      due_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+      priority: task.priority,
+      status: task.status,
+      due_date: task.due_date,
     })
     .select()
     .single();

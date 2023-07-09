@@ -1,15 +1,26 @@
 import { Create, useAutocomplete } from "@refinedev/mui";
-import { Autocomplete, Box, TextField } from "@mui/material";
-import { useForm } from "@refinedev/react-hook-form";
+import {
+  Autocomplete,
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  TextField,
+} from "@mui/material";
 import {
   IResourceComponentsProps,
   useNotification,
   useTranslate,
 } from "@refinedev/core";
-import { Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { TeamMemberWithProfile } from "src/types";
 import { useRouter } from "next/router";
 import { CreateTask, newTask } from "src/services/tasks";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
   const { open } = useNotification();
@@ -17,12 +28,12 @@ export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
   const router = useRouter();
   const { teamId: id } = router.query as { teamId: string };
   const {
-    saveButtonProps,
-    refineCore: { formLoading },
     register,
     control,
+    handleSubmit,
     formState: { errors },
     getValues,
+    setValue,
   } = useForm();
 
   const { autocompleteProps: teamMembersAutocompleteProps } =
@@ -48,7 +59,7 @@ export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
       if (!task) {
         return;
       }
-      // await router.push(`/teams/${id}/tasks/${task.id}`);
+      await router.push(`/teams/${id}/tasks/${task.id}`);
     } catch (e: any) {
       if (open) {
         open({
@@ -58,12 +69,24 @@ export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
       }
     }
   };
+
+  const priorityOptions = [
+    { label: t("tasks.taskPriorities.low"), value: "low" },
+    { label: t("tasks.taskPriorities.medium"), value: "medium" },
+    { label: t("tasks.taskPriorities.high"), value: "high" },
+  ];
+
+  const statusOptions = [
+    { label: t("tasks.taskStatuses.todo"), value: "todo" },
+    { label: t("tasks.taskStatuses.in_progress"), value: "in_progress" },
+    { label: t("tasks.taskStatuses.done"), value: "done" },
+  ];
+
   return (
     <Create
-      isLoading={formLoading}
       saveButtonProps={{
-        ...saveButtonProps,
-        onClick: handleSave,
+        // ...saveButtonProps,
+        onClick: handleSubmit(handleSave),
       }}
     >
       <Box
@@ -100,12 +123,12 @@ export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
         <Controller
           control={control}
           name="assignees"
+          rules={{ required: "This field is required" }}
           defaultValue={[]}
           render={({ field }) => {
             const newValue = teamMembersAutocompleteProps.options.filter(
               (p) => field.value?.find((v: any) => v === p?.id) !== undefined
             );
-
             return (
               <Autocomplete
                 {...teamMembersAutocompleteProps}
@@ -136,7 +159,7 @@ export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
                       {...params}
                       id="assignees"
                       name="assignees"
-                      label={t("tasks.fields.assignees")}
+                      label={t("tasks.fields.assigned_to")}
                       margin="normal"
                       variant="outlined"
                       error={!!(errors as any)?.assignees}
@@ -148,6 +171,86 @@ export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
               />
             );
           }}
+        />
+        <FormControl
+          fullWidth
+          style={{
+            marginTop: "1rem",
+            marginBottom: "0.3rem",
+          }}
+        >
+          <InputLabel id="priority-label">
+            {t("tasks.fields.priority")}
+          </InputLabel>
+          <Select
+            {...register("priority", {
+              required: "This field is required",
+            })}
+            labelId="priority-label"
+            id="priority"
+            input={<OutlinedInput label={t("tasks.fields.priority")} />}
+            defaultValue={priorityOptions[0].value}
+          >
+            {priorityOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl
+          fullWidth
+          style={{
+            marginTop: "1rem",
+            marginBottom: "0.3rem",
+          }}
+        >
+          <InputLabel id="status-label">{t("tasks.fields.status")}</InputLabel>
+          <Select
+            {...register("status", {
+              required: "This field is required",
+            })}
+            labelId="status-label"
+            id="status"
+            input={<OutlinedInput label={t("tasks.fields.status")} />}
+            defaultValue={statusOptions[0].value}
+          >
+            {statusOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Controller
+          rules={{ required: "This field is required" }}
+          name={"due_date"}
+          control={control}
+          render={({ field }) => (
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                {...field}
+                slotProps={{
+                  textField: {
+                    fullWidth: true,
+                    variant: "outlined",
+                    error: !!(errors as any)?.description,
+                    helperText: (errors as any)?.title?.message,
+                  },
+                }}
+                label="Due Date & Time"
+                onChange={(value) => {
+                  if (value) {
+                    setValue("due_date", value);
+                  }
+                }}
+                sx={{
+                  marginTop: "1rem",
+                  marginBottom: "0.3rem",
+                }}
+              />
+            </LocalizationProvider>
+          )}
         />
       </Box>
     </Create>
