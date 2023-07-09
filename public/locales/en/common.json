@@ -201,5 +201,19 @@
   "form": {
     "optional": "Optional",
     "required": "Required"
+  },
+  "common": {
+    "errors": {
+      "unexpectedError": "Unexpected Error",
+      "notFound": "Not Found",
+      "serverError": "Server Error",
+      "validationError": "Validation Error",
+      "unauthorized": "Unauthorized",
+      "forbidden": "Forbidden",
+      "badRequest": "Bad Request",
+      "serviceUnavailable": "Service Unavailable",
+      "gatewayTimeout": "Gateway Timeout",
+      "unknownError": "Unknown Error"
+    }
   }
 }

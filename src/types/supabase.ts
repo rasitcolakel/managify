@@ -44,6 +44,95 @@ export interface Database {
           }
         ]
       }
+      taskAssignments: {
+        Row: {
+          created_at: string | null
+          id: number
+          task_id: number | null
+          team_id: number | null
+          team_member_id: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          task_id?: number | null
+          team_id?: number | null
+          team_member_id?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          task_id?: number | null
+          team_id?: number | null
+          team_member_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "taskAssignments_task_id_fkey"
+            columns: ["task_id"]
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "taskAssignments_team_id_fkey"
+            columns: ["team_id"]
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "taskAssignments_team_member_id_fkey"
+            columns: ["team_member_id"]
+            referencedRelation: "teamMembers"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      tasks: {
+        Row: {
+          completed_at: string | null
+          created_at: string | null
+          description: string | null
+          due_date: string | null
+          id: number
+          priority: string | null
+          status: string | null
+          team_id: number | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: number
+          priority?: string | null
+          status?: string | null
+          team_id?: number | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: number
+          priority?: string | null
+          status?: string | null
+          team_id?: number | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_team_id_fkey"
+            columns: ["team_id"]
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       teamMembers: {
         Row: {
           created_at: string | null

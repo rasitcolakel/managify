@@ -15,6 +15,7 @@ import LoadingOverlay from "@components/common/LoadingOverlay";
 import { TeamContext } from "@contexts/TeamContext";
 import { checkIsTeamOwner } from "src/services/teams";
 import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
+import TeamTasks from "./tasks";
 
 function a11yProps(index: number) {
   return {
@@ -104,10 +105,14 @@ export default function TeamShow() {
           </Stack>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs value={value} onChange={handleChange}>
+              <Tab label={t("tasks.title")} {...a11yProps(0)} />
               <Tab label={t("teamMembers.title")} {...a11yProps(0)} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
+            <TeamTasks team={record} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
             <TeamMembers team={record} />
           </TabPanel>
         </Show>
