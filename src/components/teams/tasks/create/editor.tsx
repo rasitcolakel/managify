@@ -13,6 +13,7 @@ type EditorWrapperProps = {
 const EditorWrapper = styled.div(`
 `);
 
+// @ts-ignore - quill is not typed
 const ReactQuill = dynamic(
   () => import("react-quill").then((mod) => mod.default),
   { ssr: false }
