@@ -3,6 +3,7 @@ import {
   Autocomplete,
   Box,
   FormControl,
+  FormLabel,
   InputLabel,
   MenuItem,
   OutlinedInput,
@@ -11,6 +12,7 @@ import {
 } from "@mui/material";
 import {
   IResourceComponentsProps,
+  // useList,
   useNotification,
   useTranslate,
 } from "@refinedev/core";
@@ -21,8 +23,14 @@ import { CreateTask, newTask } from "src/services/tasks";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
+import { useEffect, useRef } from "react";
+import QuillEditor from "./editor";
 
 export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
+  const textareaRef = useRef<any>(null);
+
   const { open } = useNotification();
   const t = useTranslate();
   const router = useRouter();
@@ -35,6 +43,32 @@ export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
     getValues,
     setValue,
   } = useForm();
+
+  // const { data: tasks } = useList({
+  //   resource: "tasks",
+  //   meta: {
+  //     select: "*",
+  //   },
+  //   filters: [
+  //     {
+  //       field: "team_id",
+  //       operator: "eq",
+  //       value: id,
+  //     },
+  //   ],
+  // });
+
+  // const generateFullUrlForTask = (taskId: string) => {
+  //   return `/teams/${id}/tasks/${taskId}`;
+  // };
+
+  // const tasksMentions =
+  //   tasks?.data.map((task) => {
+  //     return {
+  //       id: generateFullUrlForTask(task.id as string),
+  //       display: task.title,
+  //     };
+  //   }) || [];
 
   const { autocompleteProps: teamMembersAutocompleteProps } =
     useAutocomplete<TeamMemberWithProfile>({
@@ -54,6 +88,8 @@ export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
   const handleSave = async () => {
     try {
       const values = getValues() as CreateTask;
+      console.log(values);
+      return;
       values.team_id = parseInt(id);
       const task = await newTask(values);
       if (!task) {
@@ -82,6 +118,16 @@ export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
     { label: t("tasks.taskStatuses.done"), value: "done" },
   ];
 
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [textareaRef]);
+
+  const onDescriptionChange = (value: any) => {
+    console.log(value);
+  };
+
   return (
     <Create
       saveButtonProps={{
@@ -107,19 +153,15 @@ export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
           label={t("tasks.fields.title")}
           name="title"
         />
-        <TextField
-          {...register("description", {
-            required: "This field is required",
-          })}
-          error={!!(errors as any)?.description}
-          helperText={(errors as any)?.description?.message}
-          margin="normal"
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-          type="text"
-          label={t("tasks.fields.description")}
-          name="description"
-        />
+        <FormLabel
+          sx={{
+            marginTop: "1rem",
+            marginBottom: "0.4rem",
+          }}
+        >
+          {t("tasks.fields.description")}
+        </FormLabel>
+        <QuillEditor onChange={onDescriptionChange} />
         <Controller
           control={control}
           name="assignees"
