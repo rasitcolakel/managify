@@ -35,6 +35,9 @@ export default function TeamList() {
     meta: {
       select: "*, owner(*)",
     },
+    pagination: {
+      pageSize: 10,
+    },
   });
 
   const { execute, data: user } = useAsyncFunction<any, Profile>(

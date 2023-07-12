@@ -2,14 +2,19 @@ import React, { useCallback } from "react";
 import { DateField, List, useDataGrid } from "@refinedev/mui";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { IResourceComponentsProps, useTranslate } from "@refinedev/core";
-import { TeamMemberWithProfile, TeamWithMembers } from "src/types";
-import { Avatar, AvatarGroup, Chip, Typography } from "@mui/material";
+import {
+  TaskWithAssignee,
+  TeamMemberWithProfile,
+  TeamWithMembers,
+} from "src/types";
+import { Avatar, AvatarGroup, Chip, Stack, Typography } from "@mui/material";
 import {
   generateRandomColorWithName,
   getFirstLettersOfWord,
 } from "src/utility";
 import { useRouter } from "next/router";
-
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import Link from "next/link";
 type Props = IResourceComponentsProps & {
   team: TeamWithMembers;
 };
@@ -31,6 +36,9 @@ export default function TeamTasks({ team }: Props) {
           value: team.id,
         },
       ],
+    },
+    pagination: {
+      pageSize: 10,
     },
   });
 
@@ -74,6 +82,24 @@ export default function TeamTasks({ team }: Props) {
     [t]
   );
 
+  const renderActions = React.useCallback(
+    (row: TaskWithAssignee) => {
+      return (
+        <Stack
+          direction="row"
+          flex={1}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Link href={`/teams/${team.id}/tasks/${row.id}`}>
+            <RemoveRedEyeIcon color="primary" />
+          </Link>
+        </Stack>
+      );
+    },
+    [team.id]
+  );
+
   const renderAssignee = (assignee: TeamMemberWithProfile) => {
     const fullName = assignee?.profile?.full_name || "";
     return (
@@ -99,12 +125,6 @@ export default function TeamTasks({ team }: Props) {
         field: "title",
         flex: 1,
         headerName: t("tasks.fields.title"),
-        minWidth: 200,
-      },
-      {
-        field: "description",
-        flex: 1,
-        headerName: t("tasks.fields.description"),
         minWidth: 200,
       },
       {
@@ -149,8 +169,18 @@ export default function TeamTasks({ team }: Props) {
           );
         },
       },
+      {
+        field: "actions",
+        headerName: t("table.actions"),
+        minWidth: 100,
+        renderCell: function render({ row }) {
+          return renderActions(row);
+        },
+        sortable: false,
+        filterable: false,
+      },
     ],
-    [renderPriority, renderStatus, t]
+    [renderActions, renderPriority, renderStatus, t]
   );
 
   return (

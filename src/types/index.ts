@@ -15,8 +15,14 @@ type TeamMemberWithProfile = TeamWithMembers["teamMembers"][0];
 
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
+type TaskAssignment = Database["public"]["Tables"]["taskAssignments"]["Row"];
+
+type TaskAssignmentWithAssignee = TaskAssignment & {
+  assignee: TeamMemberWithProfile;
+};
+
 type TaskWithAssignee = Database["public"]["Tables"]["tasks"]["Row"] & {
-  assignees: TeamMemberWithProfile["id"][];
+  taskAssignments: TaskAssignmentWithAssignee[];
 };
 
 export type {

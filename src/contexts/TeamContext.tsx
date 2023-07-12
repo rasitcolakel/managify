@@ -5,6 +5,7 @@ import {
   useShow,
   useTranslate,
 } from "@refinedev/core";
+import { useRouter } from "next/router";
 import React from "react";
 import { changeOwner, deleteTeamMember } from "src/services/teams";
 import { TeamMember, TeamWithMembers } from "src/types";
@@ -33,12 +34,17 @@ const select =
 export const TeamContextProvider: React.FC<TeamContextProviderProps> = ({
   children,
 }) => {
+  const router = useRouter();
+  const { id, teamId } = router.query;
+  console.log(id, teamId);
   const { open } = useNotification();
   const t = useTranslate();
   const { queryResult } = useShow<TeamWithMembers>({
+    resource: "teams",
     meta: {
       select,
     },
+    id: (teamId || id) as string,
   });
 
   const { data, isLoading } = queryResult;

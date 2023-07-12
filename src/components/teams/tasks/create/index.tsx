@@ -88,8 +88,6 @@ export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
   const handleSave = async () => {
     try {
       const values = getValues() as CreateTask;
-      console.log(values);
-      return;
       values.team_id = parseInt(id);
       const task = await newTask(values);
       if (!task) {
@@ -125,7 +123,7 @@ export const TaskCreate: React.FC<IResourceComponentsProps> = () => {
   }, [textareaRef]);
 
   const onDescriptionChange = (value: any) => {
-    console.log(value);
+    setValue("description", value);
   };
 
   return (

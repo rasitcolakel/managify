@@ -92,6 +92,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                   show: "/teams/:teamId/tasks/:id",
                   edit: "/teams/:teamId/tasks/:id/edit",
                   create: "/teams/:teamId/tasks/create",
+                  meta: {
+                    hide: true,
+                  },
                 },
               ]}
               options={{
