@@ -94,6 +94,9 @@
   },
   "tasks": {
     "title": "Tasks",
+    "titles": {
+      "detail": "Task Detail"
+    },
     "fields": {
       "id": "Id",
       "title": "Title",
@@ -105,7 +108,8 @@
       "team": "Team",
       "assigned_to": "Assigned To",
       "due_date": "Due Date",
-      "assignees": "Assignees"
+      "assignees": "Assignees",
+      "no_assignees": "No Assignees"
     },
     "taskPriorities": {
       "low": "Low",
@@ -188,12 +192,18 @@
   "documentTitle": {
     "default": "Managify",
     "suffix": " | Managify",
+    "show": "{{title}} | Managify",
     "teams": {
       "list": "Teams | Managify",
       "show": "{{title}} | Managify",
       "edit": "Edit the {{title}}  | Managify",
       "create": "Create new Team | Managify",
       "clone": "{{title}} Clone Team | Managify"
+    },
+    "auth": {
+      "login": "Login | Managify",
+      "register": "Register | Managify",
+      "forgotPassword": "Forgot Password | Managify"
     }
   },
   "table": {

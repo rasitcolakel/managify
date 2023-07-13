@@ -133,6 +133,11 @@
       "edit": "Bearbeite {{title}}  | Managify",
       "create": "Erstelle Neues Team | Managify",
       "clone": "{{title}} Klonen Team | Managify"
+    },
+    "auth": {
+      "login": "Anmelden | Managify",
+      "register": "Registrieren | Managify",
+      "forgotPassword": "Passwort vergessen | Managify"
     }
   },
   "table": {
