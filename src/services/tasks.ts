@@ -3,14 +3,10 @@ import { supabaseClient } from "src/utility";
 
 export type CreateTask = Pick<
   TaskWithAssignee,
-  | "title"
-  | "description"
-  | "assignees"
-  | "team_id"
-  | "priority"
-  | "status"
-  | "due_date"
->;
+  "title" | "description" | "team_id" | "priority" | "status" | "due_date"
+> & {
+  assignees: number[];
+};
 
 export const newTask = async (task: CreateTask) => {
   const { data, error } = await supabaseClient
