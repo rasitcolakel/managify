@@ -28,8 +28,9 @@ export default function TaskShow() {
   const router = useRouter();
 
   const { data, isLoading, t } = useContext(TeamContext);
+  const { tab } = router.query as { tab: string };
 
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(tab === "members" ? 1 : 0);
 
   const record = data?.data;
 
@@ -42,6 +43,10 @@ export default function TaskShow() {
   }, [record?.title]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    router.push({
+      pathname: router.pathname,
+      query: { ...router.query, tab: newValue === 1 ? "members" : "tasks" },
+    });
     setValue(newValue);
   };
 
