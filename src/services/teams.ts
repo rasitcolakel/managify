@@ -112,3 +112,11 @@ export const updateTeamStatus = async (
     throw error;
   }
 };
+
+export const getMyTeamMemberships = async () => {
+  const { data, error } = await supabaseClient.rpc("get_my_team_memberships");
+  if (error) {
+    throw error;
+  }
+  return data;
+};

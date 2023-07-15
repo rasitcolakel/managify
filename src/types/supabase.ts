@@ -301,6 +301,10 @@ export interface Database {
         Args: Record<PropertyKey, never>
         Returns: number[]
       }
+      get_my_team_memberships: {
+        Args: Record<PropertyKey, never>
+        Returns: number[]
+      }
       get_tasks_created_by_auth_user: {
         Args: Record<PropertyKey, never>
         Returns: number[]

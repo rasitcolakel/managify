@@ -223,6 +223,9 @@
       "create": "Create new Team | Managify",
       "clone": "{{title}} Clone Team | Managify"
     },
+    "tasks": {
+      "my": "My Tasks | Managify"
+    },
     "auth": {
       "login": "Login | Managify",
       "register": "Register | Managify",

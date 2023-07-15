@@ -97,6 +97,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                     hide: true,
                   },
                 },
+                {
+                  name: "my-tasks",
+                  list: "/my-tasks",
+                },
               ]}
               options={{
                 syncWithLocation: true,
