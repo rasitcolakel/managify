@@ -22,7 +22,11 @@ export const authProvider: AuthBindings = {
 
     if (data?.session) {
       nookies.set(null, "token", data.session.access_token, {
-        maxAge: 30 * 24 * 60 * 60,
+        maxAge: 60 * 65,
+        path: "/",
+      });
+      nookies.set(null, "refresh_token", data.session.refresh_token, {
+        maxAge: 60 * 65,
         path: "/",
       });
 
@@ -45,6 +49,10 @@ export const authProvider: AuthBindings = {
     nookies.destroy(null, "token", {
       path: "/",
     });
+    nookies.destroy(null, "refresh_token", {
+      path: "/",
+    });
+
     const { error } = await supabaseClient.auth.signOut();
 
     if (error) {
@@ -93,7 +101,12 @@ export const authProvider: AuthBindings = {
         }
 
         nookies.set(null, "token", data.session.access_token, {
-          maxAge: 30 * 24 * 60 * 60,
+          maxAge: 60 * 65,
+          path: "/",
+        });
+
+        nookies.set(null, "refresh_token", data.session.refresh_token, {
+          maxAge: 60 * 65,
           path: "/",
         });
 
@@ -118,7 +131,7 @@ export const authProvider: AuthBindings = {
     };
   },
   check: async (ctx) => {
-    const { token } = nookies.get(ctx);
+    const { token, refresh_token } = nookies.get(ctx);
     const { data } = await supabaseClient.auth.getUser(token);
     const { user } = data;
 
@@ -128,7 +141,33 @@ export const authProvider: AuthBindings = {
       };
     }
 
+    const { data: refreshTokenData } = await supabaseClient.auth.refreshSession(
+      { refresh_token }
+    );
+
+    if (refreshTokenData.session) {
+      nookies.set(ctx, "token", refreshTokenData.session.access_token, {
+        maxAge: 60 * 65,
+        path: "/",
+      });
+      nookies.set(
+        ctx,
+        "refresh_token",
+        refreshTokenData.session.refresh_token,
+        {
+          maxAge: 60 * 65,
+          path: "/",
+        }
+      );
+      return {
+        authenticated: true,
+      };
+    }
+
     nookies.destroy(null, "token", {
+      path: "/",
+    });
+    nookies.destroy(null, "refresh_token", {
       path: "/",
     });
 
