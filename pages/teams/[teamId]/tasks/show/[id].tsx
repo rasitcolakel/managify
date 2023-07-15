@@ -28,11 +28,18 @@ import {
   generateRandomColorWithName,
 } from "src/utility";
 import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
-import { getTasksCreatedByUser } from "src/services/tasks";
-import { Stack } from "@mui/material";
+import {
+  getTasksCreatedByUser,
+  updateTaskPriority,
+  updateTaskStatus,
+} from "src/services/tasks";
+import { IconButton, Stack } from "@mui/material";
 import Link from "@components/common/Link";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Menu, { MenuProps } from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import SettingsIcon from "@mui/icons-material/Settings";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault("Europe/Istanbul");
@@ -44,10 +51,55 @@ const StyledDescription = styled.div`
   }
 `;
 
+const StyledMenu = styled((props: MenuProps) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "right",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    {...props}
+  />
+))(({}) => ({
+  "& .MuiPaper-root": {
+    minWidth: 180,
+    boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.2)",
+  },
+}));
+
 export default function TaskShow() {
   const router = useRouter();
   const t = useTranslate();
   const { id, teamId } = router.query as { teamId: string; id: string };
+  const [statusEl, setStatusEl] = React.useState<null | HTMLElement>(null);
+  const [priorityEl, setPriorityEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClickStatus = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setStatusEl(event.currentTarget);
+  };
+  const handleCloseStatus = async (value: string) => {
+    setStatusEl(null);
+    if (value !== record?.priority && record) {
+      await updateTaskStatus(record.id, record?.team_id, value);
+      await queryResult.refetch();
+    }
+  };
+
+  const handleClickPriority = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setPriorityEl(event.currentTarget);
+  };
+
+  const handleClosePriority = async (value: string) => {
+    setPriorityEl(null);
+    if (value !== record?.priority && record) {
+      await updateTaskPriority(record.id, record?.team_id, value);
+      await queryResult.refetch();
+    }
+  };
 
   const { queryResult } = useShow<TaskWithAssignee>({
     meta: {
@@ -89,7 +141,7 @@ export default function TaskShow() {
   const renderStatus = useCallback(
     (status: string) => {
       const color =
-        status === "completed"
+        status === "done"
           ? "success"
           : status === "in_progress"
           ? "warning"
@@ -145,6 +197,118 @@ export default function TaskShow() {
   }, [execute]);
 
   const isTaskCreator = taskIds?.includes(record?.id ?? 0);
+
+  const priorityOptions = [
+    { label: t("tasks.taskPriorities.low"), value: "low" },
+    { label: t("tasks.taskPriorities.medium"), value: "medium" },
+    { label: t("tasks.taskPriorities.high"), value: "high" },
+  ];
+
+  const statusOptions = [
+    { label: t("tasks.taskStatuses.todo"), value: "todo" },
+    { label: t("tasks.taskStatuses.in_progress"), value: "in_progress" },
+    { label: t("tasks.taskStatuses.done"), value: "done" },
+  ];
+
+  const updateStatusMenu = () => {
+    return (
+      <>
+        <IconButton
+          id="update-status-button"
+          aria-controls={Boolean(statusEl) ? "update-status-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={Boolean(statusEl) ? "true" : undefined}
+          onClick={handleClickStatus}
+        >
+          <SettingsIcon />
+        </IconButton>
+        <StyledMenu
+          id="update-status-menu"
+          anchorEl={statusEl}
+          open={Boolean(statusEl)}
+          onClose={handleCloseStatus}
+          MenuListProps={{
+            "aria-labelledby": "update-status-button",
+          }}
+        >
+          <Typography
+            variant="body1"
+            sx={{
+              px: 2,
+              py: 1,
+            }}
+          >
+            {t("tasks.updateStatus")}
+          </Typography>
+          <Divider
+            sx={{
+              my: 1,
+            }}
+          />
+          {statusOptions.map((option) => (
+            <MenuItem
+              key={option.value}
+              selected={option.value === record?.status}
+              onClick={() => handleCloseStatus(option.value)}
+            >
+              {renderStatus(option.value)}
+            </MenuItem>
+          ))}
+        </StyledMenu>
+      </>
+    );
+  };
+
+  const updatePriorityMenu = () => {
+    return (
+      <>
+        <IconButton
+          id="update-priority-button"
+          aria-controls={
+            Boolean(priorityEl) ? "update-priority-menu" : undefined
+          }
+          aria-haspopup="true"
+          aria-expanded={Boolean(priorityEl) ? "true" : undefined}
+          onClick={handleClickPriority}
+        >
+          <SettingsIcon />
+        </IconButton>
+        <StyledMenu
+          id="update-priority-menu"
+          anchorEl={priorityEl}
+          open={Boolean(priorityEl)}
+          onClose={handleClosePriority}
+          MenuListProps={{
+            "aria-labelledby": "update-priority-button",
+          }}
+        >
+          <Typography
+            variant="body1"
+            sx={{
+              px: 2,
+              py: 1,
+            }}
+          >
+            {t("tasks.updatePriority")}
+          </Typography>
+          <Divider
+            sx={{
+              my: 1,
+            }}
+          />
+          {priorityOptions.map((option) => (
+            <MenuItem
+              key={option.value}
+              selected={option.value === record?.priority}
+              onClick={() => handleClosePriority(option.value)}
+            >
+              {renderPriority(option.value)}
+            </MenuItem>
+          ))}
+        </StyledMenu>
+      </>
+    );
+  };
 
   return (
     <main>
@@ -232,6 +396,7 @@ export default function TaskShow() {
                     iconStyle={{
                       bgcolor: yellow[800],
                     }}
+                    action={updateStatusMenu()}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -242,6 +407,7 @@ export default function TaskShow() {
                     iconStyle={{
                       bgcolor: blue[800],
                     }}
+                    action={updatePriorityMenu()}
                   />
                 </Grid>
                 <Grid item xs={12}>

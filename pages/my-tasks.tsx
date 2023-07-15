@@ -73,7 +73,7 @@ export default function TeamList() {
   const renderStatus = useCallback(
     (status: string) => {
       const color =
-        status === "completed"
+        status === "done"
           ? "success"
           : status === "in_progress"
           ? "warning"

@@ -10,9 +10,16 @@ type Props = {
   icon: React.ReactNode;
   iconStyle?: React.CSSProperties & SxProps;
   value: string | React.ReactNode;
+  action?: React.ReactNode;
 };
 
-export default function TaskCard({ name, icon, value, iconStyle }: Props) {
+export default function TaskCard({
+  name,
+  icon,
+  value,
+  iconStyle,
+  action,
+}: Props) {
   return (
     <Card sx={{ mt: "1em" }}>
       <CardContent>
@@ -53,6 +60,7 @@ export default function TaskCard({ name, icon, value, iconStyle }: Props) {
               <Box>{value}</Box>
             )}
           </Stack>
+          {action && <Box sx={{ pt: 1 }}>{action}</Box>}
         </Box>
       </CardContent>
     </Card>

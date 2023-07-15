@@ -142,7 +142,9 @@
       "todo": "Todo",
       "in_progress": "In Progress",
       "done": "Done"
-    }
+    },
+    "updateStatus": "Update Status",
+    "updatePriority": "Update Priority"
   },
   "teamMembers": {
     "title": "Team Members",

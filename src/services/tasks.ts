@@ -123,6 +123,66 @@ export const updateTask = async (
   };
 };
 
+export const updateTaskStatus = async (
+  id: TaskWithAssignee["id"],
+  team_id: TaskWithAssignee["team_id"],
+  status: TaskWithAssignee["status"]
+) => {
+  const { error, data } = await supabaseClient
+
+    .from("tasks")
+    .update({
+      status,
+    })
+    .eq("id", id);
+  if (error) {
+    throw error;
+  }
+
+  await insertTaskUpdate({
+    task_id: id,
+    team_id: team_id!,
+    updates: [
+      {
+        type: "status",
+        content: status ?? "",
+      },
+    ],
+  });
+
+  return data;
+};
+
+export const updateTaskPriority = async (
+  id: TaskWithAssignee["id"],
+  team_id: TaskWithAssignee["team_id"],
+  priority: TaskWithAssignee["priority"]
+) => {
+  const { error, data } = await supabaseClient
+
+    .from("tasks")
+    .update({
+      priority,
+    })
+    .eq("id", id);
+  if (error) {
+    throw error;
+  }
+
+  await insertTaskUpdate({
+    task_id: id,
+    team_id: team_id!,
+    updates: [
+      {
+        type: "priority",
+        content: priority ?? "",
+      },
+    ],
+  });
+
+  return data;
+};
+
 const getTaskAssignmentChanges = (
   oldAssignments: TaskWithAssignee["taskAssignments"],
   newAssignments: CreateTask["assignees"]
