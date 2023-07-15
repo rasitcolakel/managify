@@ -19,7 +19,6 @@ import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import GroupIcon from "@mui/icons-material/Group";
-
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
@@ -28,6 +27,12 @@ import {
   getFirstLettersOfWord,
   generateRandomColorWithName,
 } from "src/utility";
+import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
+import { getTasksCreatedByUser } from "src/services/tasks";
+import { Stack } from "@mui/material";
+import Link from "@components/common/Link";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault("Europe/Istanbul");
@@ -130,6 +135,17 @@ export default function TaskShow() {
     );
   }, []);
 
+  const {
+    execute,
+    data: taskIds,
+    loading,
+  } = useAsyncFunction<any, number[]>(getTasksCreatedByUser);
+  useEffect(() => {
+    execute();
+  }, [execute]);
+
+  const isTaskCreator = taskIds?.includes(record?.id ?? 0);
+
   return (
     <main>
       <Head>
@@ -139,14 +155,50 @@ export default function TaskShow() {
             : t("tasks.titles.detail")}
         </title>
       </Head>
-      <LoadingOverlay loading={!record && !isLoading}>
+      <LoadingOverlay loading={!record && !isLoading && loading}>
         {record && (
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography variant="h5" sx={{ mb: 1 }}>
-                {t("tasks.titles.detail")}
-              </Typography>
-              <Divider />
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Typography variant="h5" sx={{ mb: 1 }}>
+                  {t("tasks.titles.detail")}
+                </Typography>
+
+                <Stack direction="row" spacing={2}>
+                  {isTaskCreator && (
+                    <Link
+                      itemType="button"
+                      href={`/teams/${teamId}/tasks/edit/${id}`}
+                      buttonProps={{
+                        variant: "outlined",
+                        color: "primary",
+                        startIcon: <EditIcon />,
+                      }}
+                    >
+                      {t("actions.edit")}
+                    </Link>
+                  )}
+                  {isTaskCreator && (
+                    <Link
+                      itemType="button"
+                      href={`/teams/${teamId}/tasks/edit/${id}`}
+                      buttonProps={{
+                        variant: "outlined",
+                        color: "error",
+                        startIcon: <DeleteIcon />,
+                      }}
+                    >
+                      {t("actions.delete")}
+                    </Link>
+                  )}
+                </Stack>
+              </Stack>
+
+              <Divider sx={{ py: 1 }} />
             </Grid>
             <Grid item xs={12} md={6} lg={9}>
               <Paper sx={{ p: 2, mt: "1em" }}>

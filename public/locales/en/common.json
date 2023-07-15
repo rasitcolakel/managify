@@ -164,7 +164,8 @@
     "list": "List",
     "create": "Create",
     "edit": "Edit",
-    "show": "Show"
+    "show": "Show",
+    "delete": "Delete"
   },
   "buttons": {
     "create": "Create",
