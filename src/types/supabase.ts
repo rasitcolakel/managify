@@ -47,6 +47,7 @@ export interface Database {
       taskAssignments: {
         Row: {
           created_at: string | null
+          created_by: string | null
           id: number
           task_id: number | null
           team_id: number | null
@@ -54,6 +55,7 @@ export interface Database {
         }
         Insert: {
           created_at?: string | null
+          created_by?: string | null
           id?: number
           task_id?: number | null
           team_id?: number | null
@@ -61,12 +63,19 @@ export interface Database {
         }
         Update: {
           created_at?: string | null
+          created_by?: string | null
           id?: number
           task_id?: number | null
           team_id?: number | null
           team_member_id?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "taskAssignments_created_by_fkey"
+            columns: ["created_by"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "taskAssignments_task_id_fkey"
             columns: ["task_id"]
@@ -91,6 +100,7 @@ export interface Database {
         Row: {
           completed_at: string | null
           created_at: string | null
+          created_by: string | null
           description: string | null
           due_date: string | null
           id: number
@@ -103,6 +113,7 @@ export interface Database {
         Insert: {
           completed_at?: string | null
           created_at?: string | null
+          created_by?: string | null
           description?: string | null
           due_date?: string | null
           id?: number
@@ -115,6 +126,7 @@ export interface Database {
         Update: {
           completed_at?: string | null
           created_at?: string | null
+          created_by?: string | null
           description?: string | null
           due_date?: string | null
           id?: number
@@ -126,7 +138,62 @@ export interface Database {
         }
         Relationships: [
           {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "tasks_team_id_fkey"
+            columns: ["team_id"]
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      taskUpdates: {
+        Row: {
+          content: string | null
+          created_at: string | null
+          created_by: string | null
+          id: number
+          task_id: number | null
+          team_id: number | null
+          type: string | null
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          id?: number
+          task_id?: number | null
+          team_id?: number | null
+          type?: string | null
+        }
+        Update: {
+          content?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          id?: number
+          task_id?: number | null
+          team_id?: number | null
+          type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "taskUpdates_created_by_fkey"
+            columns: ["created_by"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "taskUpdates_task_id_fkey"
+            columns: ["task_id"]
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "taskUpdates_team_id_fkey"
             columns: ["team_id"]
             referencedRelation: "teams"
             referencedColumns: ["id"]
@@ -136,6 +203,7 @@ export interface Database {
       teamMembers: {
         Row: {
           created_at: string | null
+          created_by: string | null
           id: number
           status: string | null
           team_id: number | null
@@ -144,6 +212,7 @@ export interface Database {
         }
         Insert: {
           created_at?: string | null
+          created_by?: string | null
           id?: number
           status?: string | null
           team_id?: number | null
@@ -152,6 +221,7 @@ export interface Database {
         }
         Update: {
           created_at?: string | null
+          created_by?: string | null
           id?: number
           status?: string | null
           team_id?: number | null
@@ -159,6 +229,12 @@ export interface Database {
           user_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "teamMembers_created_by_fkey"
+            columns: ["created_by"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "teamMembers_team_id_fkey"
             columns: ["team_id"]
@@ -176,6 +252,7 @@ export interface Database {
       teams: {
         Row: {
           created_at: string | null
+          created_by: string | null
           description: string | null
           id: number
           owner: string | null
@@ -184,6 +261,7 @@ export interface Database {
         }
         Insert: {
           created_at?: string | null
+          created_by?: string | null
           description?: string | null
           id?: number
           owner?: string | null
@@ -192,6 +270,7 @@ export interface Database {
         }
         Update: {
           created_at?: string | null
+          created_by?: string | null
           description?: string | null
           id?: number
           owner?: string | null
@@ -199,6 +278,12 @@ export interface Database {
           title?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "teams_created_by_fkey"
+            columns: ["created_by"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "teams_owner_fkey"
             columns: ["owner"]
@@ -215,6 +300,19 @@ export interface Database {
       get_authenticated_user_teams: {
         Args: Record<PropertyKey, never>
         Returns: number[]
+      }
+      get_tasks_created_by_auth_user: {
+        Args: Record<PropertyKey, never>
+        Returns: number[]
+      }
+      get_team_members_of_a_team: {
+        Args: {
+          team_id: number
+        }
+        Returns: {
+          id: number
+          user_id: string
+        }[]
       }
       get_teams_owned_by_authenticated_user: {
         Args: Record<PropertyKey, never>

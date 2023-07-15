@@ -1,3 +1,4 @@
+import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
 import {
   GetOneResponse,
   INotificationContext,
@@ -6,9 +7,13 @@ import {
   useTranslate,
 } from "@refinedev/core";
 import { useRouter } from "next/router";
-import React from "react";
-import { changeOwner, deleteTeamMember } from "src/services/teams";
-import { TeamMember, TeamWithMembers } from "src/types";
+import React, { useEffect } from "react";
+import {
+  changeOwner,
+  deleteTeamMember,
+  getMembersOfTeam,
+} from "src/services/teams";
+import { TeamMember, TeamWithMembers, getMembersOfTeamType } from "src/types";
 
 type TeamContextType = {
   // eslint-disable-next-line no-unused-vars
@@ -20,6 +25,7 @@ type TeamContextType = {
   t: any;
   open: INotificationContext["open"];
   isLoading: boolean;
+  teamMembers: getMembersOfTeamType | null;
 };
 
 export const TeamContext = React.createContext<TeamContextType>(
@@ -36,6 +42,10 @@ export const TeamContextProvider: React.FC<TeamContextProviderProps> = ({
 }) => {
   const router = useRouter();
   const { id, teamId } = router.query;
+  const { data: teamMembers, execute: teamMembersExecute } = useAsyncFunction<
+    any,
+    getMembersOfTeamType
+  >(getMembersOfTeam);
 
   const { open } = useNotification();
   const t = useTranslate();
@@ -74,6 +84,14 @@ export const TeamContextProvider: React.FC<TeamContextProviderProps> = ({
       queryResult.refetch();
     }
   };
+  const record = data?.data;
+
+  useEffect(() => {
+    if (!record) {
+      return;
+    }
+    teamMembersExecute(record.id);
+  }, [teamMembersExecute, record]);
 
   return (
     <TeamContext.Provider
@@ -85,6 +103,7 @@ export const TeamContextProvider: React.FC<TeamContextProviderProps> = ({
         t,
         isLoading,
         open,
+        teamMembers,
       }}
     >
       {children}

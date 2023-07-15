@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import { UseModalFormReturnType } from "@refinedev/react-hook-form";
 import { HttpError } from "@refinedev/core";
 import { Controller } from "react-hook-form";
-import React from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -13,6 +13,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { AddTeamMember } from ".";
 import { Profile } from "src/types";
+import { TeamContext } from "@contexts/TeamContext";
 
 type CreateTeamMemberModalProps = {
   onClose: () => void;
@@ -28,8 +29,22 @@ const CreateTeamMemberModal: React.FC<
   formState: { errors },
   onClose,
 }) => {
+  const { teamMembers } = useContext(TeamContext);
+  const ninValue = "(" + teamMembers?.map((tm) => tm.user_id).join(",") + ")";
   const { autocompleteProps } = useAutocomplete<Profile>({
     resource: "profiles",
+    filters: [
+      {
+        field: "status",
+        operator: "eq",
+        value: "active",
+      },
+      {
+        field: "id",
+        operator: "nin",
+        value: ninValue,
+      },
+    ],
     onSearch: (value) => [
       {
         field: "full_name",

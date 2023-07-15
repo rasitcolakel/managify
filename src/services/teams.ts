@@ -78,6 +78,19 @@ export const getTeamsOwnedByAuthUser = async () => {
   return data as number[];
 };
 
+export const getMembersOfTeam = async (team_id: number) => {
+  const { data, error } = await supabaseClient.rpc(
+    "get_team_members_of_a_team",
+    {
+      team_id,
+    }
+  );
+  if (error) {
+    throw error;
+  }
+  return data;
+};
+
 export const makeTeamDeleted = async (teamId: number) => {
   await updateTeamStatus(teamId, "deleted");
 };

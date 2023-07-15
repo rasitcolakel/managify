@@ -25,6 +25,9 @@ type TaskWithAssignee = Database["public"]["Tables"]["tasks"]["Row"] & {
   taskAssignments: TaskAssignmentWithAssignee[];
 };
 
+type getMembersOfTeamType =
+  Database["public"]["Functions"]["get_team_members_of_a_team"]["Returns"];
+
 export type {
   Team,
   TeamMember,
@@ -33,4 +36,5 @@ export type {
   WithRequired,
   TeamMemberWithProfile,
   TaskWithAssignee,
+  getMembersOfTeamType,
 };
