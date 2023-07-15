@@ -22,6 +22,8 @@ import { authProvider } from "src/authProvider";
 import { AppIcon } from "src/components/app-icon";
 import { supabaseClient } from "src/utility";
 import "@components/css/index.css";
+import { CompleteProfileNotificationContextProvider } from "@contexts/CompleteProfileNotificationContext";
+import CompleteProfileNotification from "@components/users/CompleteProfileNotification";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   noLayout?: boolean;
@@ -101,9 +103,12 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                 warnWhenUnsavedChanges: false,
               }}
             >
-              {renderComponent()}
-              <RefineKbar />
-              <UnsavedChangesNotifier />
+              <CompleteProfileNotificationContextProvider>
+                <CompleteProfileNotification />
+                {renderComponent()}
+                <RefineKbar />
+                <UnsavedChangesNotifier />
+              </CompleteProfileNotificationContextProvider>
             </Refine>
           </RefineSnackbarProvider>
         </ColorModeContextProvider>

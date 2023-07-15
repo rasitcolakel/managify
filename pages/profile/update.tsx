@@ -6,21 +6,19 @@ import { useNotification, useTranslate } from "@refinedev/core";
 import { Create } from "@refinedev/mui";
 import { Box, TextField } from "@mui/material";
 import { useForm } from "@refinedev/react-hook-form";
-import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Profile } from "src/types";
-import { getMyProfile, updateMyProfile } from "src/services/users";
+import { updateMyProfile } from "src/services/users";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { CompleteProfileNotificationContext } from "@contexts/CompleteProfileNotificationContext";
 
 export default function EditProfile() {
   const { open } = useNotification();
+  const { user, execute, loading } = useContext(
+    CompleteProfileNotificationContext
+  );
 
-  const {
-    execute,
-    data: user,
-    loading,
-  } = useAsyncFunction<any, Profile>(getMyProfile);
   const router = useRouter();
   const t = useTranslate();
   const {
@@ -70,6 +68,7 @@ export default function EditProfile() {
                 message: t("notifications.success"),
                 type: "success",
               });
+              execute();
               router.push("/profile");
             }
           },

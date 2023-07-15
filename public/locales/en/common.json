@@ -103,6 +103,13 @@
       "avatar": "Avatar",
       "password": "Password",
       "password_confirmation": "Password Confirmation"
+    },
+    "notCompletedDialog": {
+      "title": "Complete your profile",
+      "message": "Please complete your profile before continuing.",
+      "buttons": {
+        "complete": "Complete Profile"
+      }
     }
   },
   "tasks": {
