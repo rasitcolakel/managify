@@ -1,30 +1,22 @@
-import { TaskCreate } from "@components/teams/tasks/create";
 import { GetServerSideProps } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React from "react";
 import { authProvider } from "src/authProvider";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-type Props = {};
-
-export default function index({}: Props) {
-  return (
-    <main>
-      <TaskCreate />
-    </main>
-  );
+export default function EditProfile() {
+  return <>123</>;
 }
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const { authenticated, redirectTo } = await authProvider.check(context);
 
-  const translateProps = await serverSideTranslations(context.locale ?? "en", [
+  const tProps = await serverSideTranslations(context.locale ?? "en", [
     "common",
   ]);
 
   if (!authenticated) {
     return {
       props: {
-        ...translateProps,
+        ...tProps,
       },
       redirect: {
         destination: `${redirectTo}?to=${encodeURIComponent("/teams")}`,
@@ -35,7 +27,7 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
 
   return {
     props: {
-      ...translateProps,
+      ...tProps,
     },
   };
 };

@@ -18,6 +18,20 @@ import { TaskWithAssignee } from "src/types";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import EventNoteIcon from "@mui/icons-material/EventNote";
+import GroupIcon from "@mui/icons-material/Group";
+
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import Avatar from "@mui/material/Avatar";
+import {
+  getFirstLettersOfWord,
+  generateRandomColorWithName,
+} from "src/utility";
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault("Europe/Istanbul");
+
 const StyledDescription = styled.div`
   margin: 1rem;
   p {
@@ -28,14 +42,15 @@ const StyledDescription = styled.div`
 export default function TaskShow() {
   const router = useRouter();
   const t = useTranslate();
+  const { id, teamId } = router.query as { teamId: string; id: string };
 
-  const { teamId } = router.query;
   const { queryResult } = useShow<TaskWithAssignee>({
     meta: {
       select:
-        "*, taskAssignments(*, assignee:teamMembers(id, user_id, status, profile:profiles(*)))",
+        "*, taskAssignments(*, assignee:teamMembers(id, user_id, status, profile:profiles!user_id(*)))",
     },
     resource: "tasks",
+    id,
   });
 
   const { data, isLoading } = queryResult;
@@ -86,12 +101,43 @@ export default function TaskShow() {
     [t]
   );
 
+  const renderAssignees = useCallback((assignees: any[]) => {
+    return (
+      <Grid container spacing={1}>
+        {assignees.map((assignee) => {
+          const { profile } = assignee.assignee;
+          const name = `${profile?.first_name} ${profile?.last_name}`;
+          return (
+            <Grid item key={assignee.id}>
+              <Chip
+                label={name}
+                avatar={
+                  <Avatar
+                    sx={{ bgcolor: generateRandomColorWithName(name) }}
+                    src={profile?.avatar}
+                    alt={name}
+                  >
+                    <Typography variant="body2" color="white">
+                      {getFirstLettersOfWord(name)}
+                    </Typography>
+                  </Avatar>
+                }
+              />
+            </Grid>
+          );
+        })}
+      </Grid>
+    );
+  }, []);
+
   return (
     <main>
       <Head>
-        {record?.title
-          ? t("documentTitle.teams.show", { title: record?.title })
-          : t("tasks.titles.detail")}
+        <title>
+          {record?.title
+            ? t("documentTitle.teams.show", { title: record?.title })
+            : t("tasks.titles.detail")}
+        </title>
       </Head>
       <LoadingOverlay loading={!record && !isLoading}>
         {record && (
@@ -113,8 +159,20 @@ export default function TaskShow() {
                   />
                 )}
               </Paper>
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={6} lg={4}>
+                <Grid item xs={12}>
+                  <TaskCard
+                    name={t("tasks.fields.assignees")}
+                    value={renderAssignees(record.taskAssignments ?? [])}
+                    icon={<GroupIcon color="inherit" />}
+                    iconStyle={{
+                      bgcolor: blue[500],
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
                   <TaskCard
                     name={t("tasks.fields.status")}
                     value={renderStatus(record.status ?? "")}
@@ -124,7 +182,7 @@ export default function TaskShow() {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} md={6} lg={4}>
+                <Grid item xs={12}>
                   <TaskCard
                     name={t("tasks.fields.priority")}
                     value={renderPriority(record.priority ?? "")}
@@ -134,13 +192,15 @@ export default function TaskShow() {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} md={6} lg={4}>
+                <Grid item xs={12}>
                   <TaskCard
                     name={t("tasks.fields.due_date")}
                     value={
                       record.due_date ? (
                         <Typography variant="body2">
-                          {record.due_date}
+                          {dayjs
+                            .tz(new Date(record.due_date))
+                            .format("YYYY-MM-DD HH:mm:ss")}
                         </Typography>
                       ) : (
                         "-"

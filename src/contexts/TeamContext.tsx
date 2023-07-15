@@ -30,13 +30,13 @@ type TeamContextProviderProps = {
   children: React.ReactNode;
 };
 const select =
-  "*, owner(*), teamMembers(id, user_id, status, profile:profiles(*))";
+  "*, owner(*), teamMembers(id, user_id, status, profile:profiles!user_id(*))";
 export const TeamContextProvider: React.FC<TeamContextProviderProps> = ({
   children,
 }) => {
   const router = useRouter();
   const { id, teamId } = router.query;
-  console.log(id, teamId);
+
   const { open } = useNotification();
   const t = useTranslate();
   const { queryResult } = useShow<TeamWithMembers>({

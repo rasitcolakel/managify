@@ -19,7 +19,6 @@ export default function TaskCard({ name, icon, value, iconStyle }: Props) {
         <Box
           sx={{
             display: "flex",
-            alignItems: "center",
           }}
         >
           <Box
@@ -32,20 +31,26 @@ export default function TaskCard({ name, icon, value, iconStyle }: Props) {
               borderRadius: "50%",
               bgcolor: "secondary.main",
               color: "white",
+              mt: 0.5,
               mr: 1,
               ...iconStyle,
             }}
           >
             {icon}
           </Box>
-          <Stack direction="column">
-            <Typography variant="h6" flex="1">
+          <Stack direction="column" flex={1}>
+            <Typography
+              variant="h6"
+              sx={{
+                pb: 1,
+              }}
+            >
               {name}
             </Typography>
             {typeof value === "string" ? (
               <Typography variant="body2">{value}</Typography>
             ) : (
-              value
+              <Box>{value}</Box>
             )}
           </Stack>
         </Box>

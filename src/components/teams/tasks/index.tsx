@@ -26,7 +26,7 @@ export default function TeamTasks({ team }: Props) {
     resource: "tasks",
     meta: {
       select:
-        "*, taskAssignments(*, assignee:teamMembers(id, user_id, status, profile:profiles(*)))",
+        "*, taskAssignments(*, assignee:teamMembers(id, user_id, status, profile:profiles!user_id(*)))",
     },
     filters: {
       permanent: [
@@ -91,7 +91,7 @@ export default function TeamTasks({ team }: Props) {
           justifyContent="center"
           alignItems="center"
         >
-          <Link href={`/teams/${team.id}/tasks/${row.id}`}>
+          <Link href={`/teams/${team.id}/tasks/show/${row.id}`}>
             <RemoveRedEyeIcon color="primary" />
           </Link>
         </Stack>

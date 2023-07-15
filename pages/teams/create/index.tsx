@@ -1,29 +1,58 @@
 import { GetServerSideProps } from "next";
 import { authProvider } from "src/authProvider";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { MuiCreateInferencer } from "@refinedev/inferencer/mui";
+import { Create } from "@refinedev/mui";
+import { Box, TextField } from "@mui/material";
+import { useForm } from "@refinedev/react-hook-form";
 import { useTranslate } from "@refinedev/core";
 
 export default function TeamCreate() {
-  const t = useTranslate();
+  const translate = useTranslate();
+  const {
+    saveButtonProps,
+    refineCore: { formLoading },
+    register,
+    formState: { errors },
+  } = useForm();
+
   return (
-    <MuiCreateInferencer
-      hideCodeViewerInProduction
-      resource="teams"
-      fieldTransformer={(field) => {
-        if (field.key === "title" || field.key === "description") {
-          return {
-            key: field.key,
-            type: "text",
-            relation: false,
-            multiple: false,
-            label: t("teams.fields." + field.key),
-          };
-        }
-      }}
-    />
+    <Create isLoading={formLoading} saveButtonProps={saveButtonProps}>
+      <Box
+        component="form"
+        sx={{ display: "flex", flexDirection: "column" }}
+        autoComplete="off"
+      >
+        <TextField
+          {...register("title", {
+            required: "This field is required",
+          })}
+          error={!!(errors as any)?.title}
+          helperText={(errors as any)?.title?.message}
+          margin="normal"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          type="text"
+          label={translate("teams.fields.title")}
+          name="title"
+        />
+        <TextField
+          {...register("description", {
+            required: "This field is required",
+          })}
+          error={!!(errors as any)?.description}
+          helperText={(errors as any)?.description?.message}
+          margin="normal"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          type="text"
+          label={translate("teams.fields.description")}
+          name="description"
+        />
+      </Box>
+    </Create>
   );
 }
+
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const { authenticated, redirectTo } = await authProvider.check(context);
 

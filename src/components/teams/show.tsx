@@ -24,7 +24,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function TeamShow() {
+export default function TaskShow() {
   const router = useRouter();
 
   const { data, isLoading, t } = useContext(TeamContext);

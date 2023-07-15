@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import { ReactQuillProps } from "react-quill";
@@ -45,7 +45,7 @@ const StyledReactQuill = styled(ReactQuill)<EditorWrapperProps>`
 type Props = {
   // eslint-disable-next-line no-unused-vars
   onChange: (value: any) => void;
-  defaultValue?: string;
+  value?: string;
   theme?: string;
   placeholder?: string;
   className?: string;
@@ -53,13 +53,12 @@ type Props = {
 
 export default function QuillEditor({
   onChange,
-  defaultValue,
+  value,
   placeholder,
   theme = "snow",
 }: Props): JSX.Element {
   const colorModeCOntext = useContext(ColorModeContext);
   const isDark = colorModeCOntext.mode === "dark";
-  const editor = useRef<any>();
   const quillProps: ReactQuillProps = {
     modules: {
       toolbar: [
@@ -73,20 +72,13 @@ export default function QuillEditor({
     },
     theme,
     onChange,
-    defaultValue,
+    value,
     placeholder,
   };
 
-  useEffect(() => {
-    if (defaultValue) {
-      const delta = editor.current.editor.clipboard.convert(defaultValue);
-      editor.current.editor.setContents(delta, "silent");
-    }
-  }, [defaultValue]);
-
   return (
     <EditorWrapper>
-      <StyledReactQuill {...quillProps} isDark={isDark} />
+      <StyledReactQuill {...quillProps} isDark={isDark} value={value} />
     </EditorWrapper>
   );
 }

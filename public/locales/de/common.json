@@ -81,6 +81,19 @@
       "show": "Team anzeigen"
     }
   },
+  "profiles": {
+    "title": "Profile",
+    "update": "Profil aktualisieren",
+    "fields": {
+      "id": "Id",
+      "first_name": "Vorname",
+      "last_name": "Nachname",
+      "email": "Email",
+      "email_verified_at": "Email verifiziert",
+      "created_at": "Erstellt",
+      "updated_at": "Aktualisiert"
+    }
+  },
   "actions": {
     "list": "Aufführen",
     "create": "Erstellen",

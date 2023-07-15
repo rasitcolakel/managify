@@ -79,7 +79,13 @@ export const authProvider: AuthBindings = {
           status: "created",
         });
 
-        if (profile.error) {
+        const team = await supabaseClient.from("teams").insert({
+          title: "Personal",
+          description: "Personal team for user",
+          status: "active",
+        });
+
+        if (profile.error || team.error) {
           return {
             success: false,
             error: profile.error,
