@@ -1,11 +1,8 @@
 {
-    "i18n-ally.localesPaths": [
-        "public/locales"
-    ],
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "cSpell.words": [
-        "Managify"
-    ],
-    "i18n-ally.keystyle": "nested"
+  "i18n-ally.localesPaths": ["public/locales"],
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "cSpell.words": ["Managify"],
+  "i18n-ally.keystyle": "nested",
+  "deno.enablePaths": ["supabase/functions"]
 }

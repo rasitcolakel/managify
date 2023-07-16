@@ -2,6 +2,8 @@ import { Database } from "./supabase";
 
 type Team = Database["public"]["Tables"]["teams"]["Row"] & {
   owner: Profile;
+  teamMembers: TeamMemberWithUser[];
+  tasks: Task[];
 };
 
 type TeamMember = Database["public"]["Tables"]["teamMembers"]["Row"];
@@ -21,7 +23,9 @@ type TaskAssignmentWithAssignee = TaskAssignment & {
   assignee: TeamMemberWithProfile;
 };
 
-type TaskWithAssignee = Database["public"]["Tables"]["tasks"]["Row"] & {
+type Task = Database["public"]["Tables"]["tasks"]["Row"];
+
+type TaskWithAssignee = Task & {
   taskAssignments: TaskAssignmentWithAssignee[];
 };
 
@@ -34,6 +38,7 @@ type getMyTeamMembershipsType =
 type TaskUpdates = Database["public"]["Tables"]["taskUpdates"]["Row"];
 
 export type {
+  Task,
   Team,
   TeamMember,
   TeamWithMembers,

@@ -1,48 +1,80 @@
 import React, { useEffect } from "react";
-import { useTranslate } from "@refinedev/core";
-import {
-  List,
-  useDataGrid,
-  DateField,
-  EditButton,
-  ShowButton,
-  DeleteButton,
-} from "@refinedev/mui";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { CrudFilter, useInfiniteList, useTranslate } from "@refinedev/core";
 import { GetServerSideProps } from "next";
 import { authProvider } from "src/authProvider";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import { Profile, Team } from "src/types";
-import Stack from "@mui/material/Stack";
 import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
 import { makeTeamActive, makeTeamDeleted } from "src/services/teams";
 import useConfirmationModal from "@components/common/useConfirmationModal";
-import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
-import { IconButton } from "@mui/material";
+import CardList from "@components/teams/list/CardList";
+import { useInView } from "react-intersection-observer";
+import { Button, IconButton, Stack, Typography } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import { useRouter } from "next/router";
+import Link from "@components/common/Link";
+import AddIcon from "@mui/icons-material/Add";
+
+export type TeamsAction = "edit" | "delete" | "restore" | "show";
+
 export default function TeamList() {
   const t = useTranslate();
-  const { dataGridProps, tableQueryResult } = useDataGrid({
-    filters: {
-      initial: [
-        {
-          field: "status",
-          operator: "eq",
-          value: "active",
-        },
-      ],
-    },
+  const router = useRouter();
+
+  const [status, setStatus] = React.useState<"active" | "deleted">("active");
+
+  const filters: CrudFilter[] = React.useMemo(() => {
+    return [
+      {
+        field: "status",
+        operator: "eq",
+        value: status,
+      },
+    ];
+  }, [status]);
+
+  const { data, fetchNextPage, hasNextPage, refetch } = useInfiniteList<Team>({
+    resource: "teams",
     meta: {
-      select: "*, owner(*)",
+      select:
+        "*, owner(*),  teamMembers(id, user_id, status, profile:profiles!user_id(*)), tasks(id, status)",
     },
+    filters,
+    sorters: [
+      {
+        field: "created_at",
+        order: "desc",
+      },
+    ],
     pagination: {
       pageSize: 10,
     },
   });
 
+  const { ref, inView } = useInView();
+
+  React.useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView]);
+
+  const teams = React.useMemo(() => {
+    const teams: Team[] = [];
+    data?.pages.forEach((page) => {
+      page.data.forEach((team) => {
+        teams.push(team);
+      });
+    });
+    return teams;
+  }, [data]);
+
   const { execute, data: user } = useAsyncFunction<any, Profile>(
     authProvider.getIdentity
   );
+  console.log("user", user);
 
   useEffect(() => {
     execute();
@@ -53,9 +85,9 @@ export default function TeamList() {
   const onDelete = React.useCallback(
     async (id: number) => {
       await makeTeamDeleted(id);
-      tableQueryResult.refetch();
+      refetch();
     },
-    [tableQueryResult]
+    [refetch]
   );
 
   const openDeleteModal = React.useCallback(
@@ -68,9 +100,9 @@ export default function TeamList() {
   const onRestore = React.useCallback(
     async (id: number) => {
       await makeTeamActive(id);
-      tableQueryResult.refetch();
+      refetch();
     },
-    [tableQueryResult]
+    [refetch]
   );
 
   const openRestoreModal = React.useCallback(
@@ -80,112 +112,79 @@ export default function TeamList() {
     [onRestore, openModal, t]
   );
 
-  const renderActions = React.useCallback(
-    (row: Team) => {
-      return (
-        <Stack direction="row" flex={1}>
-          <ShowButton size="small" hideText recordItemId={row.id} />
-          {row.owner.id === user?.id && (
-            <EditButton
-              size="small"
-              hideText
-              recordItemId={row.id}
-              color="success"
-            />
-          )}
-          {row.owner.id === user?.id &&
-            (row.status === "active" ? (
-              <DeleteButton
-                size="small"
-                hideText
-                onClick={() => openDeleteModal(row.id)}
-              />
-            ) : (
-              <IconButton size="small">
-                <RestoreFromTrashIcon
-                  color="success"
-                  fontSize="small"
-                  onClick={() => openRestoreModal(row.id)}
-                />
-              </IconButton>
-            ))}
-        </Stack>
-      );
+  const filter = React.useCallback(
+    (status: "active" | "deleted") => {
+      setStatus(status);
     },
-    [openDeleteModal, openRestoreModal, user?.id]
+    [setStatus]
   );
 
-  const columns = React.useMemo<GridColDef<Team>[]>(
-    () => [
-      {
-        field: "id",
-        headerName: t("teams.fields.id"),
-        type: "number",
-        minWidth: 50,
-      },
-      {
-        field: "title",
-        headerName: t("teams.fields.title"),
-        minWidth: 200,
-        flex: 1,
-      },
-      {
-        field: "description",
-        headerName: t("teams.fields.description"),
-        minWidth: 200,
-        flex: 1,
-      },
-      {
-        field: "Owner",
-        headerName: t("teams.fields.owner"),
-        minWidth: 200,
-        flex: 1,
-        renderCell: function render({ row }) {
-          return <span>{row.owner?.full_name}</span>;
-        },
-        sortable: false,
-        filterable: false,
-      },
-      {
-        field: "status",
-        headerName: t("teams.fields.status"),
-        minWidth: 250,
-        renderCell: function render({ value }) {
-          return <span>{t("teams.statuses." + value)}</span>;
-        },
-        flex: 1,
-      },
-      {
-        field: "created_at",
-        headerName: t("teams.fields.created_at"),
-        minWidth: 250,
-        renderCell: function render({ value }) {
-          return <DateField value={value} />;
-        },
-        flex: 1,
-      },
-      {
-        field: "actions",
-        headerName: t("table.actions"),
-        minWidth: 100,
-        renderCell: function render({ row }) {
-          return renderActions(row);
-        },
-        sortable: false,
-        filterable: false,
-      },
-    ],
-    [renderActions, t]
+  const onAction = React.useCallback(
+    (id: number, action: TeamsAction) => {
+      switch (action) {
+        case "delete":
+          openDeleteModal(id);
+          break;
+        case "restore":
+          openRestoreModal(id);
+          break;
+        case "show":
+          router.push(`/teams/show/${id}`);
+        case "edit":
+          router.push(`/teams/edit/${id}`);
+      }
+    },
+    [openDeleteModal, openRestoreModal, router]
   );
 
   return (
-    <List>
+    <Stack sx={{ justifyContent: "center" }} pt={2}>
+      <Stack
+        direction="row"
+        spacing={2}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        pb={3}
+      >
+        <Typography variant="h5" component="h1">
+          {t("teams.title")}
+        </Typography>
+        <Stack direction="row" spacing={2}>
+          <IconButton
+            color="primary"
+            onClick={() => filter(status === "active" ? "deleted" : "active")}
+          >
+            <FilterListIcon />
+          </IconButton>
+          <Link href="/teams/create">
+            <Button variant="contained" color="primary" startIcon={<AddIcon />}>
+              {t("buttons.create")}
+            </Button>
+          </Link>
+        </Stack>
+      </Stack>
       <Head>
         <title>{t("documentTitle.teams.list")}</title>
       </Head>
-      <DataGrid {...dataGridProps} columns={columns} autoHeight />
+      <CardList cardList={teams} onAction={onAction} user={user} />
+      <Stack
+        sx={{ justifyContent: "center" }}
+        pt={2}
+        ref={ref}
+        style={{
+          display: hasNextPage ? "flex" : "none",
+        }}
+      >
+        <Button
+          fullWidth={false}
+          startIcon={<RefreshIcon />}
+          onClick={() => fetchNextPage()}
+        >
+          Load More
+        </Button>
+      </Stack>
       {ConfirmationModal}
-    </List>
+    </Stack>
   );
 }
 

@@ -202,7 +202,8 @@
     "import": "Import",
     "clone": "Clone",
     "notAccessTitle": "You don't have permission to access",
-    "remove": "Remove"
+    "remove": "Remove",
+    "restore": "Restore"
   },
   "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes.",
   "notifications": {
@@ -228,6 +229,7 @@
     "default": "Managify",
     "suffix": " | Managify",
     "show": "{{title}} | Managify",
+    "invitation": "Invitation | Managify",
     "teams": {
       "list": "Teams | Managify",
       "show": "{{title}} | Managify",

@@ -119,7 +119,6 @@ export default function TaskTimeline({
   }, [data]);
 
   React.useEffect(() => {
-    console.log("inView", inView);
     if (inView) {
       fetchNextPage();
     }
