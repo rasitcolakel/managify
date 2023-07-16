@@ -92,6 +92,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                   meta: {
                     canDelete: true,
                     icon: <GroupWorkIcon />,
+                    label: t("teams.title"),
                   },
                 },
                 {
@@ -109,6 +110,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                   list: "/my-tasks",
                   meta: {
                     icon: <AssignmentIcon />,
+                    label: t("documentTitle.tasks.myTitle"),
                   },
                 },
               ]}

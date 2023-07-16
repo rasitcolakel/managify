@@ -1,0 +1,271 @@
+{
+    "pages": {
+        "login": {
+            "title": "Hesabınıza giriş yapın",
+            "signin": "Giriş yap",
+            "signup": "Kayıt ol",
+            "divider": "veya",
+            "fields": {
+                "email": "E-posta",
+                "password": "Şifre"
+            },
+            "errors": {
+                "validEmail": "Geçersiz e-posta adresi"
+            },
+            "buttons": {
+                "submit": "Giriş",
+                "forgotPassword": "Şifreni mi unuttun?",
+                "noAccount": "Hesabınız yok mu?",
+                "rememberMe": "Beni hatırla"
+            }
+        },
+        "forgotPassword": {
+            "title": "Şifrenizi mi unuttunuz?",
+            "fields": {
+                "email": "E-posta"
+            },
+            "errors": {
+                "validEmail": "Geçersiz e-posta adresi"
+            },
+            "buttons": {
+                "submit": "Sıfırlama talimatları gönder"
+            }
+        },
+        "register": {
+            "title": "Hesap oluştur",
+            "fields": {
+                "email": "E-posta",
+                "password": "Şifre"
+            },
+            "errors": {
+                "validEmail": "Geçersiz e-posta adresi"
+            },
+            "buttons": {
+                "submit": "Kayıt ol",
+                "haveAccount": "Zaten hesabınız var mı?"
+            }
+        },
+        "updatePassword": {
+            "title": "Şifreyi güncelle",
+            "fields": {
+                "password": "Yeni Şifre",
+                "confirmPassword": "Yeni şifreyi onayla"
+            },
+            "errors": {
+                "confirmPasswordNotMatch": "Şifreler eşleşmiyor"
+            },
+            "buttons": {
+                "submit": "Güncelle"
+            }
+        },
+        "error": {
+            "info": "{{action}} bileşenini {{resource}} kaynağına eklemeyi unutmuş olabilirsiniz.",
+            "404": "Üzgünüz, ziyaret ettiğiniz sayfa mevcut değil.",
+            "resource404": "{{resource}} kaynağını oluşturduğunuzdan emin misiniz?",
+            "backHome": "Ana Sayfaya Dön"
+        }
+    },
+    "teams": {
+        "title": "Takımlar",
+        "fields": {
+            "id": "ID",
+            "title": "Başlık",
+            "description": "Açıklama",
+            "created_at": "Oluşturma Tarihi",
+            "updated_at": "Güncelleme Tarihi",
+            "owner": "Sahip",
+            "status": "Durum"
+        },
+        "titles": {
+            "create": "Takım Oluştur",
+            "edit": "Takımı Düzenle",
+            "list": "Takımlar",
+            "show": "Takımı Göster"
+        },
+        "errors": {
+            "user_already_member": "Kullanıcı zaten bu takımın üyesidir."
+        },
+        "statuses": {
+            "deleted": "Silinmiş",
+            "active": "Aktif"
+        },
+        "deleteConfirmation": "Bu takımı silmek istediğinizden emin misiniz?",
+        "restoreConfirmation": "Bu takımı geri yüklemek istediğinizden emin misiniz?"
+    },
+    "profiles": {
+        "title": "Profil",
+        "update": "Profili Güncelle",
+        "fields": {
+            "id": "ID",
+            "first_name": "Ad",
+            "last_name": "Soyad",
+            "email": "E-posta",
+            "avatar": "Profil Fotoğrafı",
+            "password": "Şifre",
+            "password_confirmation": "Şifreyi Onayla"
+        },
+        "notCompletedDialog": {
+            "title": "Profilinizi Tamamlayın",
+            "message": "Devam etmeden önce profilinizi tamamlayın.",
+            "buttons": {
+                "complete": "Profili Tamamla"
+            }
+        }
+    },
+    "tasks": {
+        "title": "Görevler",
+        "titles": {
+            "detail": "Görev Detayı",
+            "create": "Görev Oluştur",
+            "edit": "Görevi Düzenle"
+        },
+        "fields": {
+            "id": "ID",
+            "title": "Başlık",
+            "description": "Açıklama",
+            "created_at": "Oluşturma Tarihi",
+            "updated_at": "Güncelleme Tarihi",
+            "status": "Durum",
+            "priority": "Öncelik",
+            "team": "Takım",
+            "assigned_to": "Atanan Kişi",
+            "due_date": "Bitiş Tarihi",
+            "assignees": "Atanan Kişiler",
+            "no_assignees": "Atanan Kişi Yok"
+        },
+        "taskPriorities": {
+            "low": "Düşük",
+            "medium": "Orta",
+            "high": "Yüksek"
+        },
+        "taskStatuses": {
+            "todo": "Yapılacak",
+            "in_progress": "Devam Ediyor",
+            "done": "Tamamlandı"
+        },
+        "taskChanges": {
+            "status": "{{date}} tarihinde durumu {{status}} olarak değiştirildi",
+            "priority": "{{date}} tarihinde önceliği {{priority}} olarak değiştirildi",
+            "created": "{{date}} tarihinde oluşturuldu",
+            "commented": "{{date}} tarihinde yorum yapıldı"
+        },
+        "updateStatus": "Durumu Güncelle",
+        "updatePriority": "Önceliği Güncelle",
+        "newComment": "Yorum yapın",
+        "comment": "Yorum",
+        "doneTask": "Görevi Tamamla"
+    },
+    "teamMembers": {
+        "title": "Takım Üyeleri",
+        "titles": {
+            "create": "Takım Üyesi Ekle",
+            "edit": "Takım Üyesini Düzenle",
+            "list": "Takım Üyeleri",
+            "show": "Takım Üyesini Göster"
+        },
+        "types": {
+            "owner": "Sahip",
+            "admin": "Yönetici",
+            "member": "Üye"
+        },
+        "statuses": {
+            "invited": "Davet Edildi",
+            "active": "Aktif"
+        },
+        "buttons": {
+            "makeOwner": "Sahip Yap"
+        },
+        "deleteMemberQuestion": "Bu kişiyi takımdan çıkarmak istediğinizden emin misiniz?",
+        "makeOwnerQuestion": "Bu kişiyi takımın sahibi yapmak istediğinizden emin misiniz? Artık siz sahip olmayacaksınız."
+    },
+    "actions": {
+        "list": "Listele",
+        "create": "Oluştur",
+        "edit": "Düzenle",
+        "show": "Göster",
+        "delete": "Sil",
+        "fetching": "Yeni veriler alınıyor..."
+    },
+    "buttons": {
+        "create": "Oluştur",
+        "save": "Kaydet",
+        "logout": "Çıkış yap",
+        "delete": "Sil",
+        "edit": "Düzenle",
+        "cancel": "İptal",
+        "confirm": "Onayla",
+        "filter": "Filtrele",
+        "clear": "Temizle",
+        "refresh": "Yenile",
+        "show": "Göster",
+        "undo": "Geri Al",
+        "import": "İçe Aktar",
+        "clone": "Kopyala",
+        "notAccessTitle": "Erişim izniniz yok",
+        "remove": "Kaldır",
+        "restore": "Geri Yükle"
+    },
+    "warnWhenUnsavedChanges": "Ayrılmak istediğinizden emin misiniz? Kaydedilmemiş değişiklikleriniz var.",
+    "notifications": {
+        "success": "Başarılı",
+        "error": "Hata (durum kodu: {{statusCode}})",
+        "undoable": "Geri almak için {{seconds}} saniyeniz var",
+        "createSuccess": "{{resource}} başarıyla oluşturuldu",
+        "createError": "{{resource}} oluşturulurken bir hata oluştu (durum kodu: {{statusCode}})",
+        "deleteSuccess": "{{resource}} başarıyla silindi",
+        "deleteError": "{{resource}} silinirken bir hata oluştu (durum kodu: {{statusCode}})",
+        "editSuccess": "{{resource}} başarıyla düzenlendi",
+        "editError": "{{resource}} düzenlenirken bir hata oluştu (durum kodu: {{statusCode}})",
+        "importProgress": "İçe aktarılıyor: {{processed}}/{{total}}"
+    },
+    "loading": "Yükleniyor",
+    "tags": {
+        "clone": "Kopyala"
+    },
+    "dashboard": {
+        "title": "Gösterge Paneli"
+    },
+    "documentTitle": {
+        "default": "Managify",
+        "suffix": " | Managify",
+        "show": "{{title}} | Managify",
+        "invitation": "Davet | Managify",
+        "teams": {
+            "list": "Takımlar | Managify",
+            "show": "{{title}} | Managify",
+            "edit": "{{title}}'yi Düzenle | Managify",
+            "create": "Yeni Takım Oluştur | Managify",
+            "clone": "{{title}} Takımını Kopyala | Managify"
+        },
+        "tasks": {
+            "my": "Görevlerim | Managify",
+            "myTitle": "Görevlerim"
+        },
+        "auth": {
+            "login": "Giriş Yap | Managify",
+            "register": "Kayıt Ol | Managify",
+            "forgotPassword": "Şifremi Unuttum | Managify"
+        }
+    },
+    "table": {
+        "actions": "İşlemler"
+    },
+    "form": {
+        "optional": "İsteğe bağlı",
+        "required": "Zorunlu"
+    },
+    "common": {
+        "errors": {
+            "unexpectedError": "Beklenmeyen Hata",
+            "notFound": "Bulunamadı",
+            "serverError": "Sunucu Hatası",
+            "validationError": "Doğrulama Hatası",
+            "unauthorized": "Yetkisiz",
+            "forbidden": "Yasak",
+            "badRequest": "Geçersiz İstek",
+            "serviceUnavailable": "Servis Kullanılamıyor",
+            "gatewayTimeout": "Ağ Geçidi Zaman Aşımı",
+            "unknownError": "Bilinmeyen Hata"
+        }
+    }
+}

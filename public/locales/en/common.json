@@ -238,7 +238,8 @@
       "clone": "{{title}} Clone Team | Managify"
     },
     "tasks": {
-      "my": "My Tasks | Managify"
+      "my": "My Tasks | Managify",
+      "myTitle": "My Tasks"
     },
     "auth": {
       "login": "Login | Managify",

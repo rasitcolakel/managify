@@ -1,40 +1,40 @@
 {
   "pages": {
     "login": {
-      "title": "Melden Sie sich bei Ihrem Konto an",
-      "signin": "Einloggen",
-      "signup": "Anmelden",
+      "title": "Melden Sie sich in Ihrem Konto an",
+      "signin": "Anmelden",
+      "signup": "Registrieren",
       "divider": "oder",
       "fields": {
-        "email": "Email",
+        "email": "E-Mail",
         "password": "Passwort"
       },
       "errors": {
         "validEmail": "Ungültige E-Mail-Adresse"
       },
       "buttons": {
-        "submit": "Anmeldung",
+        "submit": "Einloggen",
         "forgotPassword": "Passwort vergessen?",
-        "noAccount": "Sie haben kein Konto?",
-        "rememberMe": "Erinnere dich an mich"
+        "noAccount": "Sie haben noch kein Konto?",
+        "rememberMe": "Angemeldet bleiben"
       }
     },
     "forgotPassword": {
-      "title": "Haben Sie Ihr Passwort vergessen?",
+      "title": "Passwort vergessen?",
       "fields": {
-        "email": "Email"
+        "email": "E-Mail"
       },
       "errors": {
         "validEmail": "Ungültige E-Mail-Adresse"
       },
       "buttons": {
-        "submit": "Anweisungen zum Zurücksetzen senden"
+        "submit": "Senden Sie Anweisungen zur Zurücksetzung"
       }
     },
     "register": {
       "title": "Registrieren Sie sich für Ihr Konto",
       "fields": {
-        "email": "Email",
+        "email": "E-Mail",
         "password": "Passwort"
       },
       "errors": {
@@ -42,14 +42,14 @@
       },
       "buttons": {
         "submit": "Registrieren",
-        "haveAccount": "Ein Konto haben?"
+        "haveAccount": "Haben Sie bereits ein Konto?"
       }
     },
     "updatePassword": {
-      "title": "Kennwort aktualisieren",
+      "title": "Passwort aktualisieren",
       "fields": {
         "password": "Neues Passwort",
-        "confirmPassword": "Bestätige neues Passwort"
+        "confirmPassword": "Neues Passwort bestätigen"
       },
       "errors": {
         "confirmPasswordNotMatch": "Passwörter stimmen nicht überein"
@@ -59,46 +59,132 @@
       }
     },
     "error": {
-      "404": "Leider existiert diese Seite nicht.",
-      "info": "Sie haben vergessen, {{action}} component zu {{resource}} hinzufügen.",
-      "resource404": "Haben Sie die {{resource}} resource erstellt?",
-      "backHome": "Zurück"
+      "info": "Sie haben möglicherweise vergessen, die {{action}}-Komponente zur {{resource}}-Ressource hinzuzufügen.",
+      "404": "Entschuldigung, die von Ihnen besuchte Seite existiert nicht.",
+      "resource404": "Sind Sie sicher, dass Sie die {{resource}}-Ressource erstellt haben.",
+      "backHome": "Zurück zur Startseite"
     }
   },
   "teams": {
     "title": "Teams",
     "fields": {
-      "id": "Id",
+      "id": "ID",
       "title": "Titel",
       "description": "Beschreibung",
-      "created_at": "Erstellt",
-      "updated_at": "Aktualisiert"
+      "created_at": "Erstellt am",
+      "updated_at": "Aktualisiert am",
+      "owner": "Besitzer",
+      "status": "Status"
     },
     "titles": {
       "create": "Team erstellen",
       "edit": "Team bearbeiten",
       "list": "Teams",
       "show": "Team anzeigen"
-    }
+    },
+    "errors": {
+      "user_already_member": "Benutzer ist bereits Mitglied dieses Teams."
+    },
+    "statuses": {
+      "deleted": "Gelöscht",
+      "active": "Aktiv"
+    },
+    "deleteConfirmation": "Sind Sie sicher, dass Sie dieses Team löschen möchten?",
+    "restoreConfirmation": "Sind Sie sicher, dass Sie dieses Team wiederherstellen möchten?"
   },
   "profiles": {
-    "title": "Profile",
+    "title": "Profil",
     "update": "Profil aktualisieren",
     "fields": {
-      "id": "Id",
+      "id": "ID",
       "first_name": "Vorname",
       "last_name": "Nachname",
-      "email": "Email",
-      "email_verified_at": "Email verifiziert",
-      "created_at": "Erstellt",
-      "updated_at": "Aktualisiert"
+      "email": "E-Mail",
+      "avatar": "Avatar",
+      "password": "Passwort",
+      "password_confirmation": "Passwort bestätigen"
+    },
+    "notCompletedDialog": {
+      "title": "Vervollständigen Sie Ihr Profil",
+      "message": "Bitte vervollständigen Sie Ihr Profil, bevor Sie fortfahren.",
+      "buttons": {
+        "complete": "Profil vervollständigen"
+      }
     }
   },
+  "tasks": {
+    "title": "Aufgaben",
+    "titles": {
+      "detail": "Aufgabendetails",
+      "create": "Aufgabe erstellen",
+      "edit": "Aufgabe bearbeiten"
+    },
+    "fields": {
+      "id": "ID",
+      "title": "Titel",
+      "description": "Beschreibung",
+      "created_at": "Erstellt am",
+      "updated_at": "Aktualisiert am",
+      "status": "Status",
+      "priority": "Priorität",
+      "team": "Team",
+      "assigned_to": "Zugewiesen an",
+      "due_date": "Fälligkeitsdatum",
+      "assignees": "Zugewiesene Personen",
+      "no_assignees": "Keine zugewiesenen Personen"
+    },
+    "taskPriorities": {
+      "low": "Niedrig",
+      "medium": "Mittel",
+      "high": "Hoch"
+    },
+    "taskStatuses": {
+      "todo": "To-do",
+      "in_progress": "In Bearbeitung",
+      "done": "Erledigt"
+    },
+    "taskChanges": {
+      "status": "Status geändert zu {{status}} am {{date}}",
+      "priority": "Priorität geändert zu {{priority}} am {{date}}",
+      "created": "erstellt am {{date}}",
+      "commented": "kommentiert am {{date}}"
+    },
+    "updateStatus": "Status aktualisieren",
+    "updatePriority": "Priorität aktualisieren",
+    "newComment": "Kommentar hinterlassen",
+    "comment": "Kommentar",
+    "doneTask": "Aufgabe erledigen"
+  },
+  "teamMembers": {
+    "title": "Teammitglieder",
+    "titles": {
+      "create": "Teammitglied hinzufügen",
+      "edit": "Teammitglied bearbeiten",
+      "list": "Teammitglieder",
+      "show": "Teammitglied anzeigen"
+    },
+    "types": {
+      "owner": "Besitzer",
+      "admin": "Admin",
+      "member": "Mitglied"
+    },
+    "statuses": {
+      "invited": "Eingeladen",
+      "active": "Aktiv"
+    },
+    "buttons": {
+      "makeOwner": "Zum Besitzer machen"
+    },
+    "deleteMemberQuestion": "Sind Sie sicher, dass Sie diese Person aus dem Team entfernen möchten?",
+    "makeOwnerQuestion": "Sind Sie sicher, dass Sie diese Person zum Besitzer dieses Teams machen möchten? Sie werden nicht mehr der Besitzer sein."
+  },
   "actions": {
-    "list": "Aufführen",
+    "list": "Auflisten",
     "create": "Erstellen",
     "edit": "Bearbeiten",
-    "show": "Zeigen"
+    "show": "Anzeigen",
+    "delete": "Löschen",
+    "fetching": "Neue Daten werden abgerufen..."
   },
   "buttons": {
     "create": "Erstellen",
@@ -107,32 +193,34 @@
     "delete": "Löschen",
     "edit": "Bearbeiten",
     "cancel": "Abbrechen",
-    "confirm": "Sicher?",
-    "filter": "Filter",
-    "clear": "Löschen",
-    "refresh": "Erneuern",
-    "show": "Zeigen",
-    "undo": "Undo",
+    "confirm": "Bestätigen",
+    "filter": "Filtern",
+    "clear": "Leeren",
+    "refresh": "Aktualisieren",
+    "show": "Anzeigen",
+    "undo": "Rückgängig",
     "import": "Importieren",
-    "clone": "Klon",
-    "notAccessTitle": "Sie haben keine zugriffsberechtigung"
+    "clone": "Klonen",
+    "notAccessTitle": "Sie haben keine Berechtigung zum Zugriff",
+    "remove": "Entfernen",
+    "restore": "Wiederherstellen"
   },
-  "warnWhenUnsavedChanges": "Nicht gespeicherte Änderungen werden nicht übernommen.",
+  "warnWhenUnsavedChanges": "Sind Sie sicher, dass Sie gehen möchten? Sie haben nicht gespeicherte Änderungen.",
   "notifications": {
-    "success": "Erfolg",
-    "error": "Fehler (status code: {{statusCode}})",
-    "undoable": "Sie haben {{seconds}} Sekunden Zeit für Undo.",
-    "createSuccess": "{{resource}} erfolgreich erstellt.",
-    "createError": "Fehler beim Erstellen {{resource}} (status code: {{statusCode}})",
-    "deleteSuccess": "{{resource}} erfolgreich gelöscht.",
-    "deleteError": "Fehler beim Löschen {{resource}} (status code: {{statusCode}})",
-    "editSuccess": "{{resource}} erfolgreich bearbeitet.",
-    "editError": "Fehler beim Bearbeiten {{resource}} (status code: {{statusCode}})",
-    "importProgress": "{{processed}}/{{total}} importiert"
+    "success": "Erfolgreich",
+    "error": "Fehler (Statuscode: {{statusCode}})",
+    "undoable": "Sie haben {{seconds}} Sekunden, um rückgängig zu machen",
+    "createSuccess": "{{resource}} erfolgreich erstellt",
+    "createError": "Fehler beim Erstellen von {{resource}} (Statuscode: {{statusCode}})",
+    "deleteSuccess": "{{resource}} erfolgreich gelöscht",
+    "deleteError": "Fehler beim Löschen von {{resource}} (Statuscode: {{statusCode}})",
+    "editSuccess": "{{resource}} erfolgreich bearbeitet",
+    "editError": "Fehler beim Bearbeiten von {{resource}} (Statuscode: {{statusCode}})",
+    "importProgress": "Importiere: {{processed}}/{{total}}"
   },
-  "loading": "Wird geladen",
+  "loading": "Laden",
   "tags": {
-    "clone": "Klon"
+    "clone": "Klonen"
   },
   "dashboard": {
     "title": "Dashboard"
@@ -140,12 +228,18 @@
   "documentTitle": {
     "default": "Managify",
     "suffix": " | Managify",
+    "show": "{{title}} | Managify",
+    "invitation": "Einladung | Managify",
     "teams": {
       "list": "Teams | Managify",
       "show": "{{title}} | Managify",
-      "edit": "Bearbeite {{title}}  | Managify",
-      "create": "Erstelle Neues Team | Managify",
-      "clone": "{{title}} Klonen Team | Managify"
+      "edit": "Bearbeiten Sie das {{title}}  | Managify",
+      "create": "Neues Team erstellen | Managify",
+      "clone": "{{title}} Team klonen | Managify"
+    },
+    "tasks": {
+      "my": "Meine Aufgaben | Managify",
+      "myTitle": "Meine Aufgaben | Managify"
     },
     "auth": {
       "login": "Anmelden | Managify",
@@ -155,5 +249,23 @@
   },
   "table": {
     "actions": "Aktionen"
+  },
+  "form": {
+    "optional": "Optional",
+    "required": "Erforderlich"
+  },
+  "common": {
+    "errors": {
+      "unexpectedError": "Unerwarteter Fehler",
+      "notFound": "Nicht gefunden",
+      "serverError": "Serverfehler",
+      "validationError": "Validierungsfehler",
+      "unauthorized": "Unbefugt",
+      "forbidden": "Verboten",
+      "badRequest": "Fehlerhafte Anfrage",
+      "serviceUnavailable": "Dienst nicht verfügbar",
+      "gatewayTimeout": "Gateway-Zeitüberschreitung",
+      "unknownError": "Unbekannter Fehler"
+    }
   }
 }
