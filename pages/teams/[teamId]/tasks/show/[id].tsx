@@ -211,6 +211,10 @@ export default function TaskShow() {
     { label: t("tasks.taskStatuses.done"), value: "done" },
   ];
 
+  const refresh = async () => {
+    await queryResult.refetch();
+  };
+
   const updateStatusMenu = () => {
     return (
       <>
@@ -271,6 +275,7 @@ export default function TaskShow() {
           aria-haspopup="true"
           aria-expanded={Boolean(priorityEl) ? "true" : undefined}
           onClick={handleClickPriority}
+          disabled={record?.status === "done"}
         >
           <SettingsIcon />
         </IconButton>
@@ -379,7 +384,13 @@ export default function TaskShow() {
                 </Paper>
               </Grid>
               <Grid item xs={12}>
-                <TaskTimeline id={id} />
+                disabled={record?.status === "done"}
+                <TaskTimeline
+                  id={id}
+                  teamId={teamId}
+                  refresh={refresh}
+                  isDone={record?.status === "done"}
+                />
               </Grid>
             </Grid>
             <Grid item xs={12} md={6} lg={3}>

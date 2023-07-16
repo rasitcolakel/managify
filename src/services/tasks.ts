@@ -121,12 +121,16 @@ export const updateTaskStatus = async (
   team_id: TaskWithAssignee["team_id"],
   status: TaskWithAssignee["status"]
 ) => {
+  const body: Partial<TaskWithAssignee> = {
+    status,
+  };
+  if (status === "done") {
+    body["completed_at"] = dayjs().utc().format();
+  }
   const { error, data } = await supabaseClient
 
     .from("tasks")
-    .update({
-      status,
-    })
+    .update(body)
     .eq("id", id);
   if (error) {
     throw error;
@@ -174,6 +178,26 @@ export const updateTaskPriority = async (
   });
 
   return data;
+};
+
+export const addComment = async (
+  id: TaskWithAssignee["id"],
+  team_id: TaskWithAssignee["team_id"],
+  content: string,
+  makeDone?: boolean
+) => {
+  await insertTaskUpdate({
+    task_id: id,
+    team_id: team_id!,
+    updates: [
+      {
+        type: "comment",
+        content,
+      },
+    ],
+  });
+
+  if (makeDone) await updateTaskStatus(id, team_id, "done");
 };
 
 const getTaskAssignmentChanges = (

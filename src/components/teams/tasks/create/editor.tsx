@@ -9,6 +9,7 @@ import { ColorModeContext } from "@contexts/index";
 
 type EditorWrapperProps = {
   isDark: boolean;
+  minHeight?: string;
 };
 const EditorWrapper = styled.div(`
 `);
@@ -22,7 +23,7 @@ const ReactQuill = dynamic(
 
 const StyledReactQuill = styled(ReactQuill)<EditorWrapperProps>`
   .ql-editor {
-    min-height: 200px;
+    min-height: ${(props) => (props.minHeight ? props.minHeight : "200px")};
   }
   .ql-container {
     border-bottom-left-radius: 0.4em;
@@ -49,13 +50,19 @@ type Props = {
   theme?: string;
   placeholder?: string;
   className?: string;
-};
+  quillEditorProps?: ReactQuillProps & Partial<EditorWrapperProps>;
+} & React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+>;
 
 export default function QuillEditor({
   onChange,
   value,
   placeholder,
   theme = "snow",
+  quillEditorProps,
+  ...props
 }: Props): JSX.Element {
   const colorModeContext = useContext(ColorModeContext);
   const isDark = colorModeContext.mode === "dark";
@@ -77,8 +84,18 @@ export default function QuillEditor({
   };
 
   return (
-    <EditorWrapper>
-      <StyledReactQuill {...quillProps} isDark={isDark} value={value} />
+    <EditorWrapper
+      style={{
+        width: "100%",
+      }}
+      {...props}
+    >
+      <StyledReactQuill
+        {...quillProps}
+        {...quillEditorProps}
+        isDark={isDark}
+        value={value}
+      />
     </EditorWrapper>
   );
 }

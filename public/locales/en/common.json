@@ -150,7 +150,10 @@
       "commented": "commented on {{date}}"
     },
     "updateStatus": "Update Status",
-    "updatePriority": "Update Priority"
+    "updatePriority": "Update Priority",
+    "newComment": "Leave a comment",
+    "comment": "Comment",
+    "doneTask": "Done Task"
   },
   "teamMembers": {
     "title": "Team Members",

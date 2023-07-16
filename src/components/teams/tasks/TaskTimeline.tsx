@@ -16,9 +16,14 @@ import { Avatar, Divider, Paper, Stack, Typography } from "@mui/material";
 import CommentIcon from "@mui/icons-material/Comment";
 import { Profile, TaskUpdates } from "src/types";
 import dayjs from "dayjs";
+import NewComment from "./NewComment";
+import styled from "@emotion/styled";
 
 type TaskTimelineProps = {
   id: string;
+  teamId: string;
+  refresh: () => Promise<void>;
+  isDone: boolean;
 };
 
 type TaskUpdateType = TaskUpdate["type"];
@@ -28,7 +33,19 @@ type ITaskUpdate = TaskUpdates & {
   user: Profile;
 };
 
-export default function TaskTimeline({ id }: TaskTimelineProps) {
+const StyledDescription = styled.div`
+  margin: 1rem;
+  p {
+    margin: 0;
+  }
+`;
+
+export default function TaskTimeline({
+  id,
+  teamId,
+  refresh,
+  isDone,
+}: TaskTimelineProps) {
   const t = useTranslate();
   const colorModeContext = React.useContext(ColorModeContext);
   const isDark = colorModeContext.mode === "dark";
@@ -151,9 +168,10 @@ export default function TaskTimeline({ id }: TaskTimelineProps) {
               </Typography>
             </Stack>
             <Divider sx={{ my: 1 }} />
-            <Typography variant="body2" component="p">
-              {taskUpdate.content}
-            </Typography>
+
+            <StyledDescription
+              dangerouslySetInnerHTML={{ __html: taskUpdate.content || "" }}
+            />
           </Paper>
         );
       }
@@ -162,7 +180,6 @@ export default function TaskTimeline({ id }: TaskTimelineProps) {
     [readableDate, t]
   );
 
-  const lastUpdate = taskUpdates[taskUpdates.length - 1];
   // render timeline items with memoized
   const renderTimelineItems = React.useMemo(
     () =>
@@ -177,7 +194,7 @@ export default function TaskTimeline({ id }: TaskTimelineProps) {
               {timelineDotIcon(taskUpdate?.type)}
             </TimelineDot>
 
-            {taskUpdate.id !== lastUpdate.id && <TimelineConnector />}
+            <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent
             sx={{
@@ -214,7 +231,7 @@ export default function TaskTimeline({ id }: TaskTimelineProps) {
           </TimelineContent>
         </TimelineItem>
       )),
-    [isDark, lastUpdate?.id, taskUpdateMessage, taskUpdates, timelineDotIcon]
+    [isDark, taskUpdateMessage, taskUpdates, timelineDotIcon]
   );
 
   return (
@@ -227,6 +244,13 @@ export default function TaskTimeline({ id }: TaskTimelineProps) {
       }}
     >
       {renderTimelineItems}
+      <NewComment
+        id={id}
+        isDark={isDark}
+        teamId={teamId}
+        refresh={refresh}
+        isDone={isDone}
+      />
     </Timeline>
   );
 }
