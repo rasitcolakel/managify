@@ -24,6 +24,8 @@ import { supabaseClient } from "src/utility";
 import "@components/css/index.css";
 import { CompleteProfileNotificationContextProvider } from "@contexts/CompleteProfileNotificationContext";
 import CompleteProfileNotification from "@components/users/CompleteProfileNotification";
+import GroupWorkIcon from "@mui/icons-material/GroupWork";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   noLayout?: boolean;
@@ -89,6 +91,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                   show: "/teams/show/:id",
                   meta: {
                     canDelete: true,
+                    icon: <GroupWorkIcon />,
                   },
                 },
                 {
@@ -104,6 +107,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                 {
                   name: "my-tasks",
                   list: "/my-tasks",
+                  meta: {
+                    icon: <AssignmentIcon />,
+                  },
                 },
               ]}
               options={{

@@ -14,6 +14,30 @@ type ColorModeContextProviderProps = {
   children: ReactNode;
 };
 
+const customDarkTheme = {
+  ...RefineThemes.BlueDark,
+  palette: {
+    ...RefineThemes.BlueDark.palette,
+    background: {
+      ...RefineThemes.BlueDark.palette.background,
+      default: "#111827",
+      paper: "#1f2937",
+    },
+  },
+};
+
+const customLightTheme = {
+  ...RefineThemes.Blue,
+  palette: {
+    ...RefineThemes.Blue.palette,
+    background: {
+      ...RefineThemes.Blue.palette.background,
+      default: "#f3f4f6",
+      paper: "#fff",
+    },
+  },
+};
+
 export const ColorModeContextProvider: React.FC<
   ColorModeContextProviderProps
 > = ({ children }) => {
@@ -49,7 +73,7 @@ export const ColorModeContextProvider: React.FC<
     >
       <ThemeProvider
         // you can change the theme colors here. example: mode === "light" ? RefineThemes.Magenta : RefineThemes.MagentaDark
-        theme={mode === "light" ? RefineThemes.Blue : RefineThemes.BlueDark}
+        theme={mode === "light" ? customLightTheme : customDarkTheme}
       >
         {children}
       </ThemeProvider>
