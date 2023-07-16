@@ -327,7 +327,13 @@ export default function TaskShow() {
       </Head>
       <LoadingOverlay loading={!record && !isLoading && loading}>
         {record && (
-          <Grid container spacing={2}>
+          <Grid
+            container
+            spacing={2}
+            sx={{
+              position: "relative",
+            }}
+          >
             <Grid item xs={12}>
               <Stack
                 direction="row"
@@ -370,7 +376,7 @@ export default function TaskShow() {
 
               <Divider sx={{ py: 1 }} />
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={12} lg={9}>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, mt: "1em" }}>
                   <Typography variant="h6" sx={{ mb: 1 }} color="primary">
@@ -384,7 +390,6 @@ export default function TaskShow() {
                 </Paper>
               </Grid>
               <Grid item xs={12}>
-                disabled={record?.status === "done"}
                 <TaskTimeline
                   id={id}
                   teamId={teamId}
@@ -394,7 +399,14 @@ export default function TaskShow() {
               </Grid>
             </Grid>
             <Grid item xs={12} md={6} lg={3}>
-              <Grid container spacing={2}>
+              <Grid
+                container
+                spacing={2}
+                sx={{
+                  position: "sticky",
+                  top: 70,
+                }}
+              >
                 <Grid item xs={12}>
                   <TaskCard
                     name={t("tasks.fields.assignees")}

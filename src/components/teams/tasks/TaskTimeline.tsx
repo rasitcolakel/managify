@@ -5,19 +5,44 @@ import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
-import { useList, useTranslate } from "@refinedev/core";
+import { useInfiniteList, useTranslate } from "@refinedev/core";
 import { TaskUpdate } from "src/services/tasks";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import LabelIcon from "@mui/icons-material/Label";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
-import { grey } from "@mui/material/colors";
+import * as colors from "@mui/material/colors";
 import { ColorModeContext } from "@contexts/index";
-import { Avatar, Divider, Paper, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Divider,
+  Paper,
+  Stack,
+  Typography,
+  styled,
+} from "@mui/material";
 import CommentIcon from "@mui/icons-material/Comment";
 import { Profile, TaskUpdates } from "src/types";
 import dayjs from "dayjs";
 import NewComment from "./NewComment";
-import styled from "@emotion/styled";
+import { useInView } from "react-intersection-observer";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import { motion } from "framer-motion";
+
+const container = {
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const item = {
+  hidden: { translateY: -100, opacity: 0 },
+  visible: {
+    translateY: 0,
+    opacity: 1,
+  },
+};
 
 type TaskTimelineProps = {
   id: string;
@@ -33,12 +58,20 @@ type ITaskUpdate = TaskUpdates & {
   user: Profile;
 };
 
-const StyledDescription = styled.div`
+const StyledDescription = styled("div")`
   margin: 1rem;
   p {
     margin: 0;
   }
 `;
+
+const MotionTimelineDot = motion(
+  // eslint-disable-next-line react/display-name
+  React.forwardRef((props, ref) => (
+    // @ts-ignore
+    <RefreshIcon ref={ref} {...props} />
+  ))
+);
 
 export default function TaskTimeline({
   id,
@@ -46,10 +79,11 @@ export default function TaskTimeline({
   refresh,
   isDone,
 }: TaskTimelineProps) {
+  const { ref, inView } = useInView();
   const t = useTranslate();
   const colorModeContext = React.useContext(ColorModeContext);
   const isDark = colorModeContext.mode === "dark";
-  const { data } = useList<ITaskUpdate>({
+  const { data, fetchNextPage, hasNextPage } = useInfiniteList<ITaskUpdate>({
     resource: "taskUpdates",
     meta: {
       select: "*, user:profiles(*)",
@@ -64,39 +98,52 @@ export default function TaskTimeline({
     sorters: [
       {
         field: "created_at",
-        order: "asc",
+        order: "desc",
       },
     ],
     liveMode: "auto",
     pagination: {
-      pageSize: 100,
+      pageSize: 5,
     },
   });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const taskUpdates = data?.data ?? [];
 
-  const timelineDotIcon = React.useCallback(
-    (type: TaskUpdateType) => {
-      const iconProps = {
-        sx: {
-          color: isDark ? grey[400] : grey[600],
-        },
-      };
-      switch (type) {
-        case "create":
-          return <AddBoxIcon {...iconProps} />;
-        case "priority":
-          return <LabelIcon {...iconProps} />;
-        case "status":
-          return <ChangeCircleIcon {...iconProps} />;
-        case "comment":
-          return <CommentIcon {...iconProps} />;
-        default:
-          return null;
-      }
-    },
-    [isDark]
-  );
+  const taskUpdates = React.useMemo(() => {
+    const taskUpdates: ITaskUpdate[] = [];
+    data?.pages.forEach((page) => {
+      page.data.forEach((taskUpdate) => {
+        taskUpdates.push(taskUpdate);
+      });
+    });
+    return taskUpdates;
+  }, [data]);
+
+  React.useEffect(() => {
+    console.log("inView", inView);
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView]);
+
+  const timelineDotIcon = React.useCallback((type: TaskUpdateType) => {
+    const iconProps = {
+      sx: {
+        color: "white",
+      },
+    };
+    switch (type) {
+      case "create":
+        return <AddBoxIcon {...iconProps} />;
+      case "priority":
+        return <LabelIcon {...iconProps} />;
+      case "status":
+        return <ChangeCircleIcon {...iconProps} />;
+      case "comment":
+        return <CommentIcon {...iconProps} />;
+      default:
+        return null;
+    }
+  }, []);
 
   const readableDate = React.useCallback((date: string) => {
     const dateObj = dayjs(date);
@@ -180,58 +227,88 @@ export default function TaskTimeline({
     [readableDate, t]
   );
 
+  const timelineDotIconColor = React.useCallback((type: TaskUpdateType) => {
+    switch (type) {
+      case "create":
+        return colors.green[800];
+      case "priority":
+        return colors.yellow[800];
+      case "status":
+        return colors.blue[800];
+      case "comment":
+        return colors.grey[800];
+      default:
+        return colors.grey[800];
+    }
+  }, []);
+
+  const lastUpdate =
+    (taskUpdates.length && taskUpdates[taskUpdates.length - 1]) || null;
+
   // render timeline items with memoized
   const renderTimelineItems = React.useMemo(
     () =>
       taskUpdates.map((taskUpdate) => (
-        <TimelineItem key={taskUpdate.id}>
-          <TimelineSeparator>
-            <TimelineDot
+        <motion.div key={taskUpdate.id} variants={item}>
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot
+                sx={{
+                  bgcolor: timelineDotIconColor(taskUpdate?.type),
+                }}
+              >
+                {timelineDotIcon(taskUpdate?.type)}
+              </TimelineDot>
+
+              {lastUpdate && lastUpdate.id !== taskUpdate.id && (
+                <TimelineConnector />
+              )}
+              {hasNextPage && <TimelineConnector />}
+            </TimelineSeparator>
+            <TimelineContent
               sx={{
-                bgcolor: isDark ? grey[800] : grey[100],
+                alignSelf: "center",
               }}
             >
-              {timelineDotIcon(taskUpdate?.type)}
-            </TimelineDot>
-
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent
-            sx={{
-              alignSelf: "center",
-            }}
-          >
-            <Stack direction="row" spacing={1} alignItems={"center"}>
-              {taskUpdate.type !== "comment" && (
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  alignItems={"center"}
-                  mx={{
-                    xs: 1,
-                  }}
-                >
-                  <Avatar
-                    alt={taskUpdate.user.full_name || ""}
-                    sx={{ width: "1.5em", height: "1.5em" }}
-                  />
-                  <Typography
-                    sx={{
-                      fontSize: "0.9rem",
+              <Stack direction="row" spacing={1} alignItems={"center"}>
+                {taskUpdate.type !== "comment" && (
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems={"center"}
+                    mx={{
+                      xs: 1,
                     }}
-                    component="span"
                   >
-                    {taskUpdate.user.full_name}
-                  </Typography>
-                </Stack>
-              )}
+                    <Avatar
+                      alt={taskUpdate.user.full_name || ""}
+                      sx={{ width: "1.5em", height: "1.5em" }}
+                    />
+                    <Typography
+                      sx={{
+                        fontSize: "0.9rem",
+                      }}
+                      component="span"
+                    >
+                      {taskUpdate.user.full_name}
+                    </Typography>
+                  </Stack>
+                )}
 
-              {taskUpdateMessage(taskUpdate)}
-            </Stack>
-          </TimelineContent>
-        </TimelineItem>
+                {taskUpdateMessage(taskUpdate)}
+              </Stack>
+            </TimelineContent>
+          </TimelineItem>
+        </motion.div>
       )),
-    [isDark, taskUpdateMessage, taskUpdates, timelineDotIcon]
+    [
+      hasNextPage,
+      lastUpdate,
+      taskUpdateMessage,
+      taskUpdates,
+      timelineDotIcon,
+      timelineDotIconColor,
+    ]
   );
 
   return (
@@ -243,7 +320,6 @@ export default function TaskTimeline({
         },
       }}
     >
-      {renderTimelineItems}
       <NewComment
         id={id}
         isDark={isDark}
@@ -251,6 +327,43 @@ export default function TaskTimeline({
         refresh={refresh}
         isDone={isDone}
       />
+      <motion.div variants={container} initial="hidden" animate="visible">
+        {renderTimelineItems}
+      </motion.div>
+      <TimelineItem
+        ref={ref}
+        style={{
+          display: hasNextPage ? "flex" : "none",
+        }}
+      >
+        <TimelineSeparator>
+          <TimelineDot
+            sx={{
+              bgcolor: colors.green[800],
+            }}
+          >
+            <MotionTimelineDot
+              // @ts-ignore
+              sx={{
+                color: "white",
+              }}
+              animate={{
+                rotate: 360,
+                speed: 0.5,
+              }}
+              transition={{ repeat: Infinity }}
+            />
+          </TimelineDot>
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent
+          sx={{
+            alignSelf: "center",
+          }}
+        >
+          {t("actions.fetching")}
+        </TimelineContent>
+      </TimelineItem>
     </Timeline>
   );
 }

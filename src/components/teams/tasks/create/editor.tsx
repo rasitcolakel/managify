@@ -2,17 +2,15 @@ import React, { useContext } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import { ReactQuillProps } from "react-quill";
-import styled from "@emotion/styled";
 import { ColorModeContext } from "@contexts/index";
+import { styled } from "@mui/material";
 
 // add dark mode support
 
 type EditorWrapperProps = {
-  isDark: boolean;
+  isDark?: boolean;
   minHeight?: string;
 };
-const EditorWrapper = styled.div(`
-`);
 
 const ReactQuill = dynamic(
   // @ts-ignore
@@ -84,18 +82,19 @@ export default function QuillEditor({
   };
 
   return (
-    <EditorWrapper
+    <div
       style={{
         width: "100%",
       }}
       {...props}
     >
+      {/* @ts-ignore */}
       <StyledReactQuill
         {...quillProps}
         {...quillEditorProps}
         isDark={isDark}
         value={value}
       />
-    </EditorWrapper>
+    </div>
   );
 }

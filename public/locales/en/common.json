@@ -183,7 +183,8 @@
     "create": "Create",
     "edit": "Edit",
     "show": "Show",
-    "delete": "Delete"
+    "delete": "Delete",
+    "fetching": "Fetching new data..."
   },
   "buttons": {
     "create": "Create",

@@ -3,6 +3,7 @@ import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
+import TimelineConnector from "@mui/lab/TimelineConnector";
 import { useTranslate } from "@refinedev/core";
 import { addComment } from "src/services/tasks";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -60,6 +61,7 @@ export default function NewComment({
             }}
           />
         </TimelineDot>
+        <TimelineConnector />
       </TimelineSeparator>
       <TimelineContent
         sx={{
