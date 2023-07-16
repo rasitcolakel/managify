@@ -16,7 +16,7 @@ import { Header } from "@components/header";
 import { ColorModeContextProvider } from "@contexts";
 import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
-import { dataProvider } from "@refinedev/supabase";
+import { dataProvider, liveProvider } from "@refinedev/supabase";
 import { appWithTranslation, useTranslation } from "next-i18next";
 import { authProvider } from "src/authProvider";
 import { AppIcon } from "src/components/app-icon";
@@ -71,6 +71,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
           <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
           <RefineSnackbarProvider>
             <Refine
+              liveProvider={liveProvider(supabaseClient)}
+              onLiveEvent={(event) => {
+                console.log("event", event);
+              }}
               routerProvider={routerProvider}
               dataProvider={dataProvider(supabaseClient)}
               authProvider={authProvider}
@@ -105,6 +109,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
               options={{
                 syncWithLocation: true,
                 warnWhenUnsavedChanges: false,
+                liveMode: "auto",
               }}
             >
               <CompleteProfileNotificationContextProvider>

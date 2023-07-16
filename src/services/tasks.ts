@@ -19,14 +19,7 @@ export type InsertTaskUpdateProps = {
   updates: TaskUpdate[];
 };
 export type TaskUpdate = {
-  type:
-    | "create"
-    | "status"
-    | "priority"
-    | "assignee"
-    | "due_date"
-    | "description"
-    | "title";
+  type: "create" | "status" | "priority" | "assignee" | "due_date" | "comment";
   content?: string;
 };
 

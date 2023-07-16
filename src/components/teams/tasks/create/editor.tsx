@@ -57,8 +57,8 @@ export default function QuillEditor({
   placeholder,
   theme = "snow",
 }: Props): JSX.Element {
-  const colorModeCOntext = useContext(ColorModeContext);
-  const isDark = colorModeCOntext.mode === "dark";
+  const colorModeContext = useContext(ColorModeContext);
+  const isDark = colorModeContext.mode === "dark";
   const quillProps: ReactQuillProps = {
     modules: {
       toolbar: [

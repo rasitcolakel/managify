@@ -143,6 +143,12 @@
       "in_progress": "In Progress",
       "done": "Done"
     },
+    "taskChanges": {
+      "status": "changed status to {{status}} on {{date}}",
+      "priority": "changed priority to {{priority}} on {{date}}",
+      "created": "created on {{date}}",
+      "commented": "commented on {{date}}"
+    },
     "updateStatus": "Update Status",
     "updatePriority": "Update Priority"
   },

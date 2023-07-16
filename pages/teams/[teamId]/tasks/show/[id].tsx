@@ -40,6 +40,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import SettingsIcon from "@mui/icons-material/Settings";
+import TaskTimeline from "@components/teams/tasks/TaskTimeline";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault("Europe/Istanbul");
@@ -364,17 +365,22 @@ export default function TaskShow() {
 
               <Divider sx={{ py: 1 }} />
             </Grid>
-            <Grid item xs={12} md={6} lg={9}>
-              <Paper sx={{ p: 2, mt: "1em" }}>
-                <Typography variant="h6" sx={{ mb: 1 }} color="primary">
-                  {record.title}
-                </Typography>
-                {record.description && (
-                  <StyledDescription
-                    dangerouslySetInnerHTML={{ __html: record.description }}
-                  />
-                )}
-              </Paper>
+            <Grid item xs={9}>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, mt: "1em" }}>
+                  <Typography variant="h6" sx={{ mb: 1 }} color="primary">
+                    {record.title}
+                  </Typography>
+                  {record.description && (
+                    <StyledDescription
+                      dangerouslySetInnerHTML={{ __html: record.description }}
+                    />
+                  )}
+                </Paper>
+              </Grid>
+              <Grid item xs={12}>
+                <TaskTimeline id={id} />
+              </Grid>
             </Grid>
             <Grid item xs={12} md={6} lg={3}>
               <Grid container spacing={2}>

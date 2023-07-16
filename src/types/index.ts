@@ -31,11 +31,14 @@ type getMembersOfTeamType =
 type getMyTeamMembershipsType =
   Database["public"]["Functions"]["get_my_team_memberships"]["Returns"];
 
+type TaskUpdates = Database["public"]["Tables"]["taskUpdates"]["Row"];
+
 export type {
   Team,
   TeamMember,
   TeamWithMembers,
   Profile,
+  TaskUpdates,
   WithRequired,
   TeamMemberWithProfile,
   TaskWithAssignee,
