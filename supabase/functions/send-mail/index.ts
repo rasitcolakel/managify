@@ -37,7 +37,7 @@ const APP_URL = Deno.env.get("NEXT_PUBLIC_BASE_URL") ?? "";
 const invitationEmail = (teamName: string, invitationId: string) => {
   return `
   <p>You have been invited to ${teamName} on Managify</p>
-  <p>Click <a href="${APP_URL}invitation/${invitationId}">here</a> to join the team</p>
+  <p>Click <a href="${APP_URL}invitations/${invitationId}">here</a> to join the team</p>
   `;
 };
 
@@ -83,8 +83,16 @@ serve(async (req: Request) => {
         },
       }
     );
+
     const payload = (await req.json()) as Payload;
     console.log("payload", JSON.stringify(payload, null, 2));
+
+    if (payload.record.status !== "invited") {
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
     const record = payload.record;
     const { data: profile } = await supabaseClient
       .from("profiles")
