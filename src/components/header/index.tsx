@@ -1,3 +1,4 @@
+import ImageAvatar from "@components/common/ImageAvatar";
 import { ColorModeContext } from "@contexts";
 import DarkModeOutlined from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlined from "@mui/icons-material/LightModeOutlined";
@@ -11,16 +12,10 @@ import Select from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { useGetIdentity } from "@refinedev/core";
 import { HamburgerMenu, RefineThemedLayoutV2HeaderProps } from "@refinedev/mui";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
-
-interface IUser {
-  name: string;
-  avatar: string;
-}
 
 const StyledHamburgerMenu = styled(HamburgerMenu)`
   button {
@@ -31,10 +26,9 @@ const StyledHamburgerMenu = styled(HamburgerMenu)`
 export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
   sticky = true,
 }) => {
-  const { mode, setMode } = useContext(ColorModeContext);
+  const { mode, setMode, profile } = useContext(ColorModeContext);
   const { locale: currentLocale, locales, pathname, query } = useRouter();
   const theme = useTheme();
-  const { data: user } = useGetIdentity<IUser>();
 
   return (
     <AppBar position={sticky ? "sticky" : "relative"}>
@@ -114,25 +108,22 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
             >
               {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
             </IconButton>
-
-            {(user?.avatar || user?.name) && (
+            {profile && (
               <Stack
                 direction="row"
                 gap="16px"
                 alignItems="center"
                 justifyContent="center"
               >
-                {user?.name && (
-                  <Typography
-                    variant="subtitle2"
-                    sx={{
-                      color: theme.palette.text.primary,
-                    }}
-                  >
-                    {user?.name}
-                  </Typography>
-                )}
-                <Avatar src={user?.avatar} alt={user?.name} />
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    color: theme.palette.text.primary,
+                  }}
+                >
+                  {profile?.full_name}
+                </Typography>
+                <ImageAvatar user={profile} tooltip={false} />
               </Stack>
             )}
           </Stack>

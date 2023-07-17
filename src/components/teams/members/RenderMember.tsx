@@ -1,4 +1,3 @@
-import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
@@ -22,6 +21,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import useConfirmationModal from "@components/common/useConfirmationModal";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import { TeamContext } from "@contexts/TeamContext";
+import ImageAvatar from "@components/common/ImageAvatar";
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   padding: theme.spacing(1),
   marginLeft: theme.spacing(1),
@@ -90,7 +90,8 @@ function RenderMember({ teamMember, isOwner, type }: Props) {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Avatar
+        <ImageAvatar
+          user={teamMember.profile}
           sx={{
             bgcolor: generateRandomColorWithName(fullName),
             height: "3em",
@@ -100,7 +101,7 @@ function RenderMember({ teamMember, isOwner, type }: Props) {
           <Typography variant="h6" color="white">
             {getAvatarAlt()}
           </Typography>
-        </Avatar>
+        </ImageAvatar>
         <Stack padding={1} flex="1">
           <Typography variant="h6">
             {teamMember.profile?.first_name} {teamMember.profile?.last_name}

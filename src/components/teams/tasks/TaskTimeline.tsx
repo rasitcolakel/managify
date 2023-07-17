@@ -12,14 +12,7 @@ import LabelIcon from "@mui/icons-material/Label";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import * as colors from "@mui/material/colors";
 import { ColorModeContext } from "@contexts/index";
-import {
-  Avatar,
-  Divider,
-  Paper,
-  Stack,
-  Typography,
-  styled,
-} from "@mui/material";
+import { Divider, Paper, Stack, Typography, styled } from "@mui/material";
 import CommentIcon from "@mui/icons-material/Comment";
 import { Profile, TaskUpdates } from "src/types";
 import dayjs from "dayjs";
@@ -27,6 +20,7 @@ import NewComment from "./NewComment";
 import { useInView } from "react-intersection-observer";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { motion } from "framer-motion";
+import ImageAvatar from "@components/common/ImageAvatar";
 
 const container = {
   visible: {
@@ -187,7 +181,8 @@ export default function TaskTimeline({
         return (
           <Paper sx={{ p: 1, flex: 1 }}>
             <Stack direction="row" spacing={1} alignItems={"center"}>
-              <Avatar
+              <ImageAvatar
+                user={taskUpdate.user}
                 alt={taskUpdate.user.full_name || ""}
                 sx={{ width: "1.5em", height: "1.5em" }}
               />
@@ -279,7 +274,8 @@ export default function TaskTimeline({
                       xs: 1,
                     }}
                   >
-                    <Avatar
+                    <ImageAvatar
+                      user={taskUpdate.user}
                       alt={taskUpdate.user.full_name || ""}
                       sx={{ width: "1.5em", height: "1.5em" }}
                     />

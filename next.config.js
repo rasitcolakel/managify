@@ -12,4 +12,7 @@ module.exports = removeImports({
     });
     return config;
   },
+  images: {
+    domains: ["slaymghmzvxilnmdjugm.supabase.co"],
+  },
 });

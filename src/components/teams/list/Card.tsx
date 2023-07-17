@@ -4,7 +4,6 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import {
-  Avatar,
   AvatarGroup,
   Box,
   CardHeader,
@@ -15,7 +14,10 @@ import {
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { TCardItem } from "./CardList";
 import Line from "./Line";
-import { generateRandomColorWithName } from "src/utility";
+import {
+  generateRandomColorWithName,
+  getFirstLettersOfWord,
+} from "src/utility";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import EditIcon from "@mui/icons-material/Edit";
 import TrashIcon from "@mui/icons-material/Delete";
@@ -25,6 +27,7 @@ import { TeamsAction } from "pages/teams";
 import { Profile } from "src/types";
 import { useTranslate } from "@refinedev/core";
 import { StyledLink, StyledMenu, StyledMenuItem } from "@components/index";
+import ImageAvatar from "@components/common/ImageAvatar";
 
 type Props = {
   cardItem?: TCardItem;
@@ -214,7 +217,8 @@ export default function Card({ cardItem, onAction, user }: Props) {
         >
           <AvatarGroup max={6}>
             {cardItem?.teamMembers?.map((member) => (
-              <Avatar
+              <ImageAvatar
+                user={member.profile}
                 sx={{
                   bgcolor: generateRandomColorWithName(
                     member.profile.full_name || ""
@@ -225,8 +229,11 @@ export default function Card({ cardItem, onAction, user }: Props) {
                 }}
                 key={member.id}
                 alt={member.profile.full_name || ""}
-                src="/static/images/avatar/4.jpg"
-              />
+              >
+                <Typography variant="body2" color="white">
+                  {getFirstLettersOfWord(member.profile.full_name || "")}
+                </Typography>
+              </ImageAvatar>
             ))}
           </AvatarGroup>
           <Box

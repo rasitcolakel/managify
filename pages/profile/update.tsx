@@ -4,20 +4,29 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useNotification, useTranslate } from "@refinedev/core";
 
 import { Create } from "@refinedev/mui";
-import { Box, TextField } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  FormHelperText,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { useForm } from "@refinedev/react-hook-form";
-import { useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { Profile } from "src/types";
-import { updateMyProfile } from "src/services/users";
+import {
+  getImageFromCDN,
+  updateMyProfile,
+  updateMyProfileImage,
+} from "src/services/users";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { CompleteProfileNotificationContext } from "@contexts/CompleteProfileNotificationContext";
+import AvatarFileUpload from "@components/AvatarFileUpload";
+import { ColorModeContext } from "@contexts/index";
 
 export default function EditProfile() {
   const { open } = useNotification();
-  const { user, execute, loading } = useContext(
-    CompleteProfileNotificationContext
-  );
+  const { profile: user, refreshProfile } = useContext(ColorModeContext);
 
   const router = useRouter();
   const t = useTranslate();
@@ -27,6 +36,7 @@ export default function EditProfile() {
     register,
     setValue,
     getValues,
+    setError,
     formState: { errors },
   } = useForm<Profile>({
     refineCoreProps: {
@@ -37,16 +47,45 @@ export default function EditProfile() {
   });
 
   useEffect(() => {
-    execute();
-  }, [execute]);
-
-  useEffect(() => {
     if (user) {
       setValue("first_name", user?.first_name);
       setValue("last_name", user?.last_name);
     }
   }, [user, setValue]);
 
+  const onAvatarChange = useCallback(
+    async (avatar: File) => {
+      if (!user) return;
+      const resp = await updateMyProfileImage(user, avatar);
+      if (resp) {
+        open &&
+          open({
+            message: t("notifications.success"),
+            type: "success",
+          });
+        setValue("avatar", avatar);
+        refreshProfile();
+      } else {
+        open &&
+          open({
+            message: t("common.errors.unexpectedError"),
+            type: "error",
+          });
+      }
+    },
+    [user, open, t, setValue, refreshProfile]
+  );
+
+  const Avatar = useCallback(
+    () => (
+      <AvatarFileUpload
+        onAvatarChange={onAvatarChange}
+        initPreviewUrl={user?.avatar ? getImageFromCDN(user.avatar) : ""}
+      />
+    ),
+    [onAvatarChange, user?.avatar]
+  );
+  console.log("errors", errors);
   return (
     <main>
       <Head>
@@ -55,12 +94,26 @@ export default function EditProfile() {
         </title>
       </Head>
       <Create
-        isLoading={formLoading || loading}
+        isLoading={formLoading}
         saveButtonProps={{
           ...saveButtonProps,
           disabled: !user,
           onClick: async () => {
             const data = getValues() as Profile;
+            console.log(data);
+            if (!data.avatar) {
+              setError("avatar", {
+                type: "required",
+                message: "This field is required",
+              });
+              return;
+            } else {
+              setError("avatar", {
+                type: "required",
+                message: "",
+              });
+            }
+
             data.status = "active";
             const updated = await updateMyProfile(data);
             if (updated && open) {
@@ -68,7 +121,7 @@ export default function EditProfile() {
                 message: t("notifications.success"),
                 type: "success",
               });
-              execute();
+              refreshProfile();
               router.push("/profile");
             }
           },
@@ -80,6 +133,26 @@ export default function EditProfile() {
           sx={{ display: "flex", flexDirection: "column" }}
           autoComplete="off"
         >
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <FormControl sx={{ alignItems: "center" }}>
+              <Avatar />
+              {errors?.avatar?.message && (
+                <FormHelperText
+                  sx={{
+                    pt: 2,
+                  }}
+                  error
+                >
+                  {(errors as any)?.avatar?.message}
+                </FormHelperText>
+              )}
+            </FormControl>
+          </Stack>
           <TextField
             {...register("first_name", {
               required: "This field is required",

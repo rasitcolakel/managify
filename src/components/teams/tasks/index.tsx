@@ -7,7 +7,7 @@ import {
   TeamMemberWithProfile,
   TeamWithMembers,
 } from "src/types";
-import { Avatar, AvatarGroup, Chip, Stack, Typography } from "@mui/material";
+import { AvatarGroup, Chip, Stack, Typography } from "@mui/material";
 import {
   generateRandomColorWithName,
   getFirstLettersOfWord,
@@ -15,6 +15,7 @@ import {
 import { useRouter } from "next/router";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Link from "next/link";
+import ImageAvatar from "@components/common/ImageAvatar";
 type Props = IResourceComponentsProps & {
   team: TeamWithMembers;
 };
@@ -103,7 +104,8 @@ export default function TeamTasks({ team }: Props) {
   const renderAssignee = (assignee: TeamMemberWithProfile) => {
     const fullName = assignee?.profile?.full_name || "";
     return (
-      <Avatar
+      <ImageAvatar
+        user={assignee.profile}
         sizes="small"
         sx={{
           bgcolor: generateRandomColorWithName(fullName),
@@ -115,7 +117,7 @@ export default function TeamTasks({ team }: Props) {
         <Typography variant="body2" color="white">
           {getFirstLettersOfWord(fullName)}
         </Typography>
-      </Avatar>
+      </ImageAvatar>
     );
   };
 

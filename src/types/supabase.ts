@@ -12,6 +12,7 @@ export interface Database {
     Tables: {
       profiles: {
         Row: {
+          avatar: string | null
           created_at: string | null
           email: string | null
           first_name: string | null
@@ -21,6 +22,7 @@ export interface Database {
           status: string | null
         }
         Insert: {
+          avatar?: string | null
           created_at?: string | null
           email?: string | null
           first_name?: string | null
@@ -30,6 +32,7 @@ export interface Database {
           status?: string | null
         }
         Update: {
+          avatar?: string | null
           created_at?: string | null
           email?: string | null
           first_name?: string | null
@@ -303,6 +306,10 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
+      get_auth_user_team_invitations: {
+        Args: Record<PropertyKey, never>
+        Returns: number[]
+      }
       get_authenticated_user_teams: {
         Args: Record<PropertyKey, never>
         Returns: number[]

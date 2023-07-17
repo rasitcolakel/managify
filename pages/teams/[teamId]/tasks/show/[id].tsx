@@ -22,7 +22,6 @@ import GroupIcon from "@mui/icons-material/Group";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-import Avatar from "@mui/material/Avatar";
 import {
   getFirstLettersOfWord,
   generateRandomColorWithName,
@@ -41,6 +40,7 @@ import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TaskTimeline from "@components/teams/tasks/TaskTimeline";
+import ImageAvatar from "@components/common/ImageAvatar";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault("Europe/Istanbul");
@@ -170,15 +170,18 @@ export default function TaskShow() {
               <Chip
                 label={name}
                 avatar={
-                  <Avatar
-                    sx={{ bgcolor: generateRandomColorWithName(name) }}
-                    src={profile?.avatar}
-                    alt={name}
+                  <ImageAvatar
+                    user={profile}
+                    sx={{
+                      bgcolor: generateRandomColorWithName(name),
+                      width: "2rem",
+                      height: "2rem",
+                    }}
                   >
                     <Typography variant="body2" color="white">
                       {getFirstLettersOfWord(name)}
                     </Typography>
-                  </Avatar>
+                  </ImageAvatar>
                 }
               />
             </Grid>

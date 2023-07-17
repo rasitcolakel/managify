@@ -1,10 +1,15 @@
+import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
 import { ThemeProvider } from "@mui/material/styles";
 import { RefineThemes } from "@refinedev/mui";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
+import { getMyProfile } from "src/services/users";
+import { Profile } from "src/types";
 
 type ColorModeContextType = {
   mode: string;
   setMode: () => void;
+  profile: Profile | null;
+  refreshProfile: () => void;
 };
 
 export const ColorModeContext = createContext<ColorModeContextType>(
@@ -64,11 +69,21 @@ export const ColorModeContextProvider: React.FC<
     localStorage.setItem("theme", nextTheme);
   };
 
+  const { execute, data: profile } = useAsyncFunction<any, Profile>(
+    getMyProfile
+  );
+
+  useEffect(() => {
+    execute();
+  }, [execute]);
+
   return (
     <ColorModeContext.Provider
       value={{
         setMode: toggleTheme,
         mode,
+        profile,
+        refreshProfile: execute,
       }}
     >
       <ThemeProvider
