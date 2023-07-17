@@ -120,3 +120,46 @@ export const getMyTeamMemberships = async () => {
   }
   return data;
 };
+
+export const getInvitationByInvitationCode = async (invitationCode: string) => {
+  const user: any = await authProvider.getIdentity();
+
+  if (!user) {
+    throw new Error("User is not logged in");
+  }
+
+  const { data, error } = await supabaseClient
+    .from("teamMembers")
+    .select("*, team:teams(*)")
+    .eq("invitation_id", invitationCode)
+    .eq("status", "invited")
+    .eq("user_id", user?.id);
+  if (error) {
+    throw error;
+  }
+
+  if (data.length === 0) {
+    throw new Error("Invitation not found");
+  }
+  return data[0];
+};
+
+export const acceptInvitation = async (id: number) => {
+  const { error } = await supabaseClient
+    .from("teamMembers")
+    .update({ status: "active" })
+    .eq("id", id);
+  if (error) {
+    throw error;
+  }
+};
+
+export const declineInvitation = async (id: number) => {
+  const { error } = await supabaseClient
+    .from("teamMembers")
+    .update({ status: "declined" })
+    .eq("id", id);
+  if (error) {
+    throw error;
+  }
+};

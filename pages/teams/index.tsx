@@ -4,44 +4,104 @@ import { GetServerSideProps } from "next";
 import { authProvider } from "src/authProvider";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
-import { Profile, Team } from "src/types";
+import { Profile, Team, TeamMember } from "src/types";
 import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
 import { makeTeamActive, makeTeamDeleted } from "src/services/teams";
 import useConfirmationModal from "@components/common/useConfirmationModal";
 import CardList from "@components/teams/list/CardList";
 import { useInView } from "react-intersection-observer";
-import { Button, IconButton, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  Divider,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useRouter } from "next/router";
 import Link from "@components/common/Link";
 import AddIcon from "@mui/icons-material/Add";
+import { StyledMenu } from "@components/index";
 
 export type TeamsAction = "edit" | "delete" | "restore" | "show";
 
-export default function TeamList() {
+export default function TeamsPage() {
+  const t = useTranslate();
+
+  const {
+    execute,
+    data: user,
+    loading,
+  } = useAsyncFunction<any, Profile>(authProvider.getIdentity);
+
+  useEffect(() => {
+    execute();
+  }, [execute]);
+
+  return (
+    <main>
+      <Head>
+        <title>{t("documentTitle.teams.list")}</title>
+      </Head>
+      {!loading && user && <TeamList user={user} />}
+    </main>
+  );
+}
+
+function TeamList({ user }: { user: Profile }) {
   const t = useTranslate();
   const router = useRouter();
 
   const [status, setStatus] = React.useState<"active" | "deleted">("active");
 
   const filters: CrudFilter[] = React.useMemo(() => {
-    return [
+    const filters: CrudFilter[] = [
       {
-        field: "status",
+        field: "team.status",
         operator: "eq",
         value: status,
       },
     ];
-  }, [status]);
 
-  const { data, fetchNextPage, hasNextPage, refetch } = useInfiniteList<Team>({
-    resource: "teams",
+    if (status === "deleted") {
+      filters.push({
+        field: "team.owner",
+        operator: "eq",
+        value: user && user.id,
+      });
+    }
+    return filters;
+  }, [status, user]);
+
+  const { data, fetchNextPage, hasNextPage, refetch } = useInfiniteList<
+    TeamMember & {
+      team: Team;
+    }
+  >({
+    resource: "teamMembers",
     meta: {
       select:
-        "*, owner(*),  teamMembers(id, user_id, status, profile:profiles!user_id(*)), tasks(id, status)",
+        "*, team:teams(*, owner(*),  teamMembers(id, user_id, status, profile:profiles!user_id(*)), tasks(id, status))",
     },
-    filters,
+    filters: [
+      {
+        field: "user_id",
+        operator: "eq",
+        value: user && user.id,
+      },
+      {
+        field: "status",
+        operator: "eq",
+        value: "active",
+      },
+      ...filters,
+    ],
     sorters: [
       {
         field: "created_at",
@@ -65,20 +125,11 @@ export default function TeamList() {
     const teams: Team[] = [];
     data?.pages.forEach((page) => {
       page.data.forEach((team) => {
-        teams.push(team);
+        if (team.team) teams.push(team.team);
       });
     });
     return teams;
   }, [data]);
-
-  const { execute, data: user } = useAsyncFunction<any, Profile>(
-    authProvider.getIdentity
-  );
-  console.log("user", user);
-
-  useEffect(() => {
-    execute();
-  }, [execute]);
 
   const { openModal, ConfirmationModal } = useConfirmationModal();
 
@@ -137,6 +188,50 @@ export default function TeamList() {
     [openDeleteModal, openRestoreModal, router]
   );
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const filterMenu = (
+    <StyledMenu
+      id="filter-menu"
+      anchorEl={anchorEl}
+      keepMounted
+      open={Boolean(anchorEl)}
+      onClose={() => setAnchorEl(null)}
+      minWidth={350}
+    >
+      <Stack direction="column" spacing={1} p={2}>
+        <Typography variant="body1" component="h2">
+          {t("buttons.filter")}
+        </Typography>
+        <Divider
+          sx={{
+            mb: 1,
+          }}
+        />
+        <Stack direction="column" spacing={1} p={1} py={2}>
+          <FormControl>
+            <InputLabel id="demo-simple-select-standard-label">
+              {t("teams.fields.status")}
+            </InputLabel>
+            <Select
+              value={status}
+              size="small"
+              label={t("teams.fields.status")}
+              onChange={(e) => filter(e.target.value as "active" | "deleted")}
+            >
+              <MenuItem value="active">{t("teams.statuses.active")}</MenuItem>
+              <MenuItem value="deleted">{t("teams.statuses.deleted")}</MenuItem>
+            </Select>
+          </FormControl>
+        </Stack>
+      </Stack>
+    </StyledMenu>
+  );
+
   return (
     <Stack sx={{ justifyContent: "center" }} pt={2}>
       <Stack
@@ -150,23 +245,33 @@ export default function TeamList() {
           {t("teams.title")}
         </Typography>
         <Stack direction="row" spacing={2}>
-          <IconButton
-            color="primary"
-            onClick={() => filter(status === "active" ? "deleted" : "active")}
-          >
+          <IconButton color="primary" onClick={handleClick}>
             <FilterListIcon />
           </IconButton>
-          <Link href="/teams/create">
-            <Button variant="contained" color="primary" startIcon={<AddIcon />}>
-              {t("buttons.create")}
-            </Button>
+          {filterMenu}
+          <Link
+            href="/teams/create"
+            itemType="button"
+            buttonProps={{
+              variant: "contained",
+              color: "primary",
+              startIcon: <AddIcon />,
+            }}
+          >
+            {t("buttons.create")}
           </Link>
         </Stack>
       </Stack>
-      <Head>
-        <title>{t("documentTitle.teams.list")}</title>
-      </Head>
+
       <CardList cardList={teams} onAction={onAction} user={user} />
+
+      {teams.length === 0 && (
+        <Paper sx={{ p: 2 }}>
+          <Typography variant="body1" component="p">
+            {t("table.noData")}
+          </Typography>
+        </Paper>
+      )}
       <Stack
         sx={{ justifyContent: "center" }}
         pt={2}

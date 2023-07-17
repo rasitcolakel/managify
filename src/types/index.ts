@@ -37,11 +37,16 @@ type getMyTeamMembershipsType =
 
 type TaskUpdates = Database["public"]["Tables"]["taskUpdates"]["Row"];
 
+type Invitation = Database["public"]["Tables"]["teamMembers"]["Row"] & {
+  team: Team;
+};
+
 export type {
   Task,
   Team,
   TeamMember,
   TeamWithMembers,
+  Invitation,
   Profile,
   TaskUpdates,
   WithRequired,

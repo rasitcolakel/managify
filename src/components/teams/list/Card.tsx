@@ -10,12 +10,7 @@ import {
   CardHeader,
   Grid,
   IconButton,
-  Menu,
-  MenuItem,
-  MenuItemProps,
-  MenuProps,
   Stack,
-  styled,
 } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { TCardItem } from "./CardList";
@@ -28,48 +23,15 @@ import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
 import EyeIcon from "@mui/icons-material/Visibility";
 import { TeamsAction } from "pages/teams";
 import { Profile } from "src/types";
-import Link from "next/link";
 import { useTranslate } from "@refinedev/core";
+import { StyledLink, StyledMenu, StyledMenuItem } from "@components/index";
+
 type Props = {
   cardItem?: TCardItem;
   // eslint-disable-next-line no-unused-vars
   onAction: (id: TCardItem["id"], type: TeamsAction) => void;
   user: Profile | null;
 };
-
-const StyledMenu = styled((props: MenuProps) => (
-  <Menu
-    elevation={0}
-    anchorOrigin={{
-      vertical: "bottom",
-      horizontal: "right",
-    }}
-    transformOrigin={{
-      vertical: "top",
-      horizontal: "right",
-    }}
-    {...props}
-  />
-))(({}) => ({
-  "& .MuiPaper-root": {
-    minWidth: 150,
-    boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.2)",
-  },
-}));
-
-const StyledMenuItem = styled((props: MenuItemProps) => (
-  <MenuItem {...props} />
-))(({ theme }) => ({
-  fontSize: theme.typography.pxToRem(14),
-  fontWeight: 700,
-  margin: "3px 8px",
-  borderRadius: 5,
-  display: "flex",
-}));
-
-const StyledLink = styled(Link)(({}) => ({
-  textDecoration: "none",
-}));
 
 export default function Card({ cardItem, onAction, user }: Props) {
   const t = useTranslate();
@@ -106,9 +68,11 @@ export default function Card({ cardItem, onAction, user }: Props) {
             spacing={1}
             width="100%"
           >
-            <Typography gutterBottom component="div" variant="h5">
-              {cardItem?.title}
-            </Typography>
+            <StyledLink href={`/teams/show/${cardItem?.id}`} itemType="text">
+              <Typography gutterBottom variant="h5" color="text.primary">
+                {cardItem?.title}
+              </Typography>
+            </StyledLink>
             <IconButton aria-label="settings" onClick={openMenu}>
               <MoreHorizIcon />
             </IconButton>

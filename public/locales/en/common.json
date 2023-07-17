@@ -90,7 +90,15 @@
       "active": "Active"
     },
     "deleteConfirmation": "Are you sure you want to delete this team?",
-    "restoreConfirmation": "Are you sure you want to restore this team?"
+    "restoreConfirmation": "Are you sure you want to restore this team?",
+    "invitations": "Invitations",
+    "invitation": {
+      "title": "Invitation",
+      "description": "You have been invited to join the team {{team}}.",
+      "invited": "Invited",
+      "accepted": "Accepted",
+      "declined": "Declined"
+    }
   },
   "profiles": {
     "title": "Profile",
@@ -203,7 +211,9 @@
     "clone": "Clone",
     "notAccessTitle": "You don't have permission to access",
     "remove": "Remove",
-    "restore": "Restore"
+    "restore": "Restore",
+    "accept": "Accept",
+    "decline": "Decline"
   },
   "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes.",
   "notifications": {
@@ -230,6 +240,7 @@
     "suffix": " | Managify",
     "show": "{{title}} | Managify",
     "invitation": "Invitation | Managify",
+    "invitations": "Invitations | Managify",
     "teams": {
       "list": "Teams | Managify",
       "show": "{{title}} | Managify",
@@ -248,7 +259,8 @@
     }
   },
   "table": {
-    "actions": "Actions"
+    "actions": "Actions",
+    "noData": "No data available"
   },
   "form": {
     "optional": "Optional",

@@ -13,6 +13,7 @@ export interface Database {
       profiles: {
         Row: {
           created_at: string | null
+          email: string | null
           first_name: string | null
           full_name: string | null
           id: string
@@ -21,6 +22,7 @@ export interface Database {
         }
         Insert: {
           created_at?: string | null
+          email?: string | null
           first_name?: string | null
           full_name?: string | null
           id: string
@@ -29,6 +31,7 @@ export interface Database {
         }
         Update: {
           created_at?: string | null
+          email?: string | null
           first_name?: string | null
           full_name?: string | null
           id?: string
@@ -205,6 +208,7 @@ export interface Database {
           created_at: string | null
           created_by: string | null
           id: number
+          invitation_id: string
           status: string | null
           team_id: number | null
           updated_at: string | null
@@ -214,6 +218,7 @@ export interface Database {
           created_at?: string | null
           created_by?: string | null
           id?: number
+          invitation_id?: string
           status?: string | null
           team_id?: number | null
           updated_at?: string | null
@@ -223,6 +228,7 @@ export interface Database {
           created_at?: string | null
           created_by?: string | null
           id?: number
+          invitation_id?: string
           status?: string | null
           team_id?: number | null
           updated_at?: string | null

@@ -15,6 +15,7 @@ export const useAsyncFunction = <T extends (...args: any[]) => any, R = any>(
       try {
         const result = await asyncFunction(...args);
         setData(result);
+        setError(null);
         return result;
       } catch (error) {
         setError(error);

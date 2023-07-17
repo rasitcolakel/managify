@@ -89,9 +89,13 @@ export const TeamContextProvider: React.FC<TeamContextProviderProps> = ({
   useEffect(() => {
     if (!record) {
       return;
+    } else {
+      if (record.status !== "active") {
+        router.push("/404");
+      }
     }
     teamMembersExecute(record.id);
-  }, [teamMembersExecute, record]);
+  }, [teamMembersExecute, record, router]);
 
   return (
     <TeamContext.Provider

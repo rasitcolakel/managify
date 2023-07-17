@@ -26,6 +26,7 @@ import { CompleteProfileNotificationContextProvider } from "@contexts/CompletePr
 import CompleteProfileNotification from "@components/users/CompleteProfileNotification";
 import GroupWorkIcon from "@mui/icons-material/GroupWork";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   noLayout?: boolean;
@@ -74,9 +75,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
           <RefineSnackbarProvider>
             <Refine
               liveProvider={liveProvider(supabaseClient)}
-              onLiveEvent={(event) => {
-                console.log("event", event);
-              }}
               routerProvider={routerProvider}
               dataProvider={dataProvider(supabaseClient)}
               authProvider={authProvider}
@@ -91,8 +89,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                   show: "/teams/show/:id",
                   meta: {
                     canDelete: true,
-                    icon: <GroupWorkIcon />,
                     label: t("teams.title"),
+                    icon: <GroupWorkIcon />,
                   },
                 },
                 {
@@ -111,6 +109,15 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                   meta: {
                     icon: <AssignmentIcon />,
                     label: t("documentTitle.tasks.myTitle"),
+                  },
+                },
+                {
+                  name: "invitations",
+                  list: "/invitations",
+                  meta: {
+                    canDelete: true,
+                    label: t("teams.invitations"),
+                    icon: <GroupAddIcon />,
                   },
                 },
               ]}
