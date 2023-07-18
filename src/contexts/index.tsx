@@ -3,8 +3,7 @@ import { RefineThemes } from "@refinedev/mui";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { getMyProfile } from "src/services/users";
 import { Profile } from "src/types";
-import { createTheme, ThemeProvider } from "@mui/system";
-import { ThemeOptions } from "@mui/material";
+import { ThemeProvider } from "@mui/styles";
 
 type ColorModeContextType = {
   mode: string;
@@ -20,7 +19,7 @@ type ColorModeContextProviderProps = {
   children: ReactNode;
 };
 
-const customDarkTheme: ThemeOptions = {
+const customDarkTheme = {
   ...RefineThemes.BlueDark,
   palette: {
     ...RefineThemes.BlueDark.palette,
@@ -32,7 +31,7 @@ const customDarkTheme: ThemeOptions = {
   },
 };
 
-const customLightTheme: ThemeOptions = {
+const customLightTheme = {
   ...RefineThemes.Blue,
   palette: {
     ...RefineThemes.Blue.palette,
@@ -89,9 +88,7 @@ export const ColorModeContextProvider: React.FC<
     >
       <ThemeProvider
         // you can change the theme colors here. example: mode === "light" ? RefineThemes.Magenta : RefineThemes.MagentaDark
-        theme={createTheme(
-          mode === "light" ? customLightTheme : customDarkTheme
-        )}
+        theme={mode === "light" ? customLightTheme : customDarkTheme}
       >
         {children}
       </ThemeProvider>
