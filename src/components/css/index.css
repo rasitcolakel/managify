@@ -32,3 +32,15 @@
   position: absolute;
   font-size: 12px;
 }
+
+.card {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.card:hover {
+  background-color: #f9f9f9;
+}

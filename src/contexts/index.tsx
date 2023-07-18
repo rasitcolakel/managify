@@ -1,9 +1,10 @@
 import { useAsyncFunction } from "@components/hooks/useAsyncFunction";
-import { ThemeProvider } from "@mui/material/styles";
 import { RefineThemes } from "@refinedev/mui";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { getMyProfile } from "src/services/users";
 import { Profile } from "src/types";
+import { createTheme, ThemeProvider } from "@mui/system";
+import { ThemeOptions } from "@mui/material";
 
 type ColorModeContextType = {
   mode: string;
@@ -19,7 +20,7 @@ type ColorModeContextProviderProps = {
   children: ReactNode;
 };
 
-const customDarkTheme = {
+const customDarkTheme: ThemeOptions = {
   ...RefineThemes.BlueDark,
   palette: {
     ...RefineThemes.BlueDark.palette,
@@ -31,7 +32,7 @@ const customDarkTheme = {
   },
 };
 
-const customLightTheme = {
+const customLightTheme: ThemeOptions = {
   ...RefineThemes.Blue,
   palette: {
     ...RefineThemes.Blue.palette,
@@ -88,7 +89,9 @@ export const ColorModeContextProvider: React.FC<
     >
       <ThemeProvider
         // you can change the theme colors here. example: mode === "light" ? RefineThemes.Magenta : RefineThemes.MagentaDark
-        theme={mode === "light" ? customLightTheme : customDarkTheme}
+        theme={createTheme(
+          mode === "light" ? customLightTheme : customDarkTheme
+        )}
       >
         {children}
       </ThemeProvider>

@@ -85,7 +85,6 @@ export default function EditProfile() {
     ),
     [onAvatarChange, user?.avatar]
   );
-  console.log("errors", errors);
   return (
     <main>
       <Head>
@@ -100,7 +99,6 @@ export default function EditProfile() {
           disabled: !user,
           onClick: async () => {
             const data = getValues() as Profile;
-            console.log(data);
             if (!data.avatar) {
               setError("avatar", {
                 type: "required",

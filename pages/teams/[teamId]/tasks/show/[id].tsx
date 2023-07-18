@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import { blue, red, yellow } from "@mui/material/colors";
+import { blue, green, red, yellow } from "@mui/material/colors";
 import { useShow, useTranslate } from "@refinedev/core";
 import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -410,6 +410,28 @@ export default function TaskShow() {
                   top: 70,
                 }}
               >
+                {record.status === "done" && (
+                  <Grid item xs={12}>
+                    <TaskCard
+                      name={t("tasks.fields.completed_at")}
+                      value={
+                        record.due_date ? (
+                          <Typography variant="body2">
+                            {dayjs
+                              .tz(new Date(record.completed_at || ""))
+                              .format("YYYY-MM-DD HH:mm:ss")}
+                          </Typography>
+                        ) : (
+                          "-"
+                        )
+                      }
+                      icon={<EventNoteIcon color="inherit" />}
+                      iconStyle={{
+                        bgcolor: green[800],
+                      }}
+                    />
+                  </Grid>
+                )}
                 <Grid item xs={12}>
                   <TaskCard
                     name={t("tasks.fields.assignees")}

@@ -139,7 +139,8 @@
       "assigned_to": "Assigned To",
       "due_date": "Due Date",
       "assignees": "Assignees",
-      "no_assignees": "No Assignees"
+      "no_assignees": "No Assignees",
+      "completed_at": "Completed At"
     },
     "taskPriorities": {
       "low": "Low",

@@ -111,7 +111,7 @@ export const TaskCreate = ({ task }: Props) => {
       setValue("description", task.description);
       setValue(
         "assignees",
-        task.taskAssignments.map((p) => p.assignee.id)
+        task.taskAssignments.map((p) => p.assignee)
       );
       setValue("priority", task.priority);
       setValue("status", task.status);
@@ -176,12 +176,13 @@ export const TaskCreate = ({ task }: Props) => {
             rules={{ required: "This field is required" }}
             defaultValue={[]}
             render={({ field }) => {
+              const defaultIds = field.value.map((m: any) => m.id);
               const newValue = teamMembersAutocompleteProps.options.filter(
-                (p) => field.value?.find((v: any) => v === p?.id) !== undefined
+                (p) => defaultIds.includes(p.id)
               );
               const options = task
                 ? teamMembersAutocompleteProps.options.filter(
-                    (p) => !field.value?.find((v: any) => v === p?.id)
+                    (p) => !field.value?.find((v: any) => v === p)
                   )
                 : teamMembersAutocompleteProps.options;
               return (
@@ -193,7 +194,7 @@ export const TaskCreate = ({ task }: Props) => {
                   multiple
                   clearOnBlur={false}
                   onChange={(_, value) => {
-                    const newValue = value.map((p) => p?.id);
+                    const newValue = value.map((p) => p);
                     field.onChange(newValue);
                   }}
                   getOptionLabel={(item) => {

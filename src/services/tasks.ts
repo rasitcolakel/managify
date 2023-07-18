@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-import { TaskWithAssignee } from "src/types";
+import { TaskWithAssignee, TeamMemberWithProfile } from "src/types";
 import { supabaseClient } from "src/utility";
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -10,7 +10,7 @@ export type CreateTask = Pick<
   TaskWithAssignee,
   "title" | "description" | "team_id" | "priority" | "status" | "due_date"
 > & {
-  assignees: number[];
+  assignees: TeamMemberWithProfile[];
 };
 
 export type InsertTaskUpdateProps = {
@@ -39,6 +39,7 @@ export const newTask = async (task: CreateTask) => {
   if (error) {
     throw error;
   }
+
   await assignTeamMember(data.id, task.team_id!, task.assignees);
   return data;
 };
@@ -128,10 +129,10 @@ export const updateTaskStatus = async (
     body["completed_at"] = dayjs().utc().format();
   }
   const { error, data } = await supabaseClient
-
     .from("tasks")
     .update(body)
-    .eq("id", id);
+    .eq("id", id)
+    .select();
   if (error) {
     throw error;
   }
@@ -208,14 +209,16 @@ const getTaskAssignmentChanges = (
     .filter(
       (oldAssignment) =>
         oldAssignment.team_member_id &&
-        !newAssignments.includes(oldAssignment.team_member_id)
+        !newAssignments
+          .map((newAssignment) => newAssignment.id)
+          .includes(oldAssignment.team_member_id)
     )
     .map((oldAssignment) => oldAssignment.id);
   const newIds = newAssignments.filter(
     (newAssignment) =>
       !oldAssignments
         .map((oldAssignment) => oldAssignment.team_member_id)
-        .includes(newAssignment)
+        .includes(newAssignment.id)
   );
   return {
     deletedIds,
@@ -240,15 +243,16 @@ export const getTaskAssignments = async (
 export const assignTeamMember = async (
   task_id: number,
   team_id: number,
-  teamMembers: number[]
+  teamMembers: TeamMemberWithProfile[]
 ) => {
   const { data, error } = await supabaseClient
     .from("taskAssignments")
     .insert(
-      teamMembers.map((team_member_id) => ({
+      teamMembers.map((member) => ({
         task_id,
         team_id,
-        team_member_id,
+        team_member_id: member.id,
+        user_id: member.user_id,
       }))
     )
     .select();

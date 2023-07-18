@@ -15,12 +15,12 @@ import { ColorModeContext } from "@contexts/index";
 import { Divider, Paper, Stack, Typography, styled } from "@mui/material";
 import CommentIcon from "@mui/icons-material/Comment";
 import { Profile, TaskUpdates } from "src/types";
-import dayjs from "dayjs";
 import NewComment from "./NewComment";
 import { useInView } from "react-intersection-observer";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { motion } from "framer-motion";
 import ImageAvatar from "@components/common/ImageAvatar";
+import { readableDate } from "src/utility";
 
 const container = {
   visible: {
@@ -138,17 +138,6 @@ export default function TaskTimeline({
     }
   }, []);
 
-  const readableDate = React.useCallback((date: string) => {
-    const dateObj = dayjs(date);
-    if (dateObj.isSame(dayjs(), "day")) {
-      return dateObj.format("h:mm A");
-    } else if (dateObj.isSame(dayjs(), "year")) {
-      return dateObj.format("MMM D");
-    } else {
-      return dateObj.format("MMM D, YYYY");
-    }
-  }, []);
-
   const taskUpdateMessage = React.useCallback(
     (taskUpdate: ITaskUpdate) => {
       const date = readableDate(taskUpdate.created_at as string);
@@ -218,7 +207,7 @@ export default function TaskTimeline({
       }
       return message;
     },
-    [readableDate, t]
+    [t]
   );
 
   const timelineDotIconColor = React.useCallback((type: TaskUpdateType) => {

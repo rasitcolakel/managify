@@ -49,7 +49,7 @@ function AvatarFileUpload({
   };
 
   return (
-    <AvatarContainer onClick={() => console.log("hello")}>
+    <AvatarContainer>
       <label htmlFor="avatar-upload">
         <Avatar src={previewUrl || ""} className={classes.avatar} />
       </label>
