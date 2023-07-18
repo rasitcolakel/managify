@@ -9,6 +9,7 @@ import { Profile } from "src/types";
 type Props = AvatarProps & {
   user: Profile;
   tooltip?: boolean;
+  link?: boolean;
 };
 
 const StyledAvatar = styled(Avatar)<AvatarProps>``;
@@ -16,6 +17,7 @@ const StyledAvatar = styled(Avatar)<AvatarProps>``;
 export default function ImageAvatar({
   tooltip = true,
   user,
+  link = true,
   children,
   ...props
 }: Props) {
@@ -34,9 +36,17 @@ export default function ImageAvatar({
     </StyledAvatar>
   );
 
+  const Avatar = tooltip ? (
+    <Tooltip title={user?.full_name || ""} placement="bottom">
+      {Component}
+    </Tooltip>
+  ) : (
+    Component
+  );
+
   const isMe = profile?.id === user?.id;
 
-  return (
+  return link ? (
     <Link
       href={isMe ? "/profile" : `/profiles/${user?.id}`}
       passHref
@@ -44,13 +54,9 @@ export default function ImageAvatar({
         textDecoration: "none",
       }}
     >
-      {tooltip ? (
-        <Tooltip title={user?.full_name || ""} placement="bottom">
-          {Component}
-        </Tooltip>
-      ) : (
-        Component
-      )}
+      {Avatar}
     </Link>
+  ) : (
+    Avatar
   );
 }

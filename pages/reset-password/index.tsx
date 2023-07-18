@@ -61,7 +61,7 @@ ForgotPassword.noLayout = true;
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const { authenticated } = await authProvider.check(context);
-  console.log("authenticated", authenticated);
+
   const translateProps = await serverSideTranslations(context.locale ?? "en", [
     "common",
   ]);

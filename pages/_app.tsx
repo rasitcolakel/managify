@@ -22,7 +22,6 @@ import { authProvider } from "src/authProvider";
 import { AppIcon } from "src/components/app-icon";
 import { supabaseClient } from "src/utility";
 import "@components/css/index.css";
-import { CompleteProfileNotificationContextProvider } from "@contexts/CompleteProfileNotificationContext";
 import CompleteProfileNotification from "@components/users/CompleteProfileNotification";
 import GroupWorkIcon from "@mui/icons-material/GroupWork";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -127,12 +126,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                 liveMode: "auto",
               }}
             >
-              <CompleteProfileNotificationContextProvider>
-                <CompleteProfileNotification />
-                {renderComponent()}
-                <RefineKbar />
-                <UnsavedChangesNotifier />
-              </CompleteProfileNotificationContextProvider>
+              <CompleteProfileNotification />
+              {renderComponent()}
+              <RefineKbar />
+              <UnsavedChangesNotifier />
             </Refine>
           </RefineSnackbarProvider>
         </ColorModeContextProvider>

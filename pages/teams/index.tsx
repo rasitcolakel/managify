@@ -79,39 +79,40 @@ function TeamList({ user }: { user: Profile }) {
     return filters;
   }, [status, user]);
 
-  const { data, fetchNextPage, hasNextPage, refetch } = useInfiniteList<
-    TeamMember & {
-      team: Team;
-    }
-  >({
-    resource: "teamMembers",
-    meta: {
-      select:
-        "*, team:teams(*, owner(*),  teamMembers(id, user_id, status, profile:profiles!user_id(*)), tasks(id, status))",
-    },
-    filters: [
-      {
-        field: "user_id",
-        operator: "eq",
-        value: user && user.id,
+  const { data, fetchNextPage, hasNextPage, refetch, isLoading } =
+    useInfiniteList<
+      TeamMember & {
+        team: Team;
+      }
+    >({
+      resource: "teamMembers",
+      meta: {
+        select:
+          "*, team:teams(*, owner(*),  teamMembers(id, user_id, status, profile:profiles!user_id(*)), tasks(id, status))",
       },
-      {
-        field: "status",
-        operator: "eq",
-        value: "active",
+      filters: [
+        {
+          field: "user_id",
+          operator: "eq",
+          value: user && user.id,
+        },
+        {
+          field: "status",
+          operator: "eq",
+          value: "active",
+        },
+        ...filters,
+      ],
+      sorters: [
+        {
+          field: "created_at",
+          order: "desc",
+        },
+      ],
+      pagination: {
+        pageSize: 10,
       },
-      ...filters,
-    ],
-    sorters: [
-      {
-        field: "created_at",
-        order: "desc",
-      },
-    ],
-    pagination: {
-      pageSize: 10,
-    },
-  });
+    });
 
   const { ref, inView } = useInView();
 
@@ -265,7 +266,7 @@ function TeamList({ user }: { user: Profile }) {
 
       <CardList cardList={teams} onAction={onAction} user={user} />
 
-      {teams.length === 0 && (
+      {!isLoading && teams.length === 0 && (
         <Paper sx={{ p: 2 }}>
           <Typography variant="body1" component="p">
             {t("table.noData")}

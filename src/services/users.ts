@@ -61,3 +61,31 @@ export const getImage = (imagePath: string) => {
 export const getImageFromCDN = (imagePath: string) => {
   return `${process.env.NEXT_PUBLIC_CDN_URL}/${imagePath}`;
 };
+
+export const checkPassword = async (password: string): Promise<boolean> => {
+  const { error } = await supabaseClient.rpc("verify_user_password", {
+    password,
+  });
+
+  if (error) {
+    return false;
+  }
+
+  return true;
+};
+
+export const changePassword = async (
+  oldPassword: string,
+  newPassword: string
+): Promise<boolean> => {
+  const { error } = await supabaseClient.rpc("change_user_password", {
+    current_plain_password: oldPassword,
+    new_plain_password: newPassword,
+  });
+
+  if (error) {
+    return false;
+  }
+
+  return true;
+};

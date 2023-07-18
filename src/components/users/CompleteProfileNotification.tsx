@@ -9,7 +9,7 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { useTranslate } from "@refinedev/core";
 import Link from "@components/common/Link";
-import { CompleteProfileNotificationContext } from "@contexts/CompleteProfileNotificationContext";
+import { ColorModeContext } from "@contexts/index";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -21,7 +21,7 @@ const Transition = React.forwardRef(function Transition(
 });
 
 export default function CompleteProfileNotification() {
-  const { open, setOpen } = useContext(CompleteProfileNotificationContext);
+  const { open, setOpen } = useContext(ColorModeContext);
   const t = useTranslate();
 
   const handleClose = () => {
@@ -43,7 +43,7 @@ export default function CompleteProfileNotification() {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Link itemType="button" href="/profile/update">
+        <Link itemType="button" href="/profile/settings">
           <Button onClick={handleClose}>
             {t("profiles.notCompletedDialog.buttons.complete")}
           </Button>

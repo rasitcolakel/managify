@@ -3,13 +3,16 @@ import { RefineThemes } from "@refinedev/mui";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { getMyProfile } from "src/services/users";
 import { Profile } from "src/types";
-import { ThemeProvider } from "@mui/styles";
+import { useRouter } from "next/router";
+import { ThemeProvider } from "@mui/material/styles";
 
 type ColorModeContextType = {
   mode: string;
   setMode: () => void;
   profile: Profile | null;
   refreshProfile: () => void;
+  open: boolean;
+  setOpen: (_open: boolean) => void;
 };
 
 export const ColorModeContext = createContext<ColorModeContextType>(
@@ -48,6 +51,7 @@ export const ColorModeContextProvider: React.FC<
 > = ({ children }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [mode, setMode] = useState("light");
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -69,13 +73,33 @@ export const ColorModeContextProvider: React.FC<
     localStorage.setItem("theme", nextTheme);
   };
 
-  const { execute, data: profile } = useAsyncFunction<any, Profile>(
-    getMyProfile
-  );
+  const {
+    execute,
+    data: profile,
+    loading,
+  } = useAsyncFunction<any, Profile>(getMyProfile);
 
   useEffect(() => {
     execute();
   }, [execute]);
+
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    execute();
+  }, [execute]);
+
+  useEffect(() => {
+    if (profile && router.pathname) {
+      if (
+        profile.status === "created" &&
+        router.pathname !== "/profile/settings" &&
+        !loading
+      ) {
+        setOpen(true);
+      }
+    }
+  }, [profile, router.pathname, loading, router]);
 
   return (
     <ColorModeContext.Provider
@@ -84,6 +108,8 @@ export const ColorModeContextProvider: React.FC<
         mode,
         profile,
         refreshProfile: execute,
+        setOpen,
+        open,
       }}
     >
       <ThemeProvider

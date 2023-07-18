@@ -112,7 +112,9 @@
   },
   "profiles": {
     "title": "Profile",
-    "update": "Update Profile",
+    "settings": "Settings",
+    "password": "Password",
+    "update": "Profile",
     "fields": {
       "id": "Id",
       "first_name": "First Name",
@@ -120,7 +122,11 @@
       "email": "Email",
       "avatar": "Avatar",
       "password": "Password",
-      "password_confirmation": "Password Confirmation"
+      "password_confirmation": "Password Confirmation",
+      "old_password": "Old Password"
+    },
+    "errors": {
+      "current_password": "The value you entered for the current password is incorrect."
     },
     "notCompletedDialog": {
       "title": "Complete your profile",

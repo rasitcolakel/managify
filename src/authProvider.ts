@@ -53,7 +53,7 @@ export const authProvider: AuthBindings = {
     });
 
     const { error } = await supabaseClient.auth.signOut();
-
+    console.log(error);
     if (error) {
       return {
         success: false,
@@ -206,8 +206,6 @@ export const authProvider: AuthBindings = {
     const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
     });
-
-    console.log(error);
 
     if (error) {
       return {

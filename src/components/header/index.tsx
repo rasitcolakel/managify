@@ -16,7 +16,12 @@ import { HamburgerMenu, RefineThemedLayoutV2HeaderProps } from "@refinedev/mui";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
-
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import Settings from "@mui/icons-material/Settings";
+import Logout from "@mui/icons-material/Logout";
+import { StyledLink, StyledMenu, StyledMenuItem } from "..";
+import { useLogout, useTranslate } from "@refinedev/core";
 const StyledHamburgerMenu = styled(HamburgerMenu)`
   button {
     color: yellow;
@@ -26,9 +31,25 @@ const StyledHamburgerMenu = styled(HamburgerMenu)`
 export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
   sticky = true,
 }) => {
+  const t = useTranslate();
   const { mode, setMode, profile } = useContext(ColorModeContext);
   const { locale: currentLocale, locales, pathname, query } = useRouter();
   const theme = useTheme();
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const { mutate: logout } = useLogout();
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <AppBar position={sticky ? "sticky" : "relative"}>
@@ -111,19 +132,99 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
             {profile && (
               <Stack
                 direction="row"
-                gap="16px"
                 alignItems="center"
                 justifyContent="center"
               >
-                <Typography
-                  variant="subtitle2"
-                  sx={{
-                    color: theme.palette.text.primary,
+                <IconButton onClick={handleClick}>
+                  <ImageAvatar user={profile} link={false} />
+                </IconButton>
+                <StyledMenu
+                  anchorEl={anchorEl}
+                  id="account-menu"
+                  open={open}
+                  onClose={handleClose}
+                  onClick={handleClose}
+                  PaperProps={{
+                    elevation: 0,
+                    sx: {
+                      overflow: "visible",
+                      filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                      mt: 1.5,
+                      "& .MuiAvatar-root": {
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1,
+                      },
+                      "&:before": {
+                        content: '""',
+                        display: "block",
+                        position: "absolute",
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: "background.paper",
+                        transform: "translateY(-50%) rotate(45deg)",
+                        zIndex: 0,
+                      },
+                    },
                   }}
+                  transformOrigin={{ horizontal: "right", vertical: "top" }}
+                  anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 >
-                  {profile?.full_name}
-                </Typography>
-                <ImageAvatar user={profile} tooltip={false} />
+                  <StyledLink href={`/profile`}>
+                    <StyledMenuItem>
+                      <ImageAvatar user={profile} link={false} />
+
+                      <Typography
+                        variant="inherit"
+                        sx={{
+                          flex: 1,
+                          textAlign: "center",
+                          color: "text.primary",
+                        }}
+                      >
+                        {t("profiles.title")}
+                      </Typography>
+                    </StyledMenuItem>
+                  </StyledLink>
+
+                  <Divider />
+
+                  <StyledLink href={`/profile/settings`}>
+                    <StyledMenuItem>
+                      <ListItemIcon>
+                        <Settings fontSize="small" />
+                      </ListItemIcon>
+                      <Typography
+                        variant="inherit"
+                        sx={{
+                          flex: 1,
+                          textAlign: "center",
+                          color: "text.primary",
+                        }}
+                      >
+                        {t("profiles.settings")}
+                      </Typography>
+                    </StyledMenuItem>
+                  </StyledLink>
+                  <MenuItem onClick={handleLogout}>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    <Typography
+                      variant="inherit"
+                      sx={{
+                        flex: 1,
+                        textAlign: "center",
+                        color: "text.primary",
+                      }}
+                    >
+                      {t("buttons.logout")}
+                    </Typography>
+                  </MenuItem>
+                </StyledMenu>
               </Stack>
             )}
           </Stack>
