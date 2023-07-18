@@ -1,6 +1,5 @@
 import { AuthBindings as AuthBindingsRefine } from "@refinedev/core";
 import nookies from "nookies";
-
 import { supabaseClient } from "./utility";
 import { WithRequired } from "./types";
 
@@ -202,5 +201,43 @@ export const authProvider: AuthBindings = {
   onError: async (error) => {
     console.error(error);
     return { error };
+  },
+  forgotPassword: async ({ email }) => {
+    const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+
+    console.log(error);
+
+    if (error) {
+      return {
+        success: false,
+        error,
+      };
+    }
+
+    return {
+      success: true,
+      authenticated: false,
+      redirectTo: "/login",
+    };
+  },
+  updatePassword: async ({ password, _token }) => {
+    const { error } = await supabaseClient.auth.updateUser({
+      password: password as string,
+    });
+
+    if (error) {
+      return {
+        success: false,
+        error,
+      };
+    }
+
+    return {
+      success: true,
+      authenticated: false,
+      redirectTo: "/login",
+    };
   },
 };

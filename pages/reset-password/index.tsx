@@ -1,7 +1,7 @@
 import {
-  useForgotPassword,
   useNotification,
   useTranslate,
+  useUpdatePassword,
 } from "@refinedev/core";
 import { AuthPage, ThemedTitleV2 } from "@refinedev/mui";
 
@@ -16,26 +16,27 @@ import { AppIcon } from "src/components/app-icon";
 export default function ForgotPassword() {
   const t = useTranslate();
   const { open } = useNotification();
-  const { mutate: forgotPassword } = useForgotPassword();
+  const { mutate: updatePassword } = useUpdatePassword();
+
   return (
     <main>
       <Head>
-        <title>{t("documentTitle.auth.forgotPassword")}</title>
+        <title>{t("documentTitle.auth.updatePassword")}</title>
       </Head>
       <AuthPage
-        type="forgotPassword"
+        type="updatePassword"
         title={
           <ThemedTitleV2 collapsed={false} text="Managify" icon={<AppIcon />} />
         }
         formProps={{
           onSubmit: (formValues) => {
-            forgotPassword(formValues, {
+            updatePassword(formValues, {
               onSuccess: ({ success }) => {
                 if (success) {
                   open &&
                     open({
                       description: t("notifications.success"),
-                      message: t("auth.forgotPassword.success"),
+                      message: t("auth.resetPassword.success"),
                       type: "success",
                     });
                 }
@@ -44,7 +45,7 @@ export default function ForgotPassword() {
                 open &&
                   open({
                     description: t("common.errors.unexpectedError"),
-                    message: t("auth.forgotPassword.error"),
+                    message: t("auth.resetPassword.error"),
                     type: "success",
                   });
               },
@@ -60,7 +61,7 @@ ForgotPassword.noLayout = true;
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const { authenticated } = await authProvider.check(context);
-
+  console.log("authenticated", authenticated);
   const translateProps = await serverSideTranslations(context.locale ?? "en", [
     "common",
   ]);

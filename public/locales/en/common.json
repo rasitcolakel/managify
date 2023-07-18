@@ -65,6 +65,16 @@
       "backHome": "Back Home"
     }
   },
+  "auth": {
+    "forgotPassword": {
+      "success": "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.",
+      "error": "We can't find a user with that e-mail address."
+    },
+    "resetPassword": {
+      "success": "Your password has been reset!",
+      "error": "There was an error resetting your password."
+    }
+  },
   "teams": {
     "title": "Teams",
     "fields": {
@@ -256,7 +266,8 @@
     "auth": {
       "login": "Login | Managify",
       "register": "Register | Managify",
-      "forgotPassword": "Forgot Password | Managify"
+      "forgotPassword": "Forgot Password | Managify",
+      "updatePassword": "Update Password | Managify"
     }
   },
   "table": {
