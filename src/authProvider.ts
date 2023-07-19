@@ -29,9 +29,10 @@ export const authProvider: AuthBindings = {
         path: "/",
       });
 
+      window.location.reload();
+
       return {
         success: true,
-        redirectTo: "/",
       };
     }
 
@@ -53,7 +54,7 @@ export const authProvider: AuthBindings = {
     });
 
     const { error } = await supabaseClient.auth.signOut();
-    console.log(error);
+
     if (error) {
       return {
         success: false,
@@ -63,7 +64,7 @@ export const authProvider: AuthBindings = {
 
     return {
       success: true,
-      redirectTo: "/login",
+      redirectTo: "/",
     };
   },
   register: async ({ email, password }) => {

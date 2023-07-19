@@ -94,6 +94,10 @@ export const TeamMembers = ({ team }: Props) => {
     callback();
   };
 
+  const members = teamMembers.filter(
+    (teamMember) => teamMember.status !== "declined"
+  );
+
   return (
     <Stack>
       <Stack
@@ -103,7 +107,7 @@ export const TeamMembers = ({ team }: Props) => {
         pt={1}
         pr={1}
       >
-        <Typography variant="h6">{`Members(${teamMembers.length})`}</Typography>
+        <Typography variant="h6">{`Members(${members.length})`}</Typography>
         {!!isOwner && (
           <RoundedIconButton
             icon={
@@ -124,7 +128,7 @@ export const TeamMembers = ({ team }: Props) => {
         )}
       </Stack>
       <Grid container spacing={1} pt={2}>
-        {teamMembers.map((teamMember) => renderMember(teamMember))}
+        {members.map((teamMember) => renderMember(teamMember))}
       </Grid>
       {!!isOwner && (
         <CreateTeamMemberModal

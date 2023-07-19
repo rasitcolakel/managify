@@ -89,7 +89,7 @@ function BuiltWith({ isDarkMode }: Props) {
       >
         <Typography variant="body1" align="center" py={2} pb={2}>
           This project built for Refine and Supabase Hackathon by{" "}
-          <StyledLink href="https://rasit.me" target="blank">
+          <StyledLink href="https://rasit.me" target="blank" itemType="text">
             Rasit Colakel
           </StyledLink>
         </Typography>

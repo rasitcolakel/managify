@@ -39,6 +39,7 @@ function RenderMember({ teamMember, isOwner, type }: Props) {
   const fullName = `${teamMember.profile?.first_name} ${teamMember.profile?.last_name}`;
 
   const isInvited = teamMember.status === "invited";
+  const isDeclined = teamMember.status === "declined";
 
   const t = useTranslate();
 
@@ -114,6 +115,14 @@ function RenderMember({ teamMember, isOwner, type }: Props) {
           <Chip
             label={t("teamMembers.statuses.invited")}
             color="warning"
+            variant="outlined"
+            size="small"
+          />
+        )}
+        {isDeclined && (
+          <Chip
+            label={t("teams.invitation.declined")}
+            color="error"
             variant="outlined"
             size="small"
           />
