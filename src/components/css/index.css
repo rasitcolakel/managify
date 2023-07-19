@@ -44,3 +44,8 @@
 .card:hover {
   background-color: #f9f9f9;
 }
+
+.spline-sans {
+  font-family: "Lato", sans-serif !important;
+  font-family: "Spline Sans", sans-serif !important;
+}

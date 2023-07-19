@@ -20,7 +20,11 @@ import { useInView } from "react-intersection-observer";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { motion } from "framer-motion";
 import ImageAvatar from "@components/common/ImageAvatar";
-import { readableDate } from "src/utility";
+import {
+  generateRandomColorWithName,
+  getFirstLettersOfWord,
+  readableDate,
+} from "src/utility";
 
 const container = {
   visible: {
@@ -173,8 +177,18 @@ export default function TaskTimeline({
               <ImageAvatar
                 user={taskUpdate.user}
                 alt={taskUpdate.user.full_name || ""}
-                sx={{ width: "1.5em", height: "1.5em" }}
-              />
+                sx={{
+                  width: "1.5em",
+                  height: "1.5em",
+                  bgcolor: generateRandomColorWithName(
+                    taskUpdate.user.full_name || ""
+                  ),
+                }}
+              >
+                <Typography variant="body2" color="white">
+                  {getFirstLettersOfWord(taskUpdate.user.full_name || "")}
+                </Typography>
+              </ImageAvatar>
               <Typography
                 variant="body2"
                 component="span"

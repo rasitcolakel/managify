@@ -46,7 +46,7 @@ export const KanbanTasks = ({ profile }: Props) => {
       }}
       justifyContent={"center"}
     >
-      <Grid item xs={9}>
+      <Grid item xs={12} lg={9}>
         <Kanban data={tasks} type="my" />
       </Grid>
     </Grid>

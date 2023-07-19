@@ -253,6 +253,7 @@
     "title": "Dashboard"
   },
   "documentTitle": {
+    "landing": "Manage Your Teams with Managify",
     "default": "Managify",
     "suffix": " | Managify",
     "show": "{{title}} | Managify",

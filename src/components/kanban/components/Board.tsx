@@ -1,13 +1,14 @@
 import { DndContext, rectIntersection } from "@dnd-kit/core";
 import Lane from "./Lane";
 import { useContext } from "react";
-import { Grid } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 import { KanbanContext } from "@contexts/KanbanContext";
 import { useTranslate } from "@refinedev/core";
 
 export default function Board() {
   const { todoItems, doneItems, in_progressItems, moveTask } =
     useContext(KanbanContext);
+  const isMobile = useMediaQuery("(max-width: 600px)");
 
   const t = useTranslate();
 
@@ -33,27 +34,36 @@ export default function Board() {
           height: "100%",
         }}
         container
-        spacing={5}
+        spacing={isMobile ? 1 : 3}
       >
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Lane
             id="todo"
             title={t("tasks.taskStatuses.todo")}
             items={todoItems}
+            typographyProps={{
+              color: "primary.main",
+            }}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Lane
             id="in_progress"
             title={t("tasks.taskStatuses.in_progress")}
             items={in_progressItems}
+            typographyProps={{
+              color: "warning.main",
+            }}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Lane
             id="done"
             title={t("tasks.taskStatuses.done")}
             items={doneItems}
+            typographyProps={{
+              color: "success.main",
+            }}
           />
         </Grid>
       </Grid>

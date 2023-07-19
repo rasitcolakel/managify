@@ -22,6 +22,10 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { StyledLink, StyledMenu, StyledMenuItem } from "..";
 import { useLogout, useTranslate } from "@refinedev/core";
+import {
+  generateRandomColorWithName,
+  getFirstLettersOfWord,
+} from "src/utility";
 const StyledHamburgerMenu = styled(HamburgerMenu)`
   button {
     color: yellow;
@@ -136,7 +140,19 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
                 justifyContent="center"
               >
                 <IconButton onClick={handleClick}>
-                  <ImageAvatar user={profile} link={false} />
+                  <ImageAvatar
+                    user={profile}
+                    link={false}
+                    sx={{
+                      bgcolor: generateRandomColorWithName(
+                        profile.full_name || ""
+                      ),
+                    }}
+                  >
+                    <Typography variant="body2" color="white">
+                      {getFirstLettersOfWord(profile.full_name || "")}
+                    </Typography>
+                  </ImageAvatar>
                 </IconButton>
                 <StyledMenu
                   anchorEl={anchorEl}

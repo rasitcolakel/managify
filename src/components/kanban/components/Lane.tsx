@@ -9,6 +9,7 @@ import {
   Paper,
   Stack,
   Typography,
+  TypographyProps,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useTranslate } from "@refinedev/core";
@@ -27,6 +28,7 @@ interface LaneProps {
   title: string;
   items: any[];
   id: string;
+  typographyProps: TypographyProps;
 }
 
 const StyledBox = styled(Box)(({ theme }) => {
@@ -151,7 +153,7 @@ const Item = ({
   );
 };
 
-export default function Lane({ title, items, id }: LaneProps) {
+export default function Lane({ title, items, id, typographyProps }: LaneProps) {
   const { setNodeRef } = useDroppable({
     id,
   });
@@ -166,7 +168,7 @@ export default function Lane({ title, items, id }: LaneProps) {
         height: "100%",
       }}
     >
-      <Typography variant="h6" mb={3}>
+      <Typography variant="h6" mb={3} color="primary.main" {...typographyProps}>
         {title}
       </Typography>
 

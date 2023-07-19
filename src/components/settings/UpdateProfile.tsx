@@ -65,7 +65,7 @@ export default function UpdateProfile({}: Props) {
           });
       }
     },
-    [user, open, t, setValue, refreshProfile]
+    [user, open, t, setValue, refreshProfile, router]
   );
 
   const Avatar = useCallback(
