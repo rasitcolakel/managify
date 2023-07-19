@@ -49,7 +49,7 @@ function Content({ isDarkMode }: Props) {
               variant: "contained",
               sx: {
                 textTransform: "none",
-                borderRadius: "1rem",
+                borderRadius: isMobile ? "0.5rem" : "1rem",
                 p: 1,
                 px: 3,
                 my: 3,
@@ -79,7 +79,7 @@ function Content({ isDarkMode }: Props) {
           style={{
             width: "100%",
             height: "auto",
-            borderRadius: "1rem",
+            borderRadius: isMobile ? "0.5rem" : "1rem",
             border: "1px solid #eaeaea",
             borderColor: theme.palette.divider,
           }}

@@ -4,6 +4,8 @@ import React, { useContext } from "react";
 import Header from "./header";
 import Content from "./Content";
 import { ColorModeContext } from "@contexts/index";
+import Features from "./Features";
+import BuiltWith from "./BuiltWith";
 
 type Props = {};
 
@@ -18,12 +20,20 @@ export default function Landing({}: Props) {
       }}
     >
       <Header />
+      <Content isDarkMode={mode === "dark"} />
+      <Divider
+        sx={{
+          width: "100%",
+          my: 4,
+        }}
+      />
+      <Features isDarkMode={mode === "dark"} />
       <Divider
         sx={{
           width: "100%",
         }}
       />
-      <Content isDarkMode={mode === "dark"} />
+      <BuiltWith isDarkMode={mode === "dark"} />
     </Grid>
   );
 }

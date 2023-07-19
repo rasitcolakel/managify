@@ -2,6 +2,7 @@ import Link from "@components/common/Link";
 import { ColorModeContext } from "@contexts/index";
 import {
   Box,
+  Divider,
   IconButton,
   Typography,
   useMediaQuery,
@@ -21,76 +22,89 @@ export default function Header({}: Props) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Box
-      sx={{
+    <div
+      style={{
+        position: "sticky",
+        top: 0,
         width: "100%",
-        justifyContent: "center",
-        display: "flex",
-        backgroundColor: theme.palette.background.paper,
       }}
     >
-      <Grid
-        item
-        xs={12}
-        xl={8}
-        justifyContent="space-between"
-        flexDirection="row"
-        alignItems="center"
-        display="flex"
-        py={1}
-        mx={isMobile ? 3 : 0}
+      <Box
+        sx={{
+          width: "100%",
+          justifyContent: "center",
+          display: "flex",
+          backgroundColor: theme.palette.background.paper,
+        }}
       >
-        <Stack
-          direction="row"
-          spacing={1}
+        <Grid
+          item
+          xs={12}
+          xl={8}
+          justifyContent="space-between"
           flexDirection="row"
           alignItems="center"
           display="flex"
+          py={1}
+          mx={isMobile ? 3 : 0}
         >
-          <Logo
-            width={"2.5em"}
-            height={"2.5em"}
-            fill={theme.palette.primary.main}
-          />
-          <Typography variant="h5" color="primary">
-            Managify
-          </Typography>
-        </Stack>
-        <Stack direction="row" spacing={2}>
-          <IconButton
-            onClick={() => {
-              setMode();
-            }}
-            size="small"
+          <Stack
+            direction="row"
+            spacing={1}
+            flexDirection="row"
+            alignItems="center"
+            display="flex"
           >
-            {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
-          </IconButton>
-          <Link
-            href="/login"
-            itemType="button"
-            buttonProps={{
-              sx: {
-                textTransform: "none",
-                px: 3,
-              },
-            }}
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/register"
-            itemType="button"
-            buttonProps={{
-              sx: {
-                textTransform: "none",
-              },
-              variant: "contained",
-            }}
-          >
-            Sign Up
-          </Link>
-        </Stack>
-      </Grid>
-    </Box>
+            <Logo
+              width={"2.5em"}
+              height={"2.5em"}
+              fill={theme.palette.primary.main}
+            />
+            <Typography variant="h5" color="primary">
+              Managify
+            </Typography>
+          </Stack>
+          <Stack direction="row" spacing={2}>
+            <Link
+              href="/login"
+              itemType="button"
+              buttonProps={{
+                sx: {
+                  textTransform: "none",
+                  px: 3,
+                },
+              }}
+            >
+              Sign In
+            </Link>
+            <Link
+              href="/register"
+              itemType="button"
+              buttonProps={{
+                sx: {
+                  textTransform: "none",
+                },
+                variant: "contained",
+              }}
+            >
+              Sign Up
+            </Link>
+            <IconButton
+              onClick={() => {
+                setMode();
+              }}
+              size="small"
+            >
+              {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
+            </IconButton>
+          </Stack>
+        </Grid>
+      </Box>
+      <Divider
+        sx={{
+          width: "100%",
+        }}
+      />
+    </div>
   );
 }
