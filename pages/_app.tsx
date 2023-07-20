@@ -27,6 +27,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { ThemedLayoutV2 } from "@components/themedLayout";
 import React from "react";
+import MailIcon from "@mui/icons-material/Mail";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   noLayout?: boolean;
@@ -130,6 +131,14 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                   meta: {
                     icon: <AssignmentIcon />,
                     label: t("documentTitle.tasks.myTitle"),
+                  },
+                },
+                {
+                  name: "chats",
+                  list: "/chats",
+                  meta: {
+                    icon: <MailIcon />,
+                    label: t("chats.title"),
                   },
                 },
                 {
