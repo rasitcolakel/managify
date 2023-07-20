@@ -17,9 +17,7 @@ export default function Chats() {
           })}
         </title>
       </Head>
-      <ChatsContextProvider>
-        <ChatsComponent />
-      </ChatsContextProvider>
+      <ChatsContextProvider>{/* <ChatsComponent /> */}</ChatsContextProvider>
     </>
   );
 }
