@@ -21,6 +21,12 @@ export default function Login() {
         title={
           <ThemedTitleV2 collapsed={false} text="Managify" icon={<AppIcon />} />
         }
+        formProps={{
+          defaultValues: {
+            email: "demo@refine.dev",
+            password: "Test.1234",
+          },
+        }}
       />
     </main>
   );
