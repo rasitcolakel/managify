@@ -3,7 +3,6 @@ import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import {
   notificationProvider,
   RefineSnackbarProvider,
-  ThemedLayoutV2,
   ThemedTitleV2,
 } from "@refinedev/mui";
 import routerProvider, {
@@ -26,9 +25,12 @@ import CompleteProfileNotification from "@components/users/CompleteProfileNotifi
 import GroupWorkIcon from "@mui/icons-material/GroupWork";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import { ThemedLayoutV2 } from "@components/themedLayout";
+import React from "react";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   noLayout?: boolean;
+  noPadding?: boolean;
 };
 
 type AppPropsWithLayout = AppProps & {
@@ -36,6 +38,8 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const [height, setHeight] = React.useState(0);
   const renderComponent = () => {
     if (Component.noLayout) {
       return <Component {...pageProps} />;
@@ -43,7 +47,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
 
     return (
       <ThemedLayoutV2
-        Header={() => <Header sticky />}
+        Header={() => (
+          <div ref={ref}>
+            <Header sticky />
+          </div>
+        )}
         Title={({ collapsed }) => (
           <ThemedTitleV2
             collapsed={collapsed}
@@ -51,6 +59,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
             icon={<AppIcon />}
           />
         )}
+        headerHeight={height}
+        noPadding={Component.noPadding}
       >
         <Component {...pageProps} />
       </ThemedLayoutV2>
@@ -65,10 +75,22 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
     getLocale: () => i18n.language,
   };
 
+  React.useEffect(() => {
+    // Function to get the height of the header
+    const getHeight = () => {
+      if (ref.current) {
+        setHeight(ref.current.clientHeight);
+      }
+    };
+
+    // Call the function to get the height after the component has rendered
+    getHeight();
+  }, []);
+
   return (
     <>
       <RefineKbarProvider>
-        <ColorModeContextProvider>
+        <ColorModeContextProvider headerHeight={height}>
           <CssBaseline />
           <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
           <RefineSnackbarProvider>

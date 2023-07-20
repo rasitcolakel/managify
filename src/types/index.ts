@@ -41,12 +41,27 @@ type Invitation = Database["public"]["Tables"]["teamMembers"]["Row"] & {
   team: Team;
 };
 
+type Message = Database["public"]["Tables"]["messages"]["Row"] & {
+  sender: Profile;
+};
+
+type Participant = Database["public"]["Tables"]["chatParticipants"]["Row"] & {
+  profile: Profile;
+};
+
+type Chat = Database["public"]["Tables"]["chats"]["Row"] & {
+  messages: Message[];
+  participants: Participant[];
+};
+
 export type {
   Task,
   Team,
   TeamMember,
   TeamWithMembers,
   Invitation,
+  Chat,
+  Message,
   Profile,
   TaskUpdates,
   WithRequired,

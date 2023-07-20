@@ -13,6 +13,7 @@ type ColorModeContextType = {
   refreshProfile: () => void;
   open: boolean;
   setOpen: (_open: boolean) => void;
+  headerHeight?: number;
 };
 
 export const ColorModeContext = createContext<ColorModeContextType>(
@@ -20,6 +21,7 @@ export const ColorModeContext = createContext<ColorModeContextType>(
 );
 type ColorModeContextProviderProps = {
   children: ReactNode;
+  headerHeight?: number;
 };
 
 const customDarkTheme = {
@@ -48,7 +50,7 @@ const customLightTheme = {
 
 export const ColorModeContextProvider: React.FC<
   ColorModeContextProviderProps
-> = ({ children }) => {
+> = ({ children, headerHeight }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [mode, setMode] = useState("light");
   const router = useRouter();
@@ -110,6 +112,7 @@ export const ColorModeContextProvider: React.FC<
         refreshProfile: execute,
         setOpen,
         open,
+        headerHeight,
       }}
     >
       <ThemeProvider

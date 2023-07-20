@@ -10,6 +10,108 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      chatParticipants: {
+        Row: {
+          chat_id: string
+          created_at: string | null
+          id: number
+          user_id: string
+        }
+        Insert: {
+          chat_id: string
+          created_at?: string | null
+          id?: number
+          user_id: string
+        }
+        Update: {
+          chat_id?: string
+          created_at?: string | null
+          id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chatParticipants_chat_id_fkey"
+            columns: ["chat_id"]
+            referencedRelation: "chats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chatParticipants_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      chats: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chats_created_by_fkey"
+            columns: ["created_by"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      messages: {
+        Row: {
+          chat_id: string
+          created_at: string | null
+          id: number
+          is_seen: boolean | null
+          message: string
+          sender_id: string
+        }
+        Insert: {
+          chat_id: string
+          created_at?: string | null
+          id?: number
+          is_seen?: boolean | null
+          message: string
+          sender_id: string
+        }
+        Update: {
+          chat_id?: string
+          created_at?: string | null
+          id?: number
+          is_seen?: boolean | null
+          message?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_chat_id_fkey"
+            columns: ["chat_id"]
+            referencedRelation: "chats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_sender_id_fkey"
+            columns: ["sender_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       profiles: {
         Row: {
           avatar: string | null
@@ -58,6 +160,7 @@ export interface Database {
           task_id: number | null
           team_id: number | null
           team_member_id: number | null
+          user_id: string | null
         }
         Insert: {
           created_at?: string | null
@@ -66,6 +169,7 @@ export interface Database {
           task_id?: number | null
           team_id?: number | null
           team_member_id?: number | null
+          user_id?: string | null
         }
         Update: {
           created_at?: string | null
@@ -74,6 +178,7 @@ export interface Database {
           task_id?: number | null
           team_id?: number | null
           team_member_id?: number | null
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -98,6 +203,12 @@ export interface Database {
             foreignKeyName: "taskAssignments_team_member_id_fkey"
             columns: ["team_member_id"]
             referencedRelation: "teamMembers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "taskAssignments_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           }
         ]
@@ -306,6 +417,13 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
+      change_user_password: {
+        Args: {
+          current_plain_password: string
+          new_plain_password: string
+        }
+        Returns: Json
+      }
       get_auth_user_team_invitations: {
         Args: Record<PropertyKey, never>
         Returns: number[]
@@ -313,6 +431,10 @@ export interface Database {
       get_authenticated_user_teams: {
         Args: Record<PropertyKey, never>
         Returns: number[]
+      }
+      get_my_chats: {
+        Args: Record<PropertyKey, never>
+        Returns: string[]
       }
       get_my_team_memberships: {
         Args: Record<PropertyKey, never>
@@ -334,6 +456,12 @@ export interface Database {
       get_teams_owned_by_authenticated_user: {
         Args: Record<PropertyKey, never>
         Returns: number[]
+      }
+      verify_user_password: {
+        Args: {
+          password: string
+        }
+        Returns: boolean
       }
     }
     Enums: {

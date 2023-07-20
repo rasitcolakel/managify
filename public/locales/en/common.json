@@ -1,4 +1,11 @@
 {
+  "chats": {
+    "title": "Chats",
+    "typeMessage": "Type a message",
+    "search": "Search",
+    "noUsersFound": "No users found",
+    "noMessages": "No messages"
+  },
   "pages": {
     "login": {
       "title": "Sign in to your account",
