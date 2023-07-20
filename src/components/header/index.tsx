@@ -26,6 +26,7 @@ import {
   generateRandomColorWithName,
   getFirstLettersOfWord,
 } from "src/utility";
+import ChatsIcon from "./ChatsIcon";
 const StyledHamburgerMenu = styled(HamburgerMenu)`
   button {
     color: yellow;
@@ -125,6 +126,8 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
                 ))}
               </Select>
             </FormControl>
+
+            {profile && <ChatsIcon profile={profile} />}
 
             <IconButton
               onClick={() => {

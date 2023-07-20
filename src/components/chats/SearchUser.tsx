@@ -1,6 +1,6 @@
 import ImageAvatar from "@components/common/ImageAvatar";
 import { ChatsContext } from "@contexts/ChatsContext";
-import { Stack, Typography } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
 import { useList, useTranslate } from "@refinedev/core";
 import React, { useContext } from "react";
 import { Profile } from "src/types";
@@ -48,35 +48,40 @@ export default function SearchUser({ search, resetSearch }: Props) {
 
   const renderUsers = () => {
     if (!data?.data) return null;
-    return data.data.map((user) => {
+    return data.data.map((user, index) => {
       return (
-        <Stack
-          flex={1}
-          alignItems="center"
-          direction="row"
-          spacing={0}
-          key={"users-" + user.id}
-          onClick={() => onSelectUser(user)}
-          style={{
-            cursor: "pointer",
-          }}
-        >
-          <ImageAvatar
-            user={user}
-            sx={{
-              bgcolor: generateRandomColorWithName(user.full_name || ""),
-              m: 1,
+        <>
+          <Stack
+            flex={1}
+            alignItems="center"
+            direction="row"
+            spacing={0}
+            key={"users-" + user.id}
+            onClick={() => onSelectUser(user)}
+            style={{
+              cursor: "pointer",
             }}
-            link={false}
+            p={1}
+            px={2}
           >
-            <Typography variant="body2" color="white">
-              {getFirstLettersOfWord(user.full_name || "")}
+            <ImageAvatar
+              user={user}
+              sx={{
+                bgcolor: generateRandomColorWithName(user.full_name || ""),
+                m: 1,
+              }}
+              link={false}
+            >
+              <Typography variant="body2" color="white">
+                {getFirstLettersOfWord(user.full_name || "")}
+              </Typography>
+            </ImageAvatar>
+            <Typography variant="subtitle1" color="text.primary">
+              {user?.full_name}
             </Typography>
-          </ImageAvatar>
-          <Typography variant="subtitle1" color="text.primary">
-            {user?.full_name}
-          </Typography>
-        </Stack>
+          </Stack>
+          {index !== data.data.length - 1 && <Divider />}
+        </>
       );
     });
   };

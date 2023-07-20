@@ -9,8 +9,9 @@ type Props = {};
 
 export default function Index({}: Props) {
   const { isDrawerOpen, setIsDrawerOpen, isMobile } = useContext(ChatsContext);
-  const { headerHeight } = useContext(ColorModeContext);
+  const { headerHeight, profile } = useContext(ColorModeContext);
 
+  if (!profile) return null;
   return (
     <Grid
       container

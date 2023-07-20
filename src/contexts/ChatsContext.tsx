@@ -5,7 +5,7 @@ import { Chat, Profile } from "src/types";
 import type { Theme } from "@mui/material/styles";
 import { useRouter } from "next/router";
 import { ColorModeContext } from ".";
-import { sendMessage } from "src/services/messages";
+import { readAllMessages, sendMessage } from "src/services/messages";
 import { getChatWithUser } from "src/services/chats";
 
 type ChatsContextProps = {
@@ -132,7 +132,7 @@ export const ChatsContextProvider: React.FC<Props> = ({ children }) => {
     resource: "chatParticipants",
     meta: {
       select:
-        "*, chat:chats(*, participants:chatParticipants(*, profile:profiles(*)))",
+        "*, chat:chats(*, participants:chatParticipants(*, profile:profiles(*)), messages(*, sender:profiles(*)))",
     },
     pagination: {
       pageSize: 10,
@@ -153,19 +153,28 @@ export const ChatsContextProvider: React.FC<Props> = ({ children }) => {
   });
 
   const setCurrentChat = useCallback(
-    (_chat: Chat) => {
+    async (_chat: Chat) => {
       dispatch({ type: "SET_CURRENT_CHAT", payload: { chat: _chat } });
       router.push({
         pathname: router.pathname,
         query: { ...router.query, channel: _chat.id },
       });
+      if (profile) {
+        await readAllMessages(_chat.id, profile?.id);
+      }
     },
-    [router]
+    [profile, router]
   );
 
-  const setCurrentChatById = useCallback((id: Chat["id"]) => {
-    dispatch({ type: "SET_CURRENT_CHAT_BY_ID", payload: { id } });
-  }, []);
+  const setCurrentChatById = useCallback(
+    async (id: Chat["id"]) => {
+      dispatch({ type: "SET_CURRENT_CHAT_BY_ID", payload: { id } });
+      if (profile) {
+        await readAllMessages(id, profile?.id);
+      }
+    },
+    [profile]
+  );
 
   const setChats = (_chats: Chat[]) =>
     dispatch({ type: "SET_CHATS", payload: { chats: _chats } });

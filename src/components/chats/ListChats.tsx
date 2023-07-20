@@ -52,6 +52,7 @@ function ListChats() {
         sx={{
           mx: 2,
           mb: 2,
+          px: 2,
         }}
       />
 
@@ -107,6 +108,17 @@ const RenderParticipant = ({ chat, participant }: RenderChatProps) => {
   const { currentChat, setCurrentChat, theme, isMobile, setIsDrawerOpen } =
     useContext(ChatsContext);
   const isCurrentChat = currentChat?.id === chat.id;
+
+  const messages = chat.messages;
+
+  const unReadMessages =
+    currentChat?.id === chat.id
+      ? 0
+      : messages.filter(
+          (message) =>
+            message.is_seen === false && message.sender_id === participant?.id
+        ).length;
+
   return (
     <Box
       sx={{
@@ -144,7 +156,7 @@ const RenderParticipant = ({ chat, participant }: RenderChatProps) => {
       <Stack>
         <Typography variant="subtitle1">{participant?.full_name}</Typography>
         <Typography variant="subtitle2" color="text.secondary">
-          {participant?.full_name}
+          {participant?.full_name} {unReadMessages > 0 && `(${unReadMessages})`}
         </Typography>
       </Stack>
     </Box>
